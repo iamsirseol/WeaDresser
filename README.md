@@ -1,4 +1,4 @@
-<h1>:two_men_holding_hands:WeaDresser:two_women_holding_hands:</h1> <hr />
+<h1>:two_men_holding_hands:WeaDresser:two_women_holding_hands:</h1>
 <!-- 이미지나 gif 파일 -->
 
 
