@@ -27,6 +27,3 @@ yar.lock
 # package-lock 
 package-lock.json 
 
-#github 
-../.github
-
