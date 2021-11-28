@@ -12,14 +12,20 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(
   cors({
-    origin: ["https://localhost:3000"],
+    origin:true, 
+    // ["https://weadresser.cf"],
     credentials: true,
     methods: ["GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"],
   })
 );
 
+
 app.get('/', (req, res)=>{
   res.send("Hello World") // 일단 '/' 귀결되면 Hello world (just for 배포)
+})
+
+app.get('/check', (req,res) => {
+  res.send( "check point success" )
 })
 
 // sequelize.sync({ force: false, alter: true }) // <- sequelize init 필요 ! (보류)
