@@ -29,13 +29,13 @@ app.get('/check', (req,res) => {
 })
 
 // sequelize.sync({ force: false, alter: true }) // <- sequelize init 필요 ! (보류)
-let credentials ; // "여기에 AWS 키"
-let server;
-if(credentials){
-  server = https.createServer(credentials, app);
-  server.listen(port, () =>  console.log("httpSSS server running"))
-} 
-else{
-  server = app.listen(port, () =>  console.log("http server running"))
-} 
+// let credentials ; // "여기에 AWS 키"
+// let server;
+// if(credentials){
+  // server = https.createServer(credentials, app);
+  // server.listen(port, () =>  console.log("httpSSS server running"))
+// } 
+// else{
+app.listen(port, () =>  console.log("http server running"))
+// } 
   
