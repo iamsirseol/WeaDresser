@@ -1,9 +1,14 @@
-import './App.css';
+import './styles/reset.css';
+// import LoadingIndicator from './components/Loading/LoadingIndicator'
+import LandingPage from './pages/LandingPage/LandingPage';
 
 function App() {
   return (
     <div className="App">
-      <p>hello world!</p>
+      <LandingPage>
+
+      </LandingPage>
+      {/* <LoadingIndicator /> */}
     </div>
   );
 }
