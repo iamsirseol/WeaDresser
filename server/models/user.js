@@ -37,12 +37,13 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'User',
   });
 
-  User.associate = models => { // !!! 
-    User.hasMany(models.Diarie, {
-      foreignKey : "userId",
-      // onDelete : "cascade"
-    })
-  }
+  // !! 일단 찜찜 OK   
+  // User.associate = models => { 
+  //   User.hasMany(models.Diarie, {
+  //     foreignKey : "userId",
+  //     // onDelete : "cascade"
+  //   })
+  // }
 
   return User;
 };

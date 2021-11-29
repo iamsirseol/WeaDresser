@@ -30,9 +30,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.FLOAT
       },
-      userId: { // !!! 
+      userId: {  
         allowNull: false,
         type: Sequelize.INTEGER,
+        // !!! 지우는게 일단 됫었다! 
         // references: {
         //   model: {
         //     tableName: 'Users'

@@ -31,6 +31,21 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
+const {
+  User,
+  Diarie,
+  DiariesHashtag,
+  Post,
+  Like,
+  Hashtag,
+
+} = sequelize.models;
+
+// ! user-diarie 조인 할때, 별칭 처리 해결이 안되면 이부분을 model 에 정의해서 사용해야 할듯
+// User 1 : N  Diarie
+User.hasMany(Diarie, { foreignKey: 'userId' , sourceKey : 'id' });
+Diarie.belongsTo(User, { foreignKey: 'userId' , sourceKey : 'id'});
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
