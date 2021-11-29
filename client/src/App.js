@@ -1,11 +1,11 @@
+import React, { useEffect, useState } from "react";
 import './styles/reset.css';
-// import LoadingIndicator from './components/Loading/LoadingIndicator'
-
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 function App() {
   return (
     <div className="App">
-      <p>nanumbarungothic</p>
-      {/* <LoadingIndicator /> */}
+      
     </div>
   );
 }
