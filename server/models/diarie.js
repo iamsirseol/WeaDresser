@@ -20,25 +20,44 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull :false
     },
+    temp :{ 
+      type: DataTypes.FLOAT,
+      allowNull :false,
+    },
     tempMax:{
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       allowNull :false
     },
     tempMin:{
       type: DataTypes.INTEGER,
       allowNull :false
     },
-    userId:{
+    userId:{ // !!! 
       type: DataTypes.INTEGER,
-      allowNull :false
+      allowNull :false,
+      // references: {
+      //   model: User,
+      //   key: 'id'
+      // }
     },
     share:{
       type : DataTypes.BOOLEAN, 
       defaultValue: false,
     }, 
   }, {
+    updatedAt:false, // !* query check   
     sequelize,
     modelName: 'Diarie',
   });
+
+  // !!! 
+  Diarie.associate = (models) => {
+    Diarie.belongsTo(models.User, {
+      // onDelete : 'cascade',
+      as: 'U',
+      foreignKey : 'userId'
+    })
+  }
+
   return Diarie;
 };

@@ -14,17 +14,35 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
-    userName: DataTypes.STRING,
+    userName: {
+      allowNull: false,
+      type : DataTypes.STRING,
+    },
     email:{
+      allowNull:false,
       type:DataTypes.STRING,
-      allowNull:false
     }, 
     password: DataTypes.STRING,
-    gender: DataTypes.STRING,
-    sns: DataTypes.BOOLEAN
+    gender: {
+      allowNull:false,
+      type: DataTypes.STRING,
+    },
+    social:{
+      type: DataTypes.BOOLEAN,
+      allowNull:false,
+    },
   }, {
+    timestamps : false, 
     sequelize,
     modelName: 'User',
   });
+
+  User.associate = models => { // !!! 
+    User.hasMany(models.Diarie, {
+      foreignKey : "userId",
+      // onDelete : "cascade"
+    })
+  }
+
   return User;
 };

@@ -18,17 +18,27 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      temp :{ 
+        allowNull :false,
+        type: Sequelize.FLOAT,
+      },
       tempMax: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
       tempMin: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
-      userId: {
+      userId: { // !!! 
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        // references: {
+        //   model: {
+        //     tableName: 'Users'
+        //   },
+        //   key: 'id'
+        // }
       },
       share: {
         allowNull: false,
@@ -37,7 +47,9 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal("NOW()") 
+
       },
     });
   },

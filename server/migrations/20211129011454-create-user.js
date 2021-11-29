@@ -9,6 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userName: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       email: {
@@ -19,9 +20,11 @@ module.exports = {
         type: Sequelize.STRING
       },
       gender: {
+        allowNull: false,
         type: Sequelize.STRING
       },
-      sns: {
+      social: {
+        allowNull: false,
         type: Sequelize.BOOLEAN
       },
     });
