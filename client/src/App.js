@@ -1,10 +1,11 @@
-import logo from './logo.svg';
-import './App.css';
+import './styles/reset.css';
+// import LoadingIndicator from './components/Loading/LoadingIndicator'
 
 function App() {
   return (
     <div className="App">
-      <p>hello world!</p>
+      <p>nanumbarungothic</p>
+      {/* <LoadingIndicator /> */}
     </div>
   );
 }
