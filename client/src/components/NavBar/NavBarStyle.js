@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const NavContaier = styled.nav`
     width:100vw;
-    height: 80px;
+    height: 8em;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,19 +15,16 @@ export const NavContaier = styled.nav`
 `;
 
 export const NavBtnLink = styled(Link)`
-  border-radius: 50px;
-  background: #ffa928;
-  white-space: nowrap;
-  padding: 10px 38px;
-  color: #010606;
-  font-size: 16px;
-  outline: none;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  text-decoration: none;
-  &:hover {
+    border-radius: 50px;
+    background: transparent;
+    padding: 0.5em 2em;
+    color: #fff;
+    font-size: 1.6em;
     transition: all 0.2s ease-in-out;
-    background: #fff;
-    color: #010606;
+    border: 2px solid #fff;
+    position: relative;
+    &:hover {
+        background: #fff;
+        color: #000;
   }
 `;
