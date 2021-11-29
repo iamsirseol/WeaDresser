@@ -12,7 +12,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      postId: {
+      diariesId: {
         allowNull: false,
         type: Sequelize.INTEGER
       },

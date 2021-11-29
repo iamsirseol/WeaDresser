@@ -43,8 +43,25 @@ const {
 
 // ! user-diarie 조인 할때, 별칭 처리 해결이 안되면 이부분을 model 에 정의해서 사용해야 할듯
 // User 1 : N  Diarie
-User.hasMany(Diarie, { foreignKey: 'userId' , sourceKey : 'id' });
+User.hasMany(Diarie, { foreignKey: 'userId', sourceKey : 'id' });
 Diarie.belongsTo(User, { foreignKey: 'userId' , sourceKey : 'id'});
+
+// User 1 : N  Like
+User.hasMany(Like, { foreignKey: 'userId', sourceKey : 'id' });
+Like.belongsTo(User, { foreignKey: 'userId' , sourceKey : 'id'});
+
+// Diarie 1 : N  Like
+Diarie.hasMany(Like, { foreignKey: 'diariesId', sourceKey : 'id' });
+Like.belongsTo(Diarie, { foreignKey: 'diariesId' , sourceKey : 'id'});
+
+// * Diarie  N: M  Hashtag
+// Diarie 1 : N  DiariesHashtag 
+Diarie.hasMany(DiariesHashtag, { foreignKey: 'diariesId', sourceKey : 'id' });
+DiariesHashtag.belongsTo(Diarie, { foreignKey: 'diariesId' , sourceKey : 'id'});
+
+// Hashtag 1 : N  DiariesHashtag 
+Hashtag.hasMany(DiariesHashtag, { foreignKey: 'hashtagsId', sourceKey : 'id' });
+DiariesHashtag.belongsTo(Hashtag, { foreignKey: 'hashtagsId' , sourceKey : 'id'});
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

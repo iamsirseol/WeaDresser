@@ -1,6 +1,23 @@
+const { User, Diarie,sequelize } = require('../models')
+const { Op } = require('Sequelize');
 module.exports = {
   // * GET  /home
-  findRandom : (req, res) => {
+  findRandom : async (req, res) => {
+    // SELECT U.id, U.userName, U.email  
+    // FROM Users U  
+    // LEFT JOIN Diaries D  ON U.id = D.userId WHERE U.id =2;
+    const result = await User.findAll({
+      attributes :[ 'id', 'userName', 'email' ],
+      where : { id : 2 },
+      include :{ // Left join
+        model : Diarie
+      }, 
+      raw : true  
+    })
+    .catch(err => {
+      res.send("err")
+    })
+    console.log(result);
     return res.send("GET /home  routing is good now")
   }, 
 

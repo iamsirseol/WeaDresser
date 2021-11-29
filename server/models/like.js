@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull : false
     },
-    postId: {
+    diariesId: {
       type: DataTypes.INTEGER,
       allowNull : false
     },

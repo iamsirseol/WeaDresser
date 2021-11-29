@@ -14,7 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Diarie.init({
-    image: DataTypes.STRING,
+    image: {
+      type:DataTypes.STRING,
+      allowNull :false
+    },
     content: DataTypes.STRING,
     weather: {
       type: DataTypes.STRING,

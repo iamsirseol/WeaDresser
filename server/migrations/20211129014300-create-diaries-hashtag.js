@@ -9,12 +9,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       diariesId: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       hashtagsId: {
-        type: Sequelize.INTEGER
-      },
-      postsId: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
     });

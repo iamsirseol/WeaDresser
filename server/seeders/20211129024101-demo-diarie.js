@@ -31,7 +31,7 @@ module.exports = {
         temp: 5.0,
         tempMax: 7.3,
         tempMin: -3.2, 
-        userId: 3, 
+        userId: 2, 
         share:false,
       }
     ]

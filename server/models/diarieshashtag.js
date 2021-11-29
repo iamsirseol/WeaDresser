@@ -14,9 +14,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   DiariesHashtag.init({
-    diariesId: DataTypes.INTEGER,
-    hashtagsId: DataTypes.INTEGER,
-    postsId:DataTypes.INTEGER,
+    diariesId: {
+      type : DataTypes.INTEGER,
+      allowNull : false, 
+    },
+    hashtagsId: {
+      type : DataTypes.INTEGER,
+      allowNull : false, 
+    },
   }, {
     sequelize,
     modelName: 'DiariesHashtag',
