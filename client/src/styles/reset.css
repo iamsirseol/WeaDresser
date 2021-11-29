@@ -1,4 +1,5 @@
 /* font */
+html{font-size: 62.5%;} /* desktop rem설정*/
 @font-face {
     font-family: NanumBarunGothic;
     src: url("../static/fonts/NanumBarunGothic.ttf");
