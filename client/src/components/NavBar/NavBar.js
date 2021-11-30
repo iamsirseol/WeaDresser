@@ -19,12 +19,11 @@ function NavBar() {
     // console.log(isShowLoginModal, isShowSignUpModal)
     return (
         <NavContaier >
-            {   // 둘다 false => 버튼 존재!! 
+            {   // 화면 띄우는 Test !!  conflic시 편하게 삭제 가능 !! 
                 !isShowLoginModal && !isShowSignUpModal 
                 ? <button onClick={showLoginModalHandler}>로그인 모달</button>
-                : !isShowSignUpModal  // 회원 가입 버튼 눌르면서 isShow로그인모달=false 처리됨 
+                : !isShowSignUpModal  
                 ? null : null  // isShowSignup모달 =true 일때도 버튼이 사라져야함 
-            // (isLogin으로 한방해결 가능 )
             }
             {isLogin ? <NavBtnLink to = "/">로그아웃</NavBtnLink> : <NavBtnLink to ="/">로그인</NavBtnLink>}
             {/* svg아이콘은 아이콘 컴포넌트로 만드는게 나을거 같아서 일단 이렇게 했습니다. */}

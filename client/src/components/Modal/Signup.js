@@ -84,7 +84,6 @@ function Signup(){
           <SignupBtnCol>
             <button>중복체크</button>
           </SignupBtnCol>
-
         </SignupContainer>
       </ModalContainer>
     </ModalBackdrop>

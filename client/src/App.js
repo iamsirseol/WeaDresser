@@ -13,8 +13,8 @@ import Signup from "./components/Modal/Signup"
 
 function App() {
   // const isLogin = useSelector(state => state.isLoginReducer.isLogin)
-  const isShowLoginModal = useSelector(state => state.isShowLoginModalReducer.isShowLoginModal);
-  const isShowSignUpModal = useSelector(state => state.isShowSignUpModalReducer.isShowSignUpModal);
+  const { isShowLoginModal } = useSelector(state => state.isShowLoginModalReducer);
+  const { isShowSignUpModal } = useSelector(state => state.isShowSignUpModalReducer);
 
   return (
     <div className="App">

@@ -39,7 +39,6 @@ export const ModalContainer = styled.div`
     width: 45rem;
 
   }
-
 `;  
 
 export const InnerContainer =styled.div`
@@ -107,7 +106,6 @@ export const InnerInputBox = styled.div`
     border : 1px solid rgba(0,0,0,0.5);
   }
 `;
-
 
 export const BtnContainer = styled.div`
   width: 100%;
