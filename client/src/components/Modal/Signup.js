@@ -1,46 +1,94 @@
-import { getGoogleAccToken, getKakaoCode } from '../../api/social'
-import { Link, useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import '../../styles/Signup.css'
+import { useDispatch } from 'react-redux';
+import { isShowSignUpModalHandler } from '../../redux/actions/actions'
+import styled from 'styled-components';
+import { 
+  ModalBackdrop, 
+  ModalContainer,
+  InnerContainer,
+  InnerBox, InnerInputBox,
+} from './ModalStyle';
+import { useState } from 'react';
+
+const SignupContainer = styled.div`
+  width: 100%;
+  /* border: 1px solid rebeccapurple; */
+  display: flex;
+  justify-content: space-around;
+`;
+const SignupBtnCol = styled.div`
+  width: 15%;
+  height: 100%;
+  /* background-color: rebeccapurple; */
+  position: relative;
+  > button{
+    display: inline-block;
+    position: absolute;
+    width: 100%;
+    min-width: 3.5rem;
+    margin: 0 ;
+    padding: .8rem;
+    top: 24.5%;
+    right: 20%;
+    background-color: cornflowerblue;
+    border-radius: 1rem;
+    color: #fff;
+  }
+`;
 
 function Signup(){
-
+  const [ prohibit , setProhibit ] = useState(true);
+  const dispatch = useDispatch();
+  // 모달 창 바깥 클릭시 창닫기 
+  const modalOffHandler = () => {
+    // 바깥쪽 일때만 작동!  
+    if(!prohibit) 
+    //(모달 창 안쪽 마우스 off => prohibit = false)
+      dispatch(isShowSignUpModalHandler(false))
+  }
+  // 모달 창 안쪽 마우스 on => prohibt = true  
+  const stayOnHandler = () => {
+    setProhibit(true)
+  }
+  // 모달 창 안쪽 마우스 off => prohibt = false  
+  const stayOffHandler = () => {
+    setProhibit(false)
+  }
   return (
-    <div className='signupContainer'>
-      <div className='signupTitle'>회 원 가 입</div>
-      <div className='signEmailContainer'>
-        <div className='signEmailBox'>
-          <div className="signEmailTextBox">Email</div>
-          <div className='signEmailInputBox'><input className='inputEmail'/></div>
-          <button className='duplicateBtn'>중복체크</button>
-        </div>
-        <div className='codeBox'>
-          <div className="codeTextBox">Code</div>
-          <div className='codeInputBox'><input className='inputCode'/></div>
-          <button className='codeBtn'>코드전송</button>
-        </div>
-        {/* <button className='duplicateBtn'>중복체크</button> */}
-      </div>
-      <br/>
-      <div className='userContainer'>
-        <div className='leftBox'>
-          <div className="leftTextBox">name</div>
-          <div className='leftInputBox'><input className='inputCode'/></div>
-          {/* <div className='dumBox'>코드전송</div> */}
-        </div>
-        <div className='leftBox'>
-          <div className="leftTextBox">password1</div>
-          <div className='leftInputBox'><input className='inputCode'/></div>
-          {/* <div className='dumBox'>코드전송</div> */}
-        </div>
-        <div className='leftBox'>
-          <div className="leftTextBox">password2</div>
-          <div className='leftInputBox'><input className='inputCode'/></div>
-          {/* <div className='dumBox'>코드전송</div> */}
-        </div>
-        <button className="submitBtn">Submit</button>
-      </div> {/* userContainer */}
-    </div>
+    <>
+    <ModalBackdrop onClick={modalOffHandler}>
+      <ModalContainer onMouseOver={stayOnHandler} onMouseLeave={stayOffHandler}>
+        <SignupContainer>
+          <InnerContainer inHeight={"60vh"} inWidth={"85%"} marginLeft={"5.5rem"}>
+            <div className="modalTitle">회 원 가 입</div>
+            <InnerBox topMargin={"1.5rem"} height={"10%"}>
+              <div className="innerTextBox">Email</div>
+              <InnerInputBox marginLeft={"1.2rem"}><input/></InnerInputBox>
+            </InnerBox >
+            <InnerBox  codeMargin={"6.5rem"} height={"10%"}>
+              <div className="innerTextBox">Code</div>
+              <InnerInputBox marginLeft={"1.2rem"}><input/></InnerInputBox>
+            </InnerBox>
+            <InnerBox height={"10%"}>
+              <div className="innerTextBox">Name</div>
+              <InnerInputBox marginLeft={"1.2rem"}><input/></InnerInputBox>
+            </InnerBox>
+            <InnerBox height={"10%"}>
+              <div className="innerTextBox">Password1</div>
+              <InnerInputBox marginLeft={"1.2rem"}><input/></InnerInputBox>
+            </InnerBox>
+            <InnerBox height={"10%"}>
+              <div className="innerTextBox">Password2</div>
+              <InnerInputBox marginLeft={"1.2rem"}><input/></InnerInputBox>
+            </InnerBox>
+          </InnerContainer>
+          <SignupBtnCol>
+            <button>중복체크</button>
+          </SignupBtnCol>
+
+        </SignupContainer>
+      </ModalContainer>
+    </ModalBackdrop>
+    </>
   );
 }
 

@@ -17,9 +17,9 @@
 }
 
 /* container width : 500px => 자식들 모두 [500px % width]  */
-.loginTitle{
+/* .loginTitle{
   font-size: 3.5rem;
-}
+} */
 /* input Container */
 .inputContainer{
   width: 90%;
@@ -47,7 +47,7 @@
   text-align: right;
   margin-right: 1rem;
 }
-.emailInputBox, .passwordInputBox{
+.innerInputBox, .passwordInputBox{
   width: 65%;  
 }
 .emailInputBox input, .passwordInputBox input{
