@@ -1,0 +1,207 @@
+/* 랜딩페이지 첫 화면 */
+import styled from 'styled-components';
+import title from '../../images/title.svg'
+import sun from '../../images/sun.png';
+import cloud from '../../images/cloud.png';
+import moon from '../../images/moon.png';
+import rain from '../../images/rain.png';
+import snow from '../../images/snow.png';
+import scroll from '../../images/scroll_ic.svg'
+
+export const Container = styled.div`
+  width: 100%; 
+  height: 100vh; 
+`
+export const LandingPageContainer = styled.div`
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    background-size: cover;
+    background-position: center;
+    background: linear-gradient(124deg, #5b81fa 13%, #0852a8 98%);
+`;
+
+export const MainLogo = styled.div`
+    background-image: url(${title});
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 66.7em;
+    height: 7.3em;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+`
+
+export const WeatherIconBox = styled.ul`
+    position: absolute;
+    width: 100em;
+    height: 23em;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+
+    .icon1 {
+      width: 22em;
+      height: 22em;
+      background-image: url(${sun});
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+    .icon2 {
+      width: 21em;
+      height: 11em;
+      background-image: url(${cloud});
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+    .icon3 {
+      width: 23em;
+      height: 14em;
+      background-image: url(${moon});
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+    .icon4 {
+      width: 22em;
+      height: 14em;
+      background-image: url(${rain});
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+    .icon5 {
+      width: 21em;
+      height: 14em;
+      background-image: url(${snow});
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+`
+
+export const WeahterBarBox = styled.div`
+    position: absolute;
+    width: 77.5em;
+    height: 10.0em;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 20px 20px 0 rgba(12, 35, 114, 0.3);
+    border-radius: 50px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: #25287e;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* align-items: center;
+    text-align: center; */
+
+    > div {
+      width: 30%;
+      height: 10em;
+      display: flex;
+      align-items: center;
+      position: relative;
+      justify-content: center;
+      /* border-right: 1px solid #fff; */
+      &:after {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        content: "";
+        width: 1px;
+        height: 2em;
+        background-color: #fff;
+      }
+
+      &:nth-child(3) {
+        &:after { 
+          width: 0;  
+        }
+      }
+
+      > span {
+        line-height: 10em;
+        width: 35%;
+        text-align: center;
+        white-space: nowrap;
+
+        &:nth-child(2) {
+          width: 30%;
+          margin-left: 10px;
+        }
+        /* display: block; */
+      }
+    }
+    .icon {
+      width: 5em;
+      height: 3.8em;
+      background-image: url(${rain});
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+    .desc {
+      margin: 3px 0 0 0;
+      font-size: 3.0em;
+      color: #fff;
+    }
+    .temp1 {
+      color: #fff;
+      font-size: 2.6em;
+    }
+    .temp2 {
+      margin: 3px 0 0 0;
+      font-size: 3.4em;
+      color: #ff2f77;
+    }
+    .temp3 {
+      margin: 3px 0 0 0;
+      font-size: 3.4em;
+      color: #69aeff;
+    }
+`
+
+export const Scroll = styled.div`
+    background-image: url(${scroll});
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 4.4em;
+    height: 8.6em;
+    position: absolute;
+    top: 95%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+`
+
+export const OutfitBox = styled.div`
+    position: absolute;
+    width: 77.5em;
+    height: 10.0em;
+    top: 150%;
+    left: 10%;
+    transform: translate(0%, -50%);
+    box-shadow: 0 20px 20px 0 rgba(12, 35, 114, 0.3);
+    border-radius: 50px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: #25287e;
+`
