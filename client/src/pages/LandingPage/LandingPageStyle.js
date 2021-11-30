@@ -29,7 +29,7 @@ export const MainLogo = styled.div`
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    width: 66.7em;
+    width: 68em;
     height: 7.3em;
     position: absolute;
     top: 30%;
@@ -157,12 +157,18 @@ export const WeahterBarBox = styled.div`
       background-size: contain;
       background-position: center;
     }
+    .temp-now {
+      margin: 3px 0 0 0;
+      font-size: 3.0em;
+      color: #fff;
+    }
     .desc {
       margin: 3px 0 0 0;
       font-size: 3.0em;
       color: #fff;
     }
     .temp1 {
+      margin-left: 5px;
       color: #fff;
       font-size: 2.6em;
     }
@@ -189,19 +195,15 @@ export const Scroll = styled.div`
     top: 95%;
     left: 50%;
     transform: translate(-50%, -50%);
-`
+    animation: motion 0.4s linear 0s infinite alternate;
+    /* margin-top: 0; */
 
-export const OutfitBox = styled.div`
-    position: absolute;
-    width: 77.5em;
-    height: 10.0em;
-    top: 150%;
-    left: 10%;
-    transform: translate(0%, -50%);
-    box-shadow: 0 20px 20px 0 rgba(12, 35, 114, 0.3);
-    border-radius: 50px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-color: #25287e;
+    @keyframes motion {
+      0% {
+        margin-top: 10px;
+      }
+      100% {
+        margin-top: 0px;
+      }
+    }
 `

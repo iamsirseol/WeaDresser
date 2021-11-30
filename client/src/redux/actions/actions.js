@@ -3,6 +3,7 @@ export const IS_LOADING = 'IS_LOADING';
 export const IS_SHOW_LOGIN_MODAL = "IS_SHOW_LOGIN_MODAL";
 export const IS_SHOW_SIGNUP_MODAL = "IS_SHOW_SIGNUP_MODAL";
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
+export const WEATHER_DATA = "WEATHER_DATA";
 
 export function isLoginHandler (boolean) {
     return {
@@ -19,7 +20,7 @@ export function isLoadingHandler (boolean) {
             isLoading : boolean
         }
     }
-}
+};
 export function isShowLoginModalHandler (boolean) {
     return {
         type : IS_SHOW_LOGIN_MODAL,
@@ -43,4 +44,12 @@ export function setAccessToken(accessToken) {
             accessToken: accessToken
         }
     }
-}
+};
+export function getWeatherData(data) {
+    return {
+        type : WEATHER_DATA,
+        payload: {
+            data
+        }
+    }
+};
