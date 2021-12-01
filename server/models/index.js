@@ -44,7 +44,7 @@ const {
 // ! user-diarie 조인 할때, 별칭 처리 해결이 안되면 이부분을 model 에 정의해서 사용해야 할듯
 // User 1 : N  Diarie
 User.hasMany(Diarie, { foreignKey: 'userId', sourceKey : 'id' });
-Diarie.belongsTo(User, { foreignKey: 'userId' , sourceKey : 'id'});
+Diarie.belongsTo(User, { foreignKey: 'userId', as:'U', sourceKey : 'id'});
 
 // User 1 : N  Like
 User.hasMany(Like, { foreignKey: 'userId', sourceKey : 'id' });

@@ -6,19 +6,22 @@ module.exports = {
     // SELECT U.id, U.userName, U.email  
     // FROM Users U  
     // LEFT JOIN Diaries D  ON U.id = D.userId WHERE U.id =2;
-    const result = await User.findAll({
-      attributes :[ 'id', 'userName', 'email' ],
-      where : { id : 2 },
+    const result = await Diarie.findAll({
+      attributes :[ 'id', 'image', 'temp', 'userId'],
+      // { '$U.name$' : { [Op.like] : search } },
+      where : { id : 2,  },
       include :{ // Left join
-        model : Diarie
+        model : User, as : 'U',
+        // attributes: { exclude : all}
       }, 
       raw : true  
     })
     .catch(err => {
+      console.log(err)
       res.send("err")
     })
     console.log(result);
-    return res.send("GET /home  routing is good now")
+    return res.json(result)
   }, 
 
   // * GET  /home/:user
