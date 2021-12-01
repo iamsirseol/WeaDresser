@@ -4,6 +4,13 @@ export const IS_SHOW_LOGIN_MODAL = "IS_SHOW_LOGIN_MODAL";
 export const IS_SHOW_SIGNUP_MODAL = "IS_SHOW_SIGNUP_MODAL";
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
 
+export function loginSuccessHandler(boolean, accessToken) {
+    return (dispatch) => {
+        dispatch(isLoginHandler(boolean))
+        dispatch(setAccessToken(accessToken))
+    }
+}
+
 export function isLoginHandler (boolean) {
     return {
         type : IS_LOGIN,
@@ -12,6 +19,7 @@ export function isLoginHandler (boolean) {
         }
     }
 };
+
 export function isLoadingHandler (boolean) {
     return {
         type : IS_LOADING,

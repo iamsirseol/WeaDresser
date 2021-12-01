@@ -53,12 +53,12 @@ function Login(){
           <InnerContainer inHeight={"45%"} marginRight={"4.5rem"}>
             <div className="modalTitle">로그인</div>
             <InnerBox height={"15%"}>
-              <div className="innerTextBox">Email</div>
-              <InnerInputBox><input/></InnerInputBox>
+              <div className="innerTextBox">Email </div>
+              <InnerInputBox width={"85%"}><input/></InnerInputBox>
             </InnerBox>
-            <InnerBox height={"15%"}>
-              <div className="innerTextBox">Password</div>
-              <InnerInputBox><input/></InnerInputBox>
+            <InnerBox height={"15%"} >
+              <div className="innerTextBox">Password ㅤㅤ</div>
+              <InnerInputBox width={"85%"}><input/></InnerInputBox>
             </InnerBox>
           </InnerContainer>
           <BtnContainer>

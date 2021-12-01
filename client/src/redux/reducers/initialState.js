@@ -1,17 +1,22 @@
 export const initialState = {
     isLogin : {
-        isLogin : false
+        isLogin : false,
+        accessToken : "",
     },
     isLoading : {
         isLoading : true
     },
-    isShowLoginModal: {
-        isShowLoginModal : false
+    modal : {
+        isShowLoginModal : false, 
+        isShowSignUpModal : false,
     },
-    isShowSignUpModal: {
-        isShowSignUpModal: false
-    },
-    accessToken: {
-        accessToken: ''
-    },
+    // isShowLoginModal: {
+    //     isShowLoginModal : false
+    // },
+    // isShowSignUpModal: {
+    //     isShowSignUpModal: false
+    // },
+    // accessToken: {
+    //     accessToken: ''
+    // },
 }

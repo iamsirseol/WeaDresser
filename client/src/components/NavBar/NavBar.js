@@ -11,12 +11,13 @@ import {SvgMan} from "../SvgIcon/SvgIcon"
 function NavBar() {
     const dispatch = useDispatch();
     const { isLogin } = useSelector(state => state.isLoginReducer)
-    const { isShowLoginModal } = useSelector(state => state.isShowLoginModalReducer)
-    const { isShowSignUpModal } = useSelector(state => state.isShowSignUpModalReducer)
+    const { 
+        isShowLoginModal, 
+        isShowSignUpModal 
+    } = useSelector(state => state.isShowModalReducer)
     const showLoginModalHandler = () => {
         dispatch(isShowLoginModalHandler(true))
     }
-    // console.log(isShowLoginModal, isShowSignUpModal)
     return (
         <NavContaier >
             {   // 화면 띄우는 Test !!  conflic시 편하게 삭제 가능 !! 

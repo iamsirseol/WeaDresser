@@ -36,15 +36,17 @@ export const ModalContainer = styled.div`
   border: 1px solid coral;
   /* background-color: coral; */
   @media screen and (max-width : 600px){
-    width: 45rem;
-
+    width: 38rem;
+  }
+  @media screen and (max-width : 400px){
+    width: 35rem;
   }
 `;  
 
 export const InnerContainer =styled.div`
   /* width: 90%; */
-  width: ${ ({ inWidth }) => inWidth || "90%" };
   /* height: 100%; */
+  width: ${ ({ inWidth }) => inWidth || "90%" };
   height: ${({ inHeight }) => inHeight || "100%"};
   display: flex;
   flex-direction: column;
@@ -60,7 +62,12 @@ export const InnerContainer =styled.div`
     margin-bottom: 2.5rem;
     margin-left: ${ ({ marginLeft }) => marginLeft || "0px" };
     text-align: center;
-
+    @media screen and (max-width : 600px){
+      font-size: 2.8rem;
+    }
+    @media screen and (max-width : 400px){
+      font-size: 2.5rem;
+    }
   }
 `;
 
@@ -80,6 +87,14 @@ export const InnerBox = styled.div`
     margin-top: .7rem;
     text-align: right;
     margin-right: 1rem;
+    @media screen and (max-width : 600px){
+      font-size: 1.3rem;
+      width: 13%;
+    }
+    @media screen and (max-width : 400px){
+      font-size: 1.2rem;
+      width: 12%;
+    }
   }
     /* border: 1px solid aliceblue; */
   > button{
@@ -90,20 +105,29 @@ export const InnerBox = styled.div`
     border-radius: 1.0rem;
     background-color: cornflowerblue;
     color: #fff;
+    
   }
   > .codeBtn{ opacity: 0;}
 `;
 
 export const InnerInputBox = styled.div`
   /* border: 1px solid coral; */
-  width: 65%;
-  /* height: ${({ height }) => height }; */
+  /* width: 65%; */
+  width : ${ ({ width }) => width || "75%" };
   margin-left: ${ ({ marginLeft }) => marginLeft || "0px" };
   > input{
     width : 100%; 
     height: 100%;
     border-radius: 1rem;
     border : 1px solid rgba(0,0,0,0.5);
+  }
+  @media screen and (max-width : 600px){
+    font-size: 1.3rem;
+    width: 75%;
+  }
+  @media screen and (max-width : 400px){
+    font-size: 1.2rem;
+    width: 75%;
   }
 `;
 

@@ -11,27 +11,41 @@ import { useState } from 'react';
 
 const SignupContainer = styled.div`
   width: 100%;
-  /* border: 1px solid rebeccapurple; */
   display: flex;
   justify-content: space-around;
 `;
 const SignupBtnCol = styled.div`
   width: 15%;
   height: 100%;
-  /* background-color: rebeccapurple; */
   position: relative;
   > button{
     display: inline-block;
     position: absolute;
     width: 100%;
-    min-width: 3.5rem;
+    /* min-width: 3.5rem; */
     margin: 0 ;
     padding: .8rem;
-    top: 24.5%;
+    top: 26.5%;
     right: 20%;
     background-color: cornflowerblue;
     border-radius: 1rem;
     color: #fff;
+    @media screen and (max-width : 600px){
+      padding:.5rem .3rem;
+      top: 24.5%;
+    }
+    @media screen and (max-width : 400px){
+      font-size: 1.2rem;
+      padding:.5rem .1rem;
+      top: 23%;
+    }
+  }
+  @media screen and (max-width : 600px){
+    width: 18%;
+  }
+  @media screen and (max-width : 400px){
+    font-size: 1.4rem;
+    width: 18%;
   }
 `;
 

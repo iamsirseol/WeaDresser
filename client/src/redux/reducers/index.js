@@ -14,17 +14,16 @@ import { initialState } from './initialState';
 const rootReducer = combineReducers({
     isLoginReducer,
     isLoadingReducer,
-    isShowLoginModalReducer,
-    isShowSignUpModalReducer,
-    accessTokenReducer,
+    isShowModalReducer,
+    // accessTokenReducer,
 })
 
 function isLoginReducer(state = initialState.isLogin, action) {
     switch (action.type) {
         case IS_LOGIN :
-            return Object.assign({},{
-                isLogin : action.payload.isLogin
-            });
+            return Object.assign({}, state, action.payload);
+        case ACCESS_TOKEN :
+            return Object.assign({}, state, action.payload);
         default : return state;
     }
 }
@@ -38,34 +37,24 @@ function isLoadingReducer(state = initialState.isLoading, action) {
       }
 }
 
-function isShowLoginModalReducer(state = initialState.isShowLoginModal, action){
+function isShowModalReducer(state = initialState.modal, action){
     switch (action.type) {
         case IS_SHOW_LOGIN_MODAL:
-          return Object.assign({}, {
-            isShowLoginModal: action.payload.isShowLoginModal
-          });
+          return Object.assign({}, state, action.payload);
+        case IS_SHOW_SIGNUP_MODAL:
+          return Object.assign({}, state, action.payload);
         default: return state;
       }
 }
 
-function isShowSignUpModalReducer(state = initialState.isShowSignUpModal, action){
-    switch (action.type) {
-        case IS_SHOW_SIGNUP_MODAL :
-          return Object.assign({}, {
-            isShowSignUpModal: action.payload.isShowSignUpModal
-          });
-        default: return state;
-      }
-}
-
-function accessTokenReducer(state = initialState.accessToken, action){
-  switch (action.type) {
-    case ACCESS_TOKEN:
-      return Object.assign({}, {
-        accessToken: action.payload.accessToken
-      });
-    default: return state;
-  }
-}
+// function accessTokenReducer(state = initialState.accessToken, action){
+//   switch (action.type) {
+//     case ACCESS_TOKEN:
+//       return Object.assign({}, {
+//         accessToken: action.payload.accessToken
+//       });
+//     default: return state;
+//   }
+// }
 
 export default rootReducer;
