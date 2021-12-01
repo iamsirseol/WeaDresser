@@ -7,7 +7,7 @@ import {
   ModalContainer,
   InnerContainer,
   InnerBox, InnerInputBox,
-  BtnContainer,
+  BtnContainer, DivMargin
 } from './ModalStyle';
 
 function Login(){
@@ -50,17 +50,19 @@ function Login(){
     <>
     <ModalBackdrop onClick={modalOffHandler} >
         <ModalContainer onMouseOver={stayOnHandler} onMouseLeave={stayOffHandler}>
-          <InnerContainer inHeight={"45%"} marginRight={"4.5rem"}>
+          <InnerContainer>
             <div className="modalTitle">로그인</div>
             <InnerBox height={"15%"}>
               <div className="innerTextBox">Email </div>
-              <InnerInputBox width={"85%"}><input/></InnerInputBox>
+              <InnerInputBox ><input type='email'/></InnerInputBox>
             </InnerBox>
-            <InnerBox height={"15%"} >
-              <div className="innerTextBox">Password ㅤㅤ</div>
-              <InnerInputBox width={"85%"}><input/></InnerInputBox>
+            <InnerBox marginRight={"1rem"}  >
+              <div className="innerTextBox">Password </div>
+              <InnerInputBox>
+                <input type='password' /></InnerInputBox>
             </InnerBox>
           </InnerContainer>
+          <DivMargin marginTop={"10rem"}/>
           <BtnContainer>
             <button onClick={userLoginHandler} className='userLoginBtn'> 로그인</button>
             <button onClick={kakaoLoginHandler} className='kakaoLoginBtn'>Kakao 로그인</button>

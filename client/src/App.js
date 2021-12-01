@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { isLoginHandler, isShowLoginModalHandler, isShowSignUpModalHandler } from './redux/actions/actions'
 import LoadingIndicator from './components/Loading/LoadingIndicator'
 import NavBar from "./components/NavBar/NavBar"
+
+import OotdListPage from "./pages/OotdPage/OotdListPage"
+import {SolidHeart} from "./components/SvgIcon/SvgIcon"
 import Login from "./components/Modal/Login"
 import Signup from "./components/Modal/Signup"
 import LandingPage from './pages/LandingPage/LandingPage';
@@ -20,10 +23,11 @@ function App() {
 
   return (
     <div className="App">
-      <LoadingIndicator />
-      {/* <LandingPage />
-      <LandingPageSub /> */}
       <NavBar />
+      {/* <LandingPage />  */}
+      {/* <LandingPageSub /> */}
+      {/* <SolidHeart></SolidHeart> */}
+      <OotdListPage /> {/* 지울것 */}
       { 
         isShowLoginModal ? <Login /> 
         : isShowSignUpModal ? <Signup /> 

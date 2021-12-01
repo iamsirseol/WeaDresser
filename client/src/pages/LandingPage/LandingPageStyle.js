@@ -138,7 +138,7 @@ export const WeahterBarBox = styled.div`
 
       > span {
         line-height: 10em;
-        width: 35%;
+        width: 37%;
         text-align: center;
         white-space: nowrap;
 
@@ -150,7 +150,7 @@ export const WeahterBarBox = styled.div`
       }
     }
     .icon {
-      width: 5em;
+      width: 10em;
       height: 3.8em;
       background-image: url(${rain});
       background-repeat: no-repeat;
@@ -159,27 +159,27 @@ export const WeahterBarBox = styled.div`
     }
     .temp-now {
       margin: 3px 0 0 0;
-      font-size: 3.0em;
+      font-size: 2.8em;
       color: #fff;
     }
     .desc {
       margin: 3px 0 0 0;
-      font-size: 3.0em;
+      font-size: 2.6em;
       color: #fff;
     }
     .temp1 {
       margin-left: 5px;
       color: #fff;
-      font-size: 2.6em;
+      font-size: 2.4em;
     }
     .temp2 {
       margin: 3px 0 0 0;
-      font-size: 3.4em;
+      font-size: 2.8em;
       color: #ff2f77;
     }
     .temp3 {
       margin: 3px 0 0 0;
-      font-size: 3.4em;
+      font-size: 2.8em;
       color: #69aeff;
     }
 `
