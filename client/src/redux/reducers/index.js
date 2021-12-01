@@ -13,61 +13,40 @@ import { initialState } from './initialState';
 
 // * rootReducer : 여러 리듀서들을 하나로 합친다. rootReducer는 store에 전달된다.
 const rootReducer = combineReducers({
-    isLoginReducer,
     isLoadingReducer,
-    isShowLoginModalReducer,
-    isShowSignUpModalReducer,
-    accessTokenReducer,
+    isLoginReducer,
+    isShowModalReducer,
     getWeatherDataReducer
 })
+
+function isLoadingReducer(state = initialState.isLoading, action) {
+  switch (action.type) {
+    case IS_LOADING : 
+      return Object.assign({},{
+        isLoading : action.payload.isLoading
+      });
+      default : return state
+    }
+}
 
 function isLoginReducer(state = initialState.isLogin, action) {
     switch (action.type) {
         case IS_LOGIN :
-            return Object.assign({},{
-                isLogin : action.payload.isLogin
-            });
+          return Object.assign({}, state, action.payload)
+        case ACCESS_TOKEN : 
+            return Object.assign({}, state, action.payload)
         default : return state;
     }
 }
-function isLoadingReducer(state = initialState.isLoading, action) {
-    switch (action.type) {
-      case IS_LOADING : 
-        return Object.assign({},{
-          isLoading : action.payload.isLoading
-        });
-        default : return state
-      }
-}
 
-function isShowLoginModalReducer(state = initialState.isShowLoginModal, action){
+function isShowModalReducer(state = initialState.modal, action){
     switch (action.type) {
         case IS_SHOW_LOGIN_MODAL:
-          return Object.assign({}, {
-            isShowLoginModal: action.payload.isShowLoginModal
-          });
+          return Object.assign({}, state, action.payload);
+        case IS_SHOW_SIGNUP_MODAL:
+          return Object.assign({}, state, action.payload);
         default: return state;
       }
-}
-
-function isShowSignUpModalReducer(state = initialState.isShowSignUpModal, action){
-    switch (action.type) {
-        case IS_SHOW_SIGNUP_MODAL :
-          return Object.assign({}, {
-            isShowSignUpModal: action.payload.isShowSignUpModal
-          });
-        default: return state;
-      }
-}
-
-function accessTokenReducer(state = initialState.accessToken, action){
-  switch (action.type) {
-    case ACCESS_TOKEN:
-      return Object.assign({}, {
-        accessToken: action.payload.accessToken
-      });
-    default: return state;
-  }
 }
 
 function getWeatherDataReducer(state = initialState.weatherData, action){

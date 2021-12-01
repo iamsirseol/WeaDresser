@@ -43,8 +43,8 @@ export const ModalContainer = styled.div`
 
 export const InnerContainer =styled.div`
   /* width: 90%; */
-  width: ${ ({ inWidth }) => inWidth || "90%" };
   /* height: 100%; */
+  width: ${ ({ inWidth }) => inWidth || "90%" };
   height: ${({ inHeight }) => inHeight || "100%"};
   display: flex;
   flex-direction: column;
