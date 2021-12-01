@@ -10,6 +10,9 @@ import Signup from "./components/Modal/Signup"
 
 // import Signup from "./components/Modal/Signup"
 // import {Modal} from './components/Modal/Modal'
+import LandingPage from './pages/LandingPage/LandingPage';
+import LandingPageSub from './pages/LandingPage/LandingPageSub';
+
 
 function App() {
   // const isLogin = useSelector(state => state.isLoginReducer.isLogin)
@@ -18,6 +21,9 @@ function App() {
 
   return (
     <div className="App">
+      {/* <LoadingIndicator /> */}
+      <LandingPage />
+      <LandingPageSub />
       <NavBar />
       { 
         isShowLoginModal ? <Login /> 

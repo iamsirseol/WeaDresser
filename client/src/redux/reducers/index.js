@@ -5,6 +5,7 @@ import {
     IS_SHOW_LOGIN_MODAL,
     IS_SHOW_SIGNUP_MODAL,
     ACCESS_TOKEN,
+    WEATHER_DATA
     
 } from '../actions/actions';
 import { initialState } from './initialState';
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
     isShowLoginModalReducer,
     isShowSignUpModalReducer,
     accessTokenReducer,
+    getWeatherDataReducer
 })
 
 function isLoginReducer(state = initialState.isLogin, action) {
@@ -63,6 +65,16 @@ function accessTokenReducer(state = initialState.accessToken, action){
     case ACCESS_TOKEN:
       return Object.assign({}, {
         accessToken: action.payload.accessToken
+      });
+    default: return state;
+  }
+}
+
+function getWeatherDataReducer(state = initialState.weatherData, action){
+  switch (action.type) {
+    case WEATHER_DATA:
+      return Object.assign({}, {
+        data: action.payload.data
       });
     default: return state;
   }
