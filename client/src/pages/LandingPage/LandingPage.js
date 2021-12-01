@@ -26,17 +26,19 @@ function LandingPage () {
     useEffect (() => {
         let complete = false;
 
-        function askForCoords() {
-            navigator.geolocation.getCurrentPosition(handleGeoSucces, handleGeoError);
+        async function askForCoords() {
+            const result = await navigator.geolocation.getCurrentPosition(handleGeoSucces, handleGeoError);
+            // console.log("result===========", result);
         }
 
-        function handleGeoSucces (location) {
+        async function handleGeoSucces (location) {
             const lat = location.coords.latitude;
             const lot = location.coords.longitude;
-            getWeather(lat, lot);
+            await getWeather(lat, lot);
         }
         
         function handleGeoError () {
+            // console.log("asdfjaisfdhioasdhfiaodsuhf=============");
             console.log('Cannot get your location');
         }
         
