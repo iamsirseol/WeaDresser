@@ -22,11 +22,10 @@ function App() {
 
   return (
     <div className="App">
-      <LoadingIndicator />
-      {/* <LandingPage />
-      <LandingPageSub /> */}
       <NavBar />
-      <SolidHeart></SolidHeart>
+      {/* <LandingPage />  */}
+      {/* <LandingPageSub /> */}
+      {/* <SolidHeart></SolidHeart> */}
       <OotdListPage /> {/* 지울것 */}
       { 
         isShowLoginModal ? <Login /> 
