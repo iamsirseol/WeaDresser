@@ -31,25 +31,25 @@
       <tr>
          <td>팀장</td>
          <td>이윤환</td>
-         <td>Full</td>
+         <td>FULL</td>
          <td>https://github.com/leeyhunhwan</td>
       </tr>
       <tr>
          <td>팀원</td>
          <td>설동혁</td>
-         <td>Full</td>
+         <td>FULL</td>
          <td>https://github.com/iamsirseol</td>
       </tr>
       <tr>
          <td>팀원</td>
          <td>정민찬</td>
-         <td>Full</td>
+         <td>FULL</td>
          <td>https://github.com/minchjung</td>
       </tr>
       <tr>
          <td>팀원</td>
          <td>손영한</td>
-         <td>Full</td>
+         <td>FULL</td>
          <td>https://github.com/dudgks5846</td>
       </tr>
    </tbody>

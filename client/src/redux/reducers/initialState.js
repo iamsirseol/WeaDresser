@@ -19,4 +19,7 @@ export const initialState = {
     // accessToken: {
     //     accessToken: ''
     // },
+    weatherData: {
+        weatherData: ''
+    }
 }

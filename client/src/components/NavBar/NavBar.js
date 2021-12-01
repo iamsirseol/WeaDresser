@@ -10,11 +10,11 @@ import {SvgMan} from "../SvgIcon/SvgIcon"
 
 function NavBar() {
     const dispatch = useDispatch();
-    const { isLogin } = useSelector(state => state.isLoginReducer)
-    const { 
+    const { isLogin } = useSelector(state => state.isLoginReducer);
+    const {
         isShowLoginModal, 
         isShowSignUpModal 
-    } = useSelector(state => state.isShowModalReducer)
+    } = useSelector(state => state.isShowModalReducer);
     const showLoginModalHandler = () => {
         dispatch(isShowLoginModalHandler(true))
     }
