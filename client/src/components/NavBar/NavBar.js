@@ -6,7 +6,7 @@ import {
     NavContaier,
     NavBtnLink
 } from "./NavBarStyle"
-import {SvgMan} from "../SvgIcon/SvgIcon"
+import {SvgLogoSmall} from "../SvgIcon/SvgIcon"
 
 function NavBar() {
 
@@ -15,6 +15,7 @@ function NavBar() {
 
     return (
         <NavContaier>
+            <SvgLogoSmall to='/'></SvgLogoSmall>
             {isLogin ? <NavBtnLink to = "/">로그아웃</NavBtnLink> : <NavBtnLink to ="/">로그인</NavBtnLink>}
             {/* svg아이콘은 아이콘 컴포넌트로 만드는게 나을거 같아서 일단 이렇게 했습니다. */}
         </NavContaier>
