@@ -7,7 +7,7 @@ import {
   ModalContainer,
   InnerContainer,
   InnerBox, InnerInputBox,
-  BtnContainer,
+  BtnContainer, DivMargin
 } from './ModalStyle';
 
 function Login(){
@@ -61,6 +61,7 @@ function Login(){
               <InnerInputBox><input/></InnerInputBox>
             </InnerBox>
           </InnerContainer>
+          <DivMargin marginTop={"10rem"}/>
           <BtnContainer>
             <button onClick={userLoginHandler} className='userLoginBtn'> 로그인</button>
             <button onClick={kakaoLoginHandler} className='kakaoLoginBtn'>Kakao 로그인</button>

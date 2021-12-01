@@ -45,7 +45,7 @@ function Signup(){
               <InnerInputBox ><input/></InnerInputBox>
               <button className="codeBtn">중복체크</button>
             </InnerBox>
-            <DivMargin/>
+            <DivMargin />
             <InnerBox>
               <div className="innerTextBox">Name</div>
               <InnerInputBox ><input/></InnerInputBox>
