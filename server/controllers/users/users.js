@@ -3,7 +3,6 @@ module.exports = {
   checkEmail : (req, res) => {
     return res.send('POST /users/check-email OK')
   }, 
-
   // *  GET users/send-email
   sendEmail : (req, res) => {
     return res.send('GET /users/send-email OK')
