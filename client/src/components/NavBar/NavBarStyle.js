@@ -4,14 +4,15 @@ import { Link } from "react-router-dom";
 export const NavContaier = styled.nav`
     width:100vw;
     height: 8em;
+    padding: 0 3em;
+    box-sizing: border-box;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    align-content: space-between;
     position: fixed;
     top: 0;
     left: 0;
-    background: #ddd;
+    background: #ddd; // 지울것
 `;
 
 export const NavBtnLink = styled(Link)`

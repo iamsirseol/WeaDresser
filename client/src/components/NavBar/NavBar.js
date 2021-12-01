@@ -6,7 +6,7 @@ import {
     NavContaier,
     NavBtnLink
 } from "./NavBarStyle"
-import {SvgMan} from "../SvgIcon/SvgIcon"
+import {SvgLogoSmall} from "../SvgIcon/SvgIcon"
 
 function NavBar() {
     const dispatch = useDispatch();
