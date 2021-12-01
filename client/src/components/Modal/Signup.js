@@ -25,19 +25,19 @@ const SignupBtnCol = styled.div`
     /* min-width: 3.5rem; */
     margin: 0 ;
     padding: .8rem;
-    top: 26.5%;
+    top: 22%;
     right: 20%;
     background-color: cornflowerblue;
     border-radius: 1rem;
     color: #fff;
     @media screen and (max-width : 600px){
       padding:.5rem .3rem;
-      top: 24.5%;
+      top: 21.5%;
     }
     @media screen and (max-width : 400px){
       font-size: 1.2rem;
-      padding:.5rem .1rem;
-      top: 23%;
+      padding:.6rem .1rem;
+      top: 20.5%;
     }
   }
   @media screen and (max-width : 600px){

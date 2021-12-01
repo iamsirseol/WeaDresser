@@ -58,8 +58,8 @@ export const InnerContainer =styled.div`
   /* background-color: cornsilk; */
   /* background-color: ${( { backColor} ) => backColor}; */
   > .modalTitle{
-    font-size:3.5rem;
-    margin-bottom: 2.5rem;
+    font-size:3.0rem;
+    margin-bottom: 1.5rem;
     margin-left: ${ ({ marginLeft }) => marginLeft || "0px" };
     text-align: center;
     @media screen and (max-width : 600px){
