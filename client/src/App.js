@@ -10,8 +10,9 @@ import Signup from "./components/Modal/Signup"
 import LandingPage from './pages/LandingPage/LandingPage';
 import LandingPageSub from './pages/LandingPage/LandingPageSub';
 
+
 function App() {
-  const isLogin = useSelector(state => state.isLoginReducer.isLogin)
+  // const isLogin = useSelector(state => state.isLoginReducer.isLogin)
   const {
     isShowLoginModal, 
     isShowSignUpModal 
