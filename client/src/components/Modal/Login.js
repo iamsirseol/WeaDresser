@@ -2,16 +2,20 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getGoogleAccToken, getKakaoCode } from '../../api/social'
 import { isShowLoginModalHandler, isShowSignUpModalHandler } from '../../redux/actions/actions'
+// import axios from 'axios';
 import { 
   ModalBackdrop, 
   ModalContainer,
-  InnerContainer,
-  InnerBox, InnerInputBox,
-  BtnContainer,
+  LogoContainer,
+  InputContainer,
+  LoginError,
+  LoginBtnContainer
 } from './ModalStyle';
 
 function Login(){
-  const [ prohibit , setProhibit ] = useState(false)
+  const [ prohibit , setProhibit ] = useState(false);
+  const [loginInfo, setLoginInfo] = useState({ email: "", password: "" });
+  const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch(); 
   
   // 모달 창 바깥 클릭시 창닫기 
@@ -41,32 +45,62 @@ function Login(){
   const kakaoLoginHandler = () => {
     getKakaoCode()
   }
+
   const userSingupHandler = () => {
+    console.log("okokokokokokokokokokok")
     dispatch(isShowSignUpModalHandler(true))
     dispatch(isShowLoginModalHandler(false))
   }
+
+  const handleInputValue = (key) => (e) => {
+    setLoginInfo({ ...loginInfo, [key]: e.target.value.toLowerCase() });
+    console.log(key, e.target.value)
+    console.log(loginInfo)
+    setErrorMessage("");
+  };
+
+  const handleKeyPress = (e) => {
+    const isValid = loginInfo.email && loginInfo.password;
+    if (e.type === "keypress" && e.code === "Enter" && isValid) {
+      handleLogin();
+    }
+  };
+  const handleLogin = () => {
+    const { email, password } = loginInfo;
+  };
 
   return (
     <>
     <ModalBackdrop onClick={modalOffHandler} >
         <ModalContainer onMouseOver={stayOnHandler} onMouseLeave={stayOffHandler}>
-          <InnerContainer inHeight={"45%"} marginRight={"4.5rem"}>
-            <div className="modalTitle">로그인</div>
-            <InnerBox height={"15%"}>
-              <div className="innerTextBox">Email </div>
-              <InnerInputBox width={"85%"}><input/></InnerInputBox>
-            </InnerBox>
-            <InnerBox height={"15%"} >
-              <div className="innerTextBox">Password ㅤㅤ</div>
-              <InnerInputBox width={"85%"}><input/></InnerInputBox>
-            </InnerBox>
-          </InnerContainer>
-          <BtnContainer>
-            <button onClick={userLoginHandler} className='userLoginBtn'> 로그인</button>
-            <button onClick={kakaoLoginHandler} className='kakaoLoginBtn'>Kakao 로그인</button>
-            <button onClick={googleLoginHandler} className='googleLoginBtn'>Google 로그인</button>
-            <button onClick={userSingupHandler} className='singupBtn'>회원가입</button>
-          </BtnContainer>
+          <LogoContainer><img alter="" src=""/></LogoContainer>
+          <InputContainer>
+            <input 
+              className="login-input"
+              type="email"
+              placeholder="E-mail"
+              onChange={ handleInputValue("email") }
+              onKeyPress={ handleKeyPress }
+              />
+            <input 
+              className="login-input"
+              type="password"
+              placeholder="비밀번호"
+              onChange={ handleInputValue("password") }
+              onKeyPress={ handleKeyPress }
+              />
+              <LoginError>{errorMessage}</LoginError>
+          </InputContainer>
+          <LoginBtnContainer>
+            {
+              !loginInfo.email || !loginInfo.password
+              ? <button onClick={userLoginHandler} className='login-btn'> 로그인</button>
+              : <button className='login-btn-active'> 로그인</button>
+            }
+            <button onClick={kakaoLoginHandler} className='kakao-btn'>Kakao</button>
+            <button onClick={googleLoginHandler} className='google-btn'>Google</button>
+            <button onClick={userSingupHandler} className='singup-btn'>회원가입</button>
+          </LoginBtnContainer>
         </ModalContainer>
     </ModalBackdrop>
     </>

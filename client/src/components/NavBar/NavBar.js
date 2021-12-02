@@ -1,12 +1,12 @@
-import { Link, useHistory } from 'react-router-dom';
+// import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { isLoginHandler, isShowLoginModalHandler, isShowSignUpModalHandler } from '../../redux/actions/actions'
-import axios from 'axios'; // 필요 없을거 같긴 한데 로그아웃에서 쓸 수도
+import { isShowLoginModalHandler } from '../../redux/actions/actions'
+// import axios from 'axios'; // 필요 없을거 같긴 한데 로그아웃에서 쓸 수도
 import {
     NavContaier,
     NavBtnLink
 } from "./NavBarStyle"
-import {SvgMan} from "../SvgIcon/SvgIcon"
+// import {SvgMan} from "../SvgIcon/SvgIcon"
 
 function NavBar() {
     const dispatch = useDispatch();
