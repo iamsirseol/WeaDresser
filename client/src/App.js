@@ -10,6 +10,12 @@ import {SolidHeart} from "./components/SvgIcon/SvgIcon"
 import Login from "./components/Modal/Login"
 import Signup from "./components/Modal/Signup"
 import LandingPage from './pages/LandingPage/LandingPage';
+import LandingPageSub from './pages/LandingPage/LandingPageSub';
+import OotdListPage from "./pages/OotdPage/OotdListPage"
+import {SolidHeart} from "./components/SvgIcon/SvgIcon"
+import Login from "./components/Modal/Login"
+import Signup from "./components/Modal/Signup"
+import LandingPage from './pages/LandingPage/LandingPage';
 import RecordPage from './pages/RecordPage/RecordPage';
 
 function App() {
