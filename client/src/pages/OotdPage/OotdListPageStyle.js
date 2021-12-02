@@ -7,6 +7,12 @@ export const OotdPageContainer = styled.div`
     height: fit-content;
     box-sizing: border-box;
     padding: 8em 4em;
+    @media screen and (max-width:800px){
+        padding: 8em 3em;
+    }
+    @media screen and (max-width:400px){
+        padding: 8em 2em;
+    }
 `
 
 export const OotdPageTitle = styled.h2`

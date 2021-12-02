@@ -13,6 +13,7 @@ export const NavContaier = styled.nav`
     top: 0;
     left: 0;
     background: #ddd; // 지울것
+    z-index: 9999999;
 `;
 
 export const NavBtnLink = styled(Link)`

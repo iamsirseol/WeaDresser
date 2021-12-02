@@ -9,6 +9,7 @@ export const initialState = {
     modal : {
         isShowLoginModal : false, 
         isShowSignUpModal : false,
+        isShowOotdImageModal : false,
     },
     // isShowLoginModal: {
     //     isShowLoginModal : false

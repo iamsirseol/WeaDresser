@@ -2,6 +2,7 @@ export const IS_LOGIN = 'IS_LOGIN';
 export const IS_LOADING = 'IS_LOADING';
 export const IS_SHOW_LOGIN_MODAL = "IS_SHOW_LOGIN_MODAL";
 export const IS_SHOW_SIGNUP_MODAL = "IS_SHOW_SIGNUP_MODAL";
+export const IS_SHOW_OOTD_IMAGE_MODAL = "IS_SHOW_OOTD_IMAGE_MODAL"
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
 export const WEATHER_DATA = "WEATHER_DATA";
 
@@ -45,6 +46,14 @@ export function isShowSignUpModalHandler (boolean) {
         }
     }
 };
+export function isShowOotdImageModalHandler(boolean){
+    return {
+        type: IS_SHOW_OOTD_IMAGE_MODAL,
+        payload: {
+            isShowOotdImageModal: boolean
+        }
+    }
+}
 export function setAccessToken(accessToken) {
     return {
         type : ACCESS_TOKEN,
