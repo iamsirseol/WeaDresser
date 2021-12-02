@@ -1,7 +1,18 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+"use strict";
+const { Model } = require("sequelize");
+=======
+=======
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
 'use strict';
 const {
   Model
 } = require('sequelize');
+<<<<<<< HEAD
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
+=======
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -12,6 +23,41 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+<<<<<<< HEAD
+<<<<<<< HEAD
+  }
+  User.init(
+    {
+      userName: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      email: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      password: DataTypes.STRING,
+      gender: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      social: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
+    },
+    {
+      timestamps: false,
+      sequelize,
+      modelName: "User",
+    }
+  );
+
+  // !! 일단 찜찜 OK
+  // User.associate = models => {
+=======
+=======
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
   };
   User.init({
     userName: {
@@ -39,6 +85,10 @@ module.exports = (sequelize, DataTypes) => {
 
   // !! 일단 찜찜 OK   
   // User.associate = models => { 
+<<<<<<< HEAD
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
+=======
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
   //   User.hasMany(models.Diarie, {
   //     foreignKey : "userId",
   //     // onDelete : "cascade"
@@ -46,4 +96,12 @@ module.exports = (sequelize, DataTypes) => {
   // }
 
   return User;
+<<<<<<< HEAD
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
+=======
+};
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
