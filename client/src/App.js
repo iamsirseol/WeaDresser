@@ -24,11 +24,9 @@ function App() {
   return (
     <div className="App">
       <LoadingIndicator />
-      {/* <LandingPage />
-      <LandingPageSub /> */}
       <SideBar />
       <NavBar />
-      <OotdListPage /> {/* 지울것 */}
+      {/* <OotdListPage /> */}
       <LandingPage />
       {/* <RecordPage /> */}
       {/* <LandingPageSub /> */}
