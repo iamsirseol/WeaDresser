@@ -3,37 +3,6 @@ import { Link } from "react-router-dom";
 
 export const NavContaier = styled.nav`
     width:100vw;
-<<<<<<< HEAD
-<<<<<<< HEAD
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: space-between;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: #ddd;
-`;
-
-export const NavBtnLink = styled(Link)`
-  border-radius: 50px;
-  background: #ffa928;
-  white-space: nowrap;
-  padding: 10px 38px;
-  color: #010606;
-  font-size: 16px;
-  outline: none;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  text-decoration: none;
-  &:hover {
-    transition: all 0.2s ease-in-out;
-    background: #fff;
-    color: #010606;
-=======
-=======
->>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
     height: 8em;
     padding: 0 3em;
     box-sizing: border-box;
@@ -44,6 +13,7 @@ export const NavBtnLink = styled(Link)`
     top: 0;
     left: 0;
     background: #ddd; // 지울것
+    z-index: 9999999;
 `;
 
 export const NavBtnLink = styled(Link)`
@@ -58,9 +28,5 @@ export const NavBtnLink = styled(Link)`
     &:hover {
         background: #fff;
         color: #000;
-<<<<<<< HEAD
->>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
-=======
->>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
   }
 `;

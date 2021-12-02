@@ -11,6 +11,7 @@ export const OotdListBoxBack = styled.div`
     position: absolute;
     box-sizing: border-box;
     padding: 0.3em 0.5em 0.8em 0.5em;
+    cursor: pointer;
     &:hover{
     }
     @media screen and (max-width:1200px){
@@ -18,9 +19,11 @@ export const OotdListBoxBack = styled.div`
     }
     @media screen and (max-width:800px){
         width: 33%;
+        padding: 0.2em 0.3em 0.6em 0.3em;
     }
     @media screen and (max-width:400px){
         width: 50%;
+        padding: 0.15em 0.25em 0.5em 0.25em;
     }
 `
 export const OotdListBoxOver = styled.div`
@@ -35,11 +38,6 @@ export const OotdListBoxImage = styled.img`
     border-radius: 1em;
 `
 export const OotdListBoxItem = styled.div`
-    /* position: absolute;
-    top: calc(0em + 0.3em);
-    left: calc(0em + 0.5em);
-    width: calc(100% - 1em);
-    height: calc(100% - 1.1em); */
     position: absolute;
     width: 100%;
     height: 100%;
