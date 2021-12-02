@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-
+import axios from 'axios';
 import { getGoogleAccToken, getKakaoCode, getUserAccToken } from '../../api/social'
 import { 
   isShowLoginModalHandler, 
@@ -18,12 +18,10 @@ import {
 } from './ModalStyle';
 
 function Login(){
-  // const [ isValid, setIsValid ] = useState(false);
   const [ prohibit , setProhibit ] = useState(false);
   const [ loginInfo, setLoginInfo ] = useState({ email: "", password: "" });
   const [ errorMessage, setErrorMessage ] = useState("");
   const [ active, setActive ] = useState("");
-  // const history = useHistory();
   const history= useHistory();
   const dispatch = useDispatch(); 
 
@@ -50,43 +48,54 @@ function Login(){
   // inputvalue Save to the loginInfo States
   const handleInputValue = (key) => (e) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value.toLowerCase() });
-    // console.log(key, e.target.value)
     setErrorMessage("");
   };
 
   // On backSpace key => make isValid = false 
   const handleKeyPress = (e) => {
-    if(e.key === 'Backspace'){
-      // setIsValid(true);
-      setActive("")
-    }
+    if(e.key === 'Backspace') setActive("")
   };
   // validition : email=null, password=Null, and email regx@ 
   const validCheckHandler = () => {
     const { email, password } = loginInfo
-    if(!email || !password || !email.includes('@') ){
-      // setIsValid(false);
+    if(!email || !password ){
       setActive("")
-      setErrorMessage('이메일 과 패스워드를 다시 확인해 주세요')
+      setErrorMessage('이메일 과 패스워드를 입력해 주세요')
     }
+    else if(!email.includes('@')){
+      setErrorMessage('이메일 형식을 확인해 주세요')
+    }
+    // if(email && password && email.includes('@')){ 
+    else{
     // GET user Access Token from server
-    if(email && password && email.includes('@')){
-      // setIsValid(true)
-      setActive("-active")
-      userLoginHandler()
-
+    setActive("-active") // button active
+      userLoginHandler() // login ajax call
     }
   };
   const userLoginHandler = async () => {
-    const {isSuccess, accessToken } = await getUserAccToken(loginInfo);
-    if(!isSuccess){
-      //error handle message 
-      console.log("user login failed from server");
-      return 
-    }
-    dispatch(loginSuccessHandler(true, accessToken));
-    dispatch(isShowLoginModalHandler(false))
-    history.push('/')
+    const{ email, password } = loginInfo
+    axios.post(
+      'http://localhost:80/users/signin',
+      { email, password},
+      { withCredentials: true }
+    )
+    .then(result => {
+      dispatch(loginSuccessHandler(true, result.data.accessToken));
+      dispatch(isShowLoginModalHandler(false))
+      history.push('/')
+    })
+    .catch(err =>{
+      dispatch(loginSuccessHandler(false, ""));
+      if(err.response.status === 403){
+        setErrorMessage("회원이 아닙니다. 회원 가입을 진행해 주세요")
+      }
+      else if(err.response.status === 401){
+        setErrorMessage("이메일 비밀번호가 일치하지 않습니다.")
+      }
+      else{
+        setErrorMessage("앗! 서버 error가 낫어요!")
+      }
+    })
   }
   const googleLoginHandler = () => {
     getGoogleAccToken()

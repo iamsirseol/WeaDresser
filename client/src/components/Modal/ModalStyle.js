@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const ModalBackdrop = styled.div`
   position: fixed;
-  z-index: 9;
+  z-index: 99999999999999;
   top: 0;
   left: 0;
   bottom: 0;
@@ -64,7 +64,7 @@ export const InputContainer = styled.div`
   margin-top: 3.5rem; //<- responisive
   .login-input{
     /* -webkit-appearance: none; */
-    font-size: 1.2rem;
+    font-size: 1.8rem;
     height: 3rem;
     width: 30rem;
     border: none;
@@ -87,7 +87,7 @@ export const InputContainer = styled.div`
       width: 24rem;
       height: 2.3rem;
       margin: 1.5rem;
-      font-size: 1.2rem
+      font-size: 1.5rem
     }
     @media screen and (max-width : 424px){
       width: 18rem;
@@ -109,8 +109,11 @@ export const LoginError = styled.div`
   height: 1.5rem;
   color: red;
   @media screen and (max-width: 768px) {
-    font-size: 0.7rem;
+    font-size: 1.3rem;
     margin-left: 1rem;
+  }  
+  @media screen and (max-width: 424px) {
+    font-size: 1.1rem;
   }
 `;
 
