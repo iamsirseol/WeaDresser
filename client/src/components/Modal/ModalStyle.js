@@ -10,15 +10,11 @@ export const ModalBackdrop = styled.div`
   background-color: rgba(0,0,0,0.4);
   display: grid;
   place-items: center;
-  > .modalOutter{
-    width:100%; 
-    height:100vh;
-  }  
 `;
 
 export const ModalContainer = styled.div`
-  width: 75rem;
-  height: 65vh;
+  width: 60rem;
+  height: 75rem;
   z-index: 99;
   position: absolute;
   top: 50%;
@@ -27,61 +23,179 @@ export const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgba(0,0,0,0.3);
   padding-top: 2.5rem;
   border-radius: 1rem;
   text-decoration: none;
   text-align: center;
-  color: #fff;
-  &:hover{
-    background-color: #fff;
-    color: black;
-  }
-  @media screen and (max-width : 1023px){
-    width: 58rem;
-    height: 60vh;
-  }
+  background-color: white;
+  /* border: 1px solid coral; */
   @media screen and (max-width : 767px){
-    width: 45rem;
-    height: 50vh;
+    width: 40rem;
+    height: 50rem;
   }
-  @media screen and (max-width : 600px){
-    width: 38rem;
-    height: 45vh;
-  }
-  @media screen and (max-width : 400px){
-    width: 30rem;
-    height: 35vh;
+  @media screen and (max-width : 424px){
+    width: 28rem;
+    height: 35rem;
   }
 `;  
 
-export const InnerContainer =styled.div`
-  width: 100%;
-  height: ${ ({height}) => height || null };
+export const LogoContainer =styled.div`
+  width: 25rem;
+  height: 20rem;
+  background-color: aliceblue;
+  > img{
+    cursor: pointer;
+    width: 100%;
+  }
+  @media screen and (max-width : 767px){
+    width: 20rem;
+    height: 16rem;
+  }
+  @media screen and (max-width : 424px){
+    width: 15rem;
+    height: 12rem;
+  }
+`;
+
+export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 1rem;
-  text-align: center;
-  /* background-color: cornsilk; */
-  > .modalTitle{
-    font-size:3.5rem;
-    margin-bottom: 4.5rem;
-    /* text-align: center; */
-    @media screen and (max-width : 1023px){
-      font-size:3.0rem;
-    };
+  margin-top: 3.5rem; //<- responisive
+  .login-input{
+    /* -webkit-appearance: none; */
+    font-size: 1.2rem;
+    height: 3rem;
+    width: 30rem;
+    border: none;
+    border-bottom: solid 0.5px rgba(0,0,0,0.5);
+    transition: 0.4s;
+    margin: 1.5rem; // responsive 
+    &:focus{
+      transition: 0.2s;
+      outline: none;
+      border-bottom: 1px solid cornflowerblue;
+    }
+    &::placeholder{
+      color: gray;
+      opacity: 0.6;
+    }
+    &::placeholder::hover{
+      opacity: 0;
+    }
     @media screen and (max-width : 767px){
-      font-size:2.6rem;
-    };
-    @media screen and (max-width : 600px){
-      font-size:2.2rem;
-    };
-    @media screen and (max-width : 400px){
-      font-size:1.8rem;
-    };
+      width: 24rem;
+      height: 2.3rem;
+      margin: 1.5rem;
+      font-size: 1.2rem
+    }
+    @media screen and (max-width : 424px){
+      width: 18rem;
+      height: 1.2rem;
+      margin: 1.0rem;
+      font-size: 0.8rem;
+    }
+  }
+  @media screen and (max-width : 767px){
+    margin-top: 1.5rem
+  }
+  @media screen and (max-width : 424px){
+    margin-top: 1.2rem;
   }
 `;
+
+export const LoginError = styled.div`
+  font-size: 1.8rem;
+  height: 1.5rem;
+  color: red;
+  @media screen and (max-width: 768px) {
+    font-size: 0.7rem;
+    margin-left: 1rem;
+  }
+`;
+
+export const LoginBtnContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin:2rem;
+  margin-top: 4.5rem;
+  /* background:cornflowerblue; */
+  @media screen and (max-width: 787px){
+    margin-top:2.5rem;
+  }
+  button{
+    color: #757575;
+    background-color:#fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 0.7rem;
+    height: 4rem;
+    width: 28rem;
+    margin: 0.5rem;
+    font-size: 1.6rem;
+    cursor: pointer;
+    @media screen and (max-width: 767px) {
+      font-size: 1.4rem;
+      margin-left: 1rem;
+      width: 22rem;
+      height: 3.5rem;
+    }
+  }
+  .login-btn{
+    background-color: #fff;
+    color: #757575;
+  }
+  .login-btn-active{
+    background-color: cornflowerblue;
+    color: #fff;
+  }
+  .kakao-btn{
+    background-color: #FFE650;
+  }
+  .google-btn{
+    background-color: #252525;
+    color: #fff;
+  }
+
+`;
+export const Button = styled.button`
+  color: ${({ textColor }) => textColor || "#757575"};
+  background-color:${({ backColor }) => backColor || "white"};
+  border: 1px solid #d9d9d9;
+  border-radius: 3px;
+  height: 3rem;
+  width: 25rem;
+  margin: 0.3rem;
+  cursor: pointer;
+  @media screen and (max-width: 768px) {
+    width: 17rem;
+    height: 3rem;
+    font-size: 0.7rem;
+  }
+`;
+export const SocialBtnContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* margin:2rem; */
+  /* background:cornflowerblue; */
+`;
+export const SocialButton = styled.button`
+  color: ${({ textColor }) => textColor || "#757575"};
+  background-color:${({ backColor }) => backColor || "white"};
+  border: 1px solid #d9d9d9;
+  border-radius: 3px;
+  height: 3rem;
+  width: 25rem;
+  margin: 0.3rem;
+  cursor: pointer;
+  @media screen and (max-width: 768px) {
+    width: 17rem;
+    height: 3rem;
+    font-size: 0.7rem;
+  }
+`;
+
+
+export const InnerContainer = styled.div``;
 
 export const InnerBox = styled.div`
   display: flex;
