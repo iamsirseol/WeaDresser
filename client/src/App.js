@@ -12,11 +12,12 @@ import Login from "./components/Modal/Login"
 import Signup from "./components/Modal/Signup"
 import LandingPage from './pages/LandingPage/LandingPage';
 // import LandingPageSub from './pages/LandingPage/LandingPageSub';
-
+require('dotenv').config();
 
 function App() {
   const {isLogin, accessToken} = useSelector(state => state.isLoginReducer)
   console.log(isLogin, accessToken)
+  console.log("dotenv", process.env.REACT_APP_API_KEY )
   const {
     isShowLoginModal, 
     isShowSignUpModal 

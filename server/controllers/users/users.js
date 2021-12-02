@@ -11,7 +11,7 @@ module.exports = {
 
   // *  POST users/signin
   signin : (req, res) => {
-    console.log("ok it works")
+    console.log(req.body)
     return res.json({accessToken : 'test accessToken to the client'})
     // return res.send('POST /users/signin OK')
   },
