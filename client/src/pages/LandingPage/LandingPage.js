@@ -9,50 +9,107 @@ import {
     MainLogo, WeatherIconBox, 
     WeahterBarBox, 
     Scroll,
+    WeatherIcon
 } from './LandingPageStyle';
-// import sun from '../../images/sun.png';
-// import cloud from '../../images/cloud.png';
-// import moon from '../../images/moon.png';
-// import rain from '../../images/rain.png';
-// import snow from '../../images/snow.png';
+import sun from '../../images/sun.png';
+import cloud from '../../images/cloud.png';
+import moon from '../../images/moon.png';
+import rain from '../../images/rain.png';
+import snow from '../../images/snow.png';
+require('dotenv').config()
 
 function LandingPage () {
 
-    const [curWeather, setCurWeather] = useState('맑음');
+    const [curWeather, setCurWeather] = useState('');
+    const [curIcon, setCurIcon] = useState(moon);
+    const [check, setCheck] = useState([false, false, false]);
+    const [navi, setNavi] = useState([]);
     const dispatch = useDispatch();
     const weatherData = useSelector(state => state.getWeatherDataReducer); // redux-thunk 다시 보기
-    // console.log('날씨!',weatherData.data);
-    
-    useEffect (() => {
-        let complete = false;
 
-        function askForCoords() {
-            navigator.geolocation.getCurrentPosition(handleGeoSucces, handleGeoError);
+    useEffect (() => {
+        
+        let complete = false;
+        
+        if (weatherData.data) {
+            console.log('날씨!',weatherData.data.weather[0].main);
+            if (weatherData.data.weather[0].main === 'Clouds') {
+                setCurWeather('흐림');
+                setCurIcon(cloud);
+            }
+            if (weatherData.data.weather[0].main === 'Snow') {
+                setCurWeather('눈');
+                setCurIcon(snow);
+            }
+            if (weatherData.data.weather[0].main === 'Rain' || weatherData.data.weather[0].main === 'Thunderstrom') {
+                setCurWeather('비');
+                setCurIcon(rain);
+            } else {
+                setCurWeather('맑음');
+                setCurIcon(sun);
+            }
         }
 
-        function handleGeoSucces (location) {
-            const lat = location.coords.latitude;
-            const lot = location.coords.longitude;
+        // if ('geolocation' in navigator) {
+        //     navigator.geolocation.getCurrentPosition(location => {
+        //         console.log('found!!', location);
+        //         const lat = location.coords.latitude;
+        //         const lot = location.coords.longitude;
+        //         setNavi([lat, lot]);
+        //     })
+        // } else {
+        //     console.log('Cannot get your location');
+        // }
+        function askForCoords() {
+            navigator.geolocation.getCurrentPosition(handleGeoSucces, handleGeoError);
+
+            // let newCheck = check.slice();
+            // newCheck[0] = true;
+            // setCheck(newCheck);
+            // console.log(1)
+        }
+
+        async function handleGeoSucces (location) {
+            const lat = await location.coords.latitude;
+            const lot = await location.coords.longitude;
             getWeather(lat, lot);
+
+            // let newCheck = check.slice();
+            // newCheck[1] = true;
+            // setCheck(newCheck);
+            // console.log(2)
+
         }
         
         function handleGeoError () {
             console.log('Cannot get your location');
+            console.log(3)
         }
         
-        async function getWeather (lat, lot) {
-            const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lot}&appid=218094985a81470cdcd4ec7afed19e13`)
-            console.log('ㅁㅁㅁ',result)
-            const { coord, main, name, sys, weather } = result.data;
-            if (!complete) dispatch(getWeatherData({ coord, main, name, sys, weather }));
+        async function getWeather (lat = navi[0], lot = navi[1]) {
+            const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lot}&appid=${process.env.API_KEY}`)
+                .catch(err => console.log('err', err));
+            // console.log('ㅁㅁㅁ',result.data)
+            // let newCheck = check.slice();
+            // newCheck[2] = true;
+            // setCheck(newCheck);
+            if (result) {
+                const { coord, main, name, sys, weather } = result.data;
+                dispatch(getWeatherData({ coord, main, name, sys, weather }));
+            }
         }
+        
         
         return () => {
-            askForCoords();
-        
+            if (!complete) {
+                askForCoords();
+                if (check[0] && check[1] && check[2]) {
+                    complete = true;
+                }
+            }
         }
         
-    }, [dispatch])
+    }, []);
 
     return (
         <Container>
@@ -68,11 +125,12 @@ function LandingPage () {
                 <WeahterBarBox>
                 {
                 !weatherData.data ? 
-                null
+                null // 로딩페이지로 바꿔서 넣어야 할 듯
                 :
                     <>
                         <div>
-                            <span className="icon"></span>
+                            <WeatherIcon imgUrl={curIcon}></WeatherIcon>
+                            {/* <span className="icon" imgUrl={curIcon}></span> */}
                             <span className="temp-now">{(parseInt((weatherData.data.main.temp - 273.15) * 10)) / 10}°C</span>
                             <span className="desc">{curWeather}</span>
                         </div>

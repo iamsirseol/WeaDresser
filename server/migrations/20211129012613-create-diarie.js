@@ -1,40 +1,40 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Diaries', {
+    await queryInterface.createTable("Diaries", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       image: {
         allowNull: false,
         type: Sequelize.STRING,
       },
       content: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       weather: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
-      temp :{ 
-        allowNull :false,
+      temp: {
+        allowNull: false,
         type: Sequelize.FLOAT,
       },
       tempMax: {
         allowNull: false,
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
       },
       tempMin: {
         allowNull: false,
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
       },
-      userId: {  
+      userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        // !!! 지우는게 일단 됫었다! 
+        // !!! 지우는게 일단 됫었다!
         // references: {
         //   model: {
         //     tableName: 'Users'
@@ -50,12 +50,11 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal("NOW()") 
-
+        defaultValue: Sequelize.literal("NOW()"),
       },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Diaries');
-  }
+    await queryInterface.dropTable("Diaries");
+  },
 };

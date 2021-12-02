@@ -6,6 +6,9 @@ export const initialState = {
     isLoading : {
         isLoading : true
     },
+    accessToken: {
+        accessToken: ''
+    },
     modal : {
         isShowLoginModal : false, 
         isShowSignUpModal : false,

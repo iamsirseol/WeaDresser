@@ -21,7 +21,6 @@ export function isLoginHandler (boolean) {
         }
     }
 };
-
 export function isLoadingHandler (boolean) {
     return {
         type : IS_LOADING,
@@ -29,7 +28,7 @@ export function isLoadingHandler (boolean) {
             isLoading : boolean
         }
     }
-};
+}
 export function isShowLoginModalHandler (boolean) {
     return {
         type : IS_SHOW_LOGIN_MODAL,
