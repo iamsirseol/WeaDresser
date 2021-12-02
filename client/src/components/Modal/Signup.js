@@ -10,8 +10,6 @@ import {
 } from './ModalStyle';
 import { useState } from 'react';
 
-<<<<<<< HEAD
-=======
 const SignupContainer = styled.div`
   width: 100%;
   display: flex;
@@ -52,7 +50,6 @@ const SignupBtnCol = styled.div`
   }
 `;
 
->>>>>>> feature/client/login2
 function Signup(){
   const [ prohibit , setProhibit ] = useState(true);
   const dispatch = useDispatch();

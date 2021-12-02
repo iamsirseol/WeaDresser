@@ -1,8 +1,13 @@
 import { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getGoogleAccToken, getKakaoCode } from '../../api/social'
-import { isShowLoginModalHandler, isShowSignUpModalHandler } from '../../redux/actions/actions'
-import axios from 'axios';
+
+import { getGoogleAccToken, getKakaoCode, getUserAccToken } from '../../api/social'
+import { 
+  isShowLoginModalHandler, 
+  isShowSignUpModalHandler,
+  loginSuccessHandler 
+} from '../../redux/actions/actions'
 import { 
   ModalBackdrop, 
   ModalContainer,
@@ -13,19 +18,20 @@ import {
 } from './ModalStyle';
 
 function Login(){
+  // const [ isValid, setIsValid ] = useState(false);
   const [ prohibit , setProhibit ] = useState(false);
   const [ loginInfo, setLoginInfo ] = useState({ email: "", password: "" });
   const [ errorMessage, setErrorMessage ] = useState("");
-  const [ isValid, setIsValid ] = useState(false);
   const [ active, setActive ] = useState("");
+  // const history = useHistory();
+  const history= useHistory();
   const dispatch = useDispatch(); 
-  
+
   // 모달 창 바깥 클릭시 창닫기 
   const modalOffHandler = () => {
-    // 바깥쪽 일때만 작동!  
-    if(!prohibit) 
+    if(!prohibit) // 바깥쪽 일때만 작동!  
+    dispatch(isShowLoginModalHandler(false))
     //(모달 창 안쪽 마우스 off => prohibit = false)
-      dispatch(isShowLoginModalHandler(false))
   }
   // 모달 창 안쪽 마우스 on => prohibt = true  
   const stayOnHandler = () => {
@@ -35,61 +41,58 @@ function Login(){
   const stayOffHandler = () => {
     setProhibit(false)
   }
-  // get google token 
-  const googleLoginHandler = () => {
-    getGoogleAccToken()
-  }
-  // get kakao code 
-  const kakaoLoginHandler = () => {
-    getKakaoCode()
-  }
-
+  // modal 창 닫기 handler 
   const userSingupHandler = () => {
     dispatch(isShowSignUpModalHandler(true))
     dispatch(isShowLoginModalHandler(false))
   }
 
+  // inputvalue Save to the loginInfo States
   const handleInputValue = (key) => (e) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value.toLowerCase() });
     // console.log(key, e.target.value)
     setErrorMessage("");
   };
 
+  // On backSpace key => make isValid = false 
   const handleKeyPress = (e) => {
     if(e.key === 'Backspace'){
-      setIsValid(true);
+      // setIsValid(true);
       setActive("")
     }
   };
-  const userLoginHandler = () => {
-
-    const { email, password } = loginInfo;
-    axios.post(
-      'http://localhost:80/users/signin',
-      { email, password},
-      { withCredentials: true }
-    )
-    .then(data => {
-      console.log(data)
-    })
-    .catch(err => {
-      console.log(err)
-    })
-
-  };
+  // validition : email=null, password=Null, and email regx@ 
   const validCheckHandler = () => {
     const { email, password } = loginInfo
-    // console.log(email)
     if(!email || !password || !email.includes('@') ){
-      setIsValid(false);
+      // setIsValid(false);
       setActive("")
       setErrorMessage('이메일 과 패스워드를 다시 확인해 주세요')
     }
+    // GET user Access Token from server
     if(email && password && email.includes('@')){
-      setIsValid(true)
+      // setIsValid(true)
       setActive("-active")
       userLoginHandler()
+
     }
+  };
+  const userLoginHandler = async () => {
+    const {isSuccess, accessToken } = await getUserAccToken(loginInfo);
+    if(!isSuccess){
+      //error handle message 
+      console.log("user login failed from server");
+      return 
+    }
+    dispatch(loginSuccessHandler(true, accessToken));
+    dispatch(isShowLoginModalHandler(false))
+    history.push('/')
+  }
+  const googleLoginHandler = () => {
+    getGoogleAccToken()
+  }
+  const kakaoLoginHandler = () => {
+    getKakaoCode()
   }
 
   return (

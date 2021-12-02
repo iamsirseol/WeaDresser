@@ -6,11 +6,7 @@ import {
     NavContaier,
     NavBtnLink
 } from "./NavBarStyle"
-<<<<<<< HEAD
-import {SvgLogoSmall} from "../SvgIcon/SvgIcon"
-=======
 // import {SvgMan} from "../SvgIcon/SvgIcon"
->>>>>>> feature/client/login2
 
 function NavBar() {
     const dispatch = useDispatch();

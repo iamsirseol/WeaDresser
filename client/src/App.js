@@ -15,7 +15,8 @@ import LandingPage from './pages/LandingPage/LandingPage';
 
 
 function App() {
-  // const isLogin = useSelector(state => state.isLoginReducer.isLogin)
+  const {isLogin, accessToken} = useSelector(state => state.isLoginReducer)
+  console.log(isLogin, accessToken)
   const {
     isShowLoginModal, 
     isShowSignUpModal 

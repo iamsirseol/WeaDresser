@@ -48,7 +48,24 @@ const getKakaoAccToken = async (kakaoCode) => {
     : { isSuccess : false, accessToken : null, msg : "Bad Request" }
 }
 
+const getUserAccToken = async (loginInfo) => {
+  const {email, password} = loginInfo; 
+  const data = await axios.post(
+    'http://localhost:80/users/signin',
+    { email, password},
+    { withCredentials: true }
+  )
+  .catch(err => {
+    return { isSuccess : false, accessToken : null , msg : "Server error"} 
+  })
+  
+  return data 
+    ? { isSuccess : true ,  accessToken : data.data.accessToken, msg : "Success" }
+    : { isSuccess : false, accessToken : null, msg : "Bad Request" }  
+}
+
 export {
   getGoogleAccToken, getGoogleUserInfo, 
   getKakaoCode, getKakaoAccToken, 
+  getUserAccToken
 }
