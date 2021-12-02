@@ -6,7 +6,9 @@ import {
     IS_SHOW_SIGNUP_MODAL,
     IS_SHOW_OOTD_IMAGE_MODAL,
     ACCESS_TOKEN,
-    WEATHER_DATA
+    WEATHER_DATA,
+    IS_SHOW_SIDE_BAR,
+
     
 } from '../actions/actions';
 import { initialState } from './initialState';
@@ -16,7 +18,8 @@ const rootReducer = combineReducers({
     isLoginReducer,
     isLoadingReducer,
     isShowModalReducer,
-    getWeatherDataReducer
+    getWeatherDataReducer,
+    isShowSideBarReducer,
 })
 
 function isLoginReducer(state = initialState.isLogin, action) {
@@ -65,6 +68,16 @@ function getWeatherDataReducer(state = initialState.weatherData, action){
     case WEATHER_DATA:
       return Object.assign({}, {
         data: action.payload.data
+      });
+    default: return state;
+  }
+}
+
+function isShowSideBarReducer(state = initialState.isShowSideBar, action){
+  switch (action.type) {
+    case IS_SHOW_SIDE_BAR:
+      return Object.assign({}, {
+        isShowSideBar: action.payload.isShowSideBar
       });
     default: return state;
   }

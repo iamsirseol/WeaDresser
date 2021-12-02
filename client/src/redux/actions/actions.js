@@ -5,6 +5,7 @@ export const IS_SHOW_SIGNUP_MODAL = "IS_SHOW_SIGNUP_MODAL";
 export const IS_SHOW_OOTD_IMAGE_MODAL = "IS_SHOW_OOTD_IMAGE_MODAL"
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
 export const WEATHER_DATA = "WEATHER_DATA";
+export const IS_SHOW_SIDE_BAR = "IS_SHOW_SIDE_BAR"
 
 export function loginSuccessHandler(boolean, accessToken) {
     return (dispatch) => {
@@ -69,3 +70,11 @@ export function getWeatherData(data) {
         }
     }
 };
+export function sideBarHandler(boolean){
+    return{
+        type: IS_SHOW_SIDE_BAR,
+        payload: {
+            isShowSideBar : boolean
+        }
+    }
+}

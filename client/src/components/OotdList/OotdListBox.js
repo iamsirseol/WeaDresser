@@ -1,7 +1,6 @@
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { isLoginHandler, isShowLoginModalHandler, isShowSignUpModalHandler, isShowOotdImageModalHandler } from '../../redux/actions/actions'
-import {  } from '../../redux/actions/actions'
 import axios from 'axios'; // 필요 없을거 같긴 한데 로그아웃에서 쓸 수도
 import {
     OotdListBoxContainer,
@@ -22,22 +21,22 @@ function OotdListBox(){
     const isShowImageModal = useSelector(state => state.isShowModalReducer.isShowOotdImageModal)
 
     let images
-    useEffect(() => {// 현재 이미지를 링크로 불러오는데 아무래도 속도가 느려 images 변수값의 offestWidth 가 undefind 가 뜰때가 있는데 그걸 방지하기 위해 넣어놨다.
-        const ootdListGrid = (param) => {
-            images = document.querySelectorAll(".ootdImageBox");
-            const colWidth = images[0].offsetWidth
-            let imgStack = param
-            for(let i = 0; i < images.length; i++) {
-                let minIndex = imgStack.indexOf(Math.min.apply(0, imgStack));
-                let x = colWidth * minIndex;
-                let y = imgStack[minIndex];
-                imgStack[minIndex] += (images[i].children[0].scrollHeight +20);
-                images[i].style.transform = `translateX(${x}px) translateY(${y}px)`;
-                if(i === images.length - 1) {
-                    document.querySelector(".ootd-list").style.height = `${Math.max.apply(0, imgStack)}px`;
-                }
+    const ootdListGrid = (param) => {
+        images = document.querySelectorAll(".ootd-image-box");
+        const colWidth = images[0].offsetWidth
+        let imgStack = param
+        for(let i = 0; i < images.length; i++) {
+            let minIndex = imgStack.indexOf(Math.min.apply(0, imgStack));
+            let x = colWidth * minIndex;
+            let y = imgStack[minIndex];
+            imgStack[minIndex] += (images[i].children[0].scrollHeight +20);
+            images[i].style.transform = `translateX(${x}px) translateY(${y}px)`;
+            if(i === images.length - 1) {
+                document.querySelector(".ootd-list").style.height = `${Math.max.apply(0, imgStack)}px`;
             }
         }
+    }
+    useEffect(() => {// 현재 이미지를 링크로 불러오는데 아무래도 속도가 느려 images 변수값의 offestWidth 가 undefind 가 뜰때가 있는데 그걸 방지하기 위해 넣어놨다.
         window.onload = () => {
             if(window.matchMedia("(max-width: 400px)").matches){
                 ootdListGrid([0,0])
@@ -71,7 +70,7 @@ function OotdListBox(){
     }, [modalImage])
 
     // useEffect(() => { // 현재 이미지를 링크로 불러오는데 아무래도 속도가 느려 clickedImage라는 변수값이 undefind 가 뜰때가 있는데 그걸 방지하기 위해 넣어놨다.
-    //     const clickedImage = document.querySelectorAll('.ootdImageBox');
+    //     const clickedImage = document.querySelectorAll('.ootd-image-box');
     //     for(let i = 0; i < arr.length; i++){
     //         clickedImage[i].addEventListener('click', function(){
     //             setModalImage(clickedImage[i].children[0].children[0].src)
@@ -92,7 +91,7 @@ function OotdListBox(){
         <OotdListBoxContainer className="ootd-list">
             {
                 arr.map((val, idx) => {
-                    return <OotdListBoxBack className="ootdImageBox" key={idx} onClick={(e) => clickedImage(e)}>
+                    return <OotdListBoxBack className="ootd-image-box" key={idx} onClick={(e) => clickedImage(e)}>
                         <OotdListBoxOver>
                             <OotdListBoxImage src={`http://placeimg.com/640/${val}/any`} key={idx} className="ootdImage" />
                             <OotdListBoxItem><OotdLikeCont /></OotdListBoxItem>
