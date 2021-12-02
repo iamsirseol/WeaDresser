@@ -87,7 +87,7 @@ function LandingPage () {
         }
         
         async function getWeather (lat = navi[0], lot = navi[1]) {
-            const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lot}&appid=218094985a81470cdcd4ec7afed19e13`)
+            const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lot}&appid=${process.env.API_KEY}`)
                 .catch(err => console.log('err', err));
             // console.log('ㅁㅁㅁ',result.data)
             // let newCheck = check.slice();
