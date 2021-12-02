@@ -24,6 +24,10 @@ export const initialState = {
     //     accessToken: ''
     // },
     weatherData: {
-        weatherData: ''
+        coord: null,
+        main: null, 
+        name: null, 
+        sys: null,
+        weather: null
     }
 }
