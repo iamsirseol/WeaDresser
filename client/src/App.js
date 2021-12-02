@@ -16,8 +16,8 @@ require('dotenv').config();
 
 function App() {
   const {isLogin, accessToken} = useSelector(state => state.isLoginReducer)
-  console.log(isLogin, accessToken)
-  console.log("dotenv", process.env.REACT_APP_API_KEY )
+  // console.log(isLogin, accessToken)
+  // console.log("dotenv", process.env.REACT_APP_API_KEY )
   const {
     isShowLoginModal, 
     isShowSignUpModal 
@@ -28,7 +28,7 @@ function App() {
   return (
     <div className="App">
       {/* <LoadingIndicator /> */}
-      {/* <LandingPage /> */}
+      <LandingPage />
       {/* <LandingPageSub /> */}
       <NavBar />
       { 

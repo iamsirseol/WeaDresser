@@ -207,3 +207,13 @@ export const Scroll = styled.div`
       }
     }
 `
+
+export const WeatherIcon = styled.div`
+      width: 21em;
+      height: 11em;
+      background-image: url(${cloud});
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+   
+`

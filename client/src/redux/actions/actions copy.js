@@ -6,6 +6,7 @@ export const IS_SHOW_SIGNUP_MODAL = "IS_SHOW_SIGNUP_MODAL";
 export const IS_SHOW_OOTD_IMAGE_MODAL = "IS_SHOW_OOTD_IMAGE_MODAL"
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
 export const WEATHER_DATA = "WEATHER_DATA";
+require('dotenv').config();
 
 export function loginSuccessHandler(boolean, accessToken) {
     return (dispatch) => {
@@ -62,16 +63,29 @@ export function setAccessToken(accessToken) {
         }
     }
 };
-export function getLocationData(lat, lot) {
-    console.log(lat, lot, '@@@@')
+
+export function callGeoLocation(){
+
+}
+
+export function getLocationData({latitude, longitude}, API_KEY) {
+    // console.log(latitude, longitude, '@@@@');
+    // const API_key = "21674499d78d5cc9f73dd339f934e97d";
+    // console.log(process.REACT_APP_API_KEY)
+    // console.log(API_KEY)
+    // console.log("dotenv==ACTION", process.env.REACT_APP_API_KEY )
+
     return (async dispatch => {
-        const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lot}&appid=${process.env.REACT_APP_API_KEY}`)
+        console.log("location 받아오고 날씨 요청 횟수 ")
+        const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`)
             .catch(err => console.log('err', err));
         const { coord, main, name, sys, weather } = result.data;
-        dispatch(getWeatherData({ coord, main, name, sys, weather }))
+        dispatch(getWeatherData({ coord, main, name, sys, weather }));
+        dispatch(isLoadingHandler(true));
     })
 };
 export function getWeatherData(data) {
+    // console.log(data)
     return {
         type : WEATHER_DATA,
         payload: {

@@ -4,20 +4,30 @@ import {
     IS_LOADING,
     IS_SHOW_LOGIN_MODAL,
     IS_SHOW_SIGNUP_MODAL,
+    IS_SHOW_OOTD_IMAGE_MODAL,
     ACCESS_TOKEN,
     WEATHER_DATA
     
 } from '../actions/actions';
 import { initialState } from './initialState';
 
-
 // * rootReducer : 여러 리듀서들을 하나로 합친다. rootReducer는 store에 전달된다.
 const rootReducer = combineReducers({
-    isLoadingReducer,
     isLoginReducer,
+    isLoadingReducer,
     isShowModalReducer,
     getWeatherDataReducer
 })
+
+function isLoginReducer(state = initialState.isLogin, action) {
+  switch (action.type) {
+      case IS_LOGIN :
+        return Object.assign({},state, action.payload);
+      case ACCESS_TOKEN :
+        return Object.assign({},state, action.payload);
+      default : return state;
+  }
+}
 
 function isLoadingReducer(state = initialState.isLoading, action) {
   switch (action.type) {
@@ -29,32 +39,33 @@ function isLoadingReducer(state = initialState.isLoading, action) {
     }
 }
 
-function isLoginReducer(state = initialState.isLogin, action) {
-    switch (action.type) {
-        case IS_LOGIN :
-          return Object.assign({}, state, action.payload)
-        case ACCESS_TOKEN : 
-            return Object.assign({}, state, action.payload)
-        default : return state;
-    }
-}
-
 function isShowModalReducer(state = initialState.modal, action){
     switch (action.type) {
         case IS_SHOW_LOGIN_MODAL:
           return Object.assign({}, state, action.payload);
         case IS_SHOW_SIGNUP_MODAL:
           return Object.assign({}, state, action.payload);
+        case IS_SHOW_OOTD_IMAGE_MODAL:
+          return Object.assign({}, state, action.payload)
         default: return state;
       }
+}
+
+function accessTokenReducer(state = initialState.accessToken, action){
+  switch (action.type) {
+    case ACCESS_TOKEN:
+      return Object.assign({}, {
+        accessToken: action.payload.accessToken
+      })
+  }
 }
 
 function getWeatherDataReducer(state = initialState.weatherData, action){
   switch (action.type) {
     case WEATHER_DATA:
-      return Object.assign({}, {
-        data: action.payload.data
-      });
+      return Object.assign({}, state,
+        action.payload
+      );
     default: return state;
   }
 }

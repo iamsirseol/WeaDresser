@@ -1,4 +1,6 @@
-
+const { User, Diarie, sequelize } = require("../models");
+const { isAuthorized } = require("./tokenfunction/index");
+const { Op } = require("Sequelize");
 module.exports = {
   // * GET  /ootd   또는   /ootd?offset= & limit= 
   findTopLike :async (req, res) => {
@@ -31,8 +33,33 @@ module.exports = {
       : res.send(`GET /ootd with para is good now!,  offset=${offset} limit=${limit}`)
   }, 
 
-  // * POST  /ootd/like 
-  addLike : (req, res) => {
-    return res.send(`POST /ootd/like routing is good now!!, check your req.body`)
-  }
-}
+  // * POST  /ootd/like
+  addLike: async (req, res) => {
+    const accessTokenData = isAuthorized(req);
+    const { diariesId } = req.body;
+    if (!diariesId) {
+      return res.status(400).send("Bad Request");
+    }
+    if (!accessTokenData) {
+      res.status(401).json({ message: "unauthorized" });
+    }
+    return Like.findOrCreate({
+      where: {
+        userId: accessTokenData,
+        diariesId: diariesId,
+      },
+      default: {
+        userId: accessTokenData,
+        diariesId: diariesId,
+      },
+    })
+      .then(([data, created]) => {
+        return !created
+          ? res.status(400).send("Bad Request")
+          : res.status(201).send("ok");
+      })
+      .catch((err) => {
+        return res.status(500).send("server error");
+      });
+  },
+};

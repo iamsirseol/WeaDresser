@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -12,33 +10,36 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-  };
-  User.init({
-    userName: {
-      allowNull: false,
-      type : DataTypes.STRING,
+  }
+  User.init(
+    {
+      userName: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      email: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      password: DataTypes.STRING,
+      gender: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      social: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
     },
-    email:{
-      allowNull:false,
-      type:DataTypes.STRING,
-    }, 
-    password: DataTypes.STRING,
-    gender: {
-      allowNull:false,
-      type: DataTypes.STRING,
-    },
-    social:{
-      type: DataTypes.BOOLEAN,
-      allowNull:false,
-    },
-  }, {
-    timestamps : false, 
-    sequelize,
-    modelName: 'User',
-  });
+    {
+      timestamps: false,
+      sequelize,
+      modelName: "User",
+    }
+  );
 
-  // !! 일단 찜찜 OK   
-  // User.associate = models => { 
+  // !! 일단 찜찜 OK
+  // User.associate = models => {
   //   User.hasMany(models.Diarie, {
   //     foreignKey : "userId",
   //     // onDelete : "cascade"
