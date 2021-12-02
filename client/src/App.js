@@ -7,7 +7,7 @@ import LoadingIndicator from './components/Loading/LoadingIndicator'
 import NavBar from "./components/NavBar/NavBar"
 import Login from "./components/Modal/Login"
 import Signup from "./components/Modal/Signup"
-// import LandingPage from './pages/LandingPage/LandingPage';
+import LandingPage from './pages/LandingPage/LandingPage';
 // import LandingPageSub from './pages/LandingPage/LandingPageSub';
 
 
@@ -20,9 +20,9 @@ function App() {
 
   return (
     <div className="App">
-      <LoadingIndicator />
-      {/* <LandingPage />
-      <LandingPageSub /> */}
+      {/* <LoadingIndicator /> */}
+      {/* <LandingPage /> */}
+      {/* <LandingPageSub /> */}
       <NavBar />
       { 
         isShowLoginModal ? <Login /> 

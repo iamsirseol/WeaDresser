@@ -6,11 +6,13 @@ module.exports = {
 
   // *  GET users/send-email
   sendEmail : (req, res) => {
+    console.log("ok it works")
     return res.send('GET /users/send-email OK')
   },
 
   // *  POST users/signin
   signin : (req, res) => {
+    console.log("ok it works")
     return res.send('POST /users/signin OK')
   },
 

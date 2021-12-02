@@ -105,7 +105,7 @@ export const InputContainer = styled.div`
 `;
 
 export const LoginError = styled.div`
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   height: 1.5rem;
   color: red;
   @media screen and (max-width: 768px) {

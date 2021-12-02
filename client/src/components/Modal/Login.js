@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getGoogleAccToken, getKakaoCode } from '../../api/social'
 import { isShowLoginModalHandler, isShowSignUpModalHandler } from '../../redux/actions/actions'
-// import axios from 'axios';
+import axios from 'axios';
 import { 
   ModalBackdrop, 
   ModalContainer,
@@ -14,8 +14,10 @@ import {
 
 function Login(){
   const [ prohibit , setProhibit ] = useState(false);
-  const [loginInfo, setLoginInfo] = useState({ email: "", password: "" });
-  const [errorMessage, setErrorMessage] = useState("");
+  const [ loginInfo, setLoginInfo ] = useState({ email: "", password: "" });
+  const [ errorMessage, setErrorMessage ] = useState("");
+  const [ isValid, setIsValid ] = useState(false);
+  const [ active, setActive ] = useState("");
   const dispatch = useDispatch(); 
   
   // 모달 창 바깥 클릭시 창닫기 
@@ -33,10 +35,6 @@ function Login(){
   const stayOffHandler = () => {
     setProhibit(false)
   }
-  // user loginHandler 
-  const userLoginHandler = () => {
-
-  }
   // get google token 
   const googleLoginHandler = () => {
     getGoogleAccToken()
@@ -47,27 +45,52 @@ function Login(){
   }
 
   const userSingupHandler = () => {
-    console.log("okokokokokokokokokokok")
     dispatch(isShowSignUpModalHandler(true))
     dispatch(isShowLoginModalHandler(false))
   }
 
   const handleInputValue = (key) => (e) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value.toLowerCase() });
-    console.log(key, e.target.value)
-    console.log(loginInfo)
+    // console.log(key, e.target.value)
     setErrorMessage("");
   };
 
   const handleKeyPress = (e) => {
-    const isValid = loginInfo.email && loginInfo.password;
-    if (e.type === "keypress" && e.code === "Enter" && isValid) {
-      handleLogin();
+    if(e.key === 'Backspace'){
+      setIsValid(true);
+      setActive("")
     }
   };
-  const handleLogin = () => {
+  const userLoginHandler = () => {
+
     const { email, password } = loginInfo;
+    axios.post(
+      'http://localhost:80/users/signin',
+      { email, password},
+      { withCredentials: true }
+    )
+    .then(data => {
+      console.log(data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
   };
+  const validCheckHandler = () => {
+    const { email, password } = loginInfo
+    // console.log(email)
+    if(!email || !password || !email.includes('@') ){
+      setIsValid(false);
+      setActive("")
+      setErrorMessage('이메일 과 패스워드를 다시 확인해 주세요')
+    }
+    if(email && password && email.includes('@')){
+      setIsValid(true)
+      setActive("-active")
+      userLoginHandler()
+    }
+  }
 
   return (
     <>
@@ -80,23 +103,19 @@ function Login(){
               type="email"
               placeholder="E-mail"
               onChange={ handleInputValue("email") }
-              onKeyPress={ handleKeyPress }
+              onKeyUp={ handleKeyPress }
               />
             <input 
               className="login-input"
               type="password"
               placeholder="비밀번호"
               onChange={ handleInputValue("password") }
-              onKeyPress={ handleKeyPress }
+              onKeyUp={ handleKeyPress }
               />
               <LoginError>{errorMessage}</LoginError>
           </InputContainer>
           <LoginBtnContainer>
-            {
-              !loginInfo.email || !loginInfo.password
-              ? <button onClick={userLoginHandler} className='login-btn'> 로그인</button>
-              : <button className='login-btn-active'> 로그인</button>
-            }
+            <button onClick={validCheckHandler}  className={`login-btn${active}`}> 로그인</button>
             <button onClick={kakaoLoginHandler} className='kakao-btn'>Kakao</button>
             <button onClick={googleLoginHandler} className='google-btn'>Google</button>
             <button onClick={userSingupHandler} className='singup-btn'>회원가입</button>
