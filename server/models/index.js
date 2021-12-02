@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 "use strict";
 
 const fs = require("fs");
@@ -8,6 +9,8 @@ const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/../config/config.js")[env];
 =======
+=======
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
 'use strict';
 
 const fs = require('fs');
@@ -16,6 +19,9 @@ const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.js')[env];
+<<<<<<< HEAD
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
+=======
 >>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
 const db = {};
 
@@ -23,6 +29,7 @@ let sequelize;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
+<<<<<<< HEAD
 <<<<<<< HEAD
   sequelize = new Sequelize(
     config.database,
@@ -48,6 +55,8 @@ fs.readdirSync(__dirname)
 
 Object.keys(db).forEach((modelName) => {
 =======
+=======
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
@@ -62,12 +71,16 @@ fs
   });
 
 Object.keys(db).forEach(modelName => {
+<<<<<<< HEAD
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
+=======
 >>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
 });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 const { User, Diarie, DiariesHashtag, Post, Like, Hashtag } = sequelize.models;
 
@@ -96,6 +109,8 @@ DiariesHashtag.belongsTo(Hashtag, {
   sourceKey: "id",
 });
 =======
+=======
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
 const {
   User,
   Diarie,
@@ -127,6 +142,9 @@ DiariesHashtag.belongsTo(Diarie, { foreignKey: 'diariesId' , sourceKey : 'id'});
 // Hashtag 1 : N  DiariesHashtag 
 Hashtag.hasMany(DiariesHashtag, { foreignKey: 'hashtagsId', sourceKey : 'id' });
 DiariesHashtag.belongsTo(Hashtag, { foreignKey: 'hashtagsId' , sourceKey : 'id'});
+<<<<<<< HEAD
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
+=======
 >>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
 
 db.sequelize = sequelize;

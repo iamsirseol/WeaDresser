@@ -6,6 +6,10 @@ import {
     IS_SHOW_SIGNUP_MODAL,
     ACCESS_TOKEN,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    WEATHER_DATA
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
 =======
     WEATHER_DATA
 >>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
@@ -16,6 +20,7 @@ import { initialState } from './initialState';
 
 // * rootReducer : 여러 리듀서들을 하나로 합친다. rootReducer는 store에 전달된다.
 const rootReducer = combineReducers({
+<<<<<<< HEAD
 <<<<<<< HEAD
     isLoginReducer,
     isLoadingReducer,
@@ -60,6 +65,8 @@ function isShowSignUpModalReducer(state = initialState.isShowSignUpModal, action
             isShowSignUpModal: action.payload.isShowSignUpModal
           });
 =======
+=======
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
     isLoadingReducer,
     isLoginReducer,
     isShowModalReducer,
@@ -92,11 +99,15 @@ function isShowModalReducer(state = initialState.modal, action){
           return Object.assign({}, state, action.payload);
         case IS_SHOW_SIGNUP_MODAL:
           return Object.assign({}, state, action.payload);
+<<<<<<< HEAD
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
+=======
 >>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
         default: return state;
       }
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 function accessTokenReducer(state = initialState.accessToken, action){
   switch (action.type) {
@@ -104,11 +115,16 @@ function accessTokenReducer(state = initialState.accessToken, action){
       return Object.assign({}, {
         accessToken: action.payload.accessToken
 =======
+=======
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
 function getWeatherDataReducer(state = initialState.weatherData, action){
   switch (action.type) {
     case WEATHER_DATA:
       return Object.assign({}, {
         data: action.payload.data
+<<<<<<< HEAD
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
+=======
 >>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
       });
     default: return state;

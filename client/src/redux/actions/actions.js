@@ -4,7 +4,10 @@ export const IS_SHOW_LOGIN_MODAL = "IS_SHOW_LOGIN_MODAL";
 export const IS_SHOW_SIGNUP_MODAL = "IS_SHOW_SIGNUP_MODAL";
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
 export const WEATHER_DATA = "WEATHER_DATA";
 
 export function loginSuccessHandler(boolean, accessToken) {
@@ -13,6 +16,9 @@ export function loginSuccessHandler(boolean, accessToken) {
         dispatch(setAccessToken(accessToken))
     }
 }
+<<<<<<< HEAD
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
+=======
 >>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
 
 export function isLoginHandler (boolean) {
@@ -24,6 +30,10 @@ export function isLoginHandler (boolean) {
     }
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
 =======
 
 >>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
@@ -35,7 +45,11 @@ export function isLoadingHandler (boolean) {
         }
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
+=======
+};
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
 =======
 };
 >>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
@@ -63,8 +77,11 @@ export function setAccessToken(accessToken) {
         }
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 =======
+=======
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
 };
 export function getWeatherData(data) {
     return {
@@ -73,5 +90,9 @@ export function getWeatherData(data) {
             data
         }
     }
+<<<<<<< HEAD
+};
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
+=======
 };
 >>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82

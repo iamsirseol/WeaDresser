@@ -1,7 +1,12 @@
 export const initialState = {
     isLogin : {
 <<<<<<< HEAD
+<<<<<<< HEAD
         isLogin : false
+=======
+        isLogin : false,
+        accessToken : "",
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
 =======
         isLogin : false,
         accessToken : "",
@@ -10,6 +15,7 @@ export const initialState = {
     isLoading : {
         isLoading : true
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
     isShowLoginModal: {
         isShowLoginModal : false
@@ -21,6 +27,8 @@ export const initialState = {
         accessToken: ''
     },
 =======
+=======
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
     modal : {
         isShowLoginModal : false, 
         isShowSignUpModal : false,
@@ -37,5 +45,8 @@ export const initialState = {
     weatherData: {
         weatherData: ''
     }
+<<<<<<< HEAD
+>>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
+=======
 >>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
 }
