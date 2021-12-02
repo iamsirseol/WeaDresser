@@ -1,18 +1,5 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 "use strict";
 const { Model } = require("sequelize");
-=======
-=======
->>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
-'use strict';
-const {
-  Model
-} = require('sequelize');
-<<<<<<< HEAD
->>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
-=======
->>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
 module.exports = (sequelize, DataTypes) => {
   class Hashtag extends Model {
     /**
@@ -23,8 +10,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
   }
   Hashtag.init(
     {
@@ -37,20 +22,3 @@ module.exports = (sequelize, DataTypes) => {
   );
   return Hashtag;
 };
-=======
-=======
->>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
-  };
-  Hashtag.init({
-    name: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Hashtag',
-  });
-  return Hashtag;
-<<<<<<< HEAD
-};
->>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82
-=======
-};
->>>>>>> a7d5c121d0a8fc3d3e411f595c141538c0463a82

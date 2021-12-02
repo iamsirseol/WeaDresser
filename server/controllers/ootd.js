@@ -1,4 +1,5 @@
 const { User, Diarie, sequelize } = require("../models");
+const { isAuthorized } = require("./tokenfunction/index");
 const { Op } = require("Sequelize");
 module.exports = {
   // * GET  /ootd   또는   /ootd?offset= & limit=
@@ -38,7 +39,7 @@ module.exports = {
 
   // * POST  /ootd/like
   addLike: async (req, res) => {
-    const accessTokenData = verifyAccessToken(req);
+    const accessTokenData = isAuthorized(req);
     const { diariesId } = req.body;
     if (!diariesId) {
       return res.status(400).send("Bad Request");

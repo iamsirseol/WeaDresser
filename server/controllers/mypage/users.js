@@ -1,10 +1,10 @@
 const { User, Diarie, Like } = require("../../models");
-const { verifyAccessToken } = require("../tokenfunction/index");
-const bcrypt = require("bcrypt");
+const { isAuthorized } = require("../tokenfunction/index");
+
 module.exports = {
   // * GET mypage/users
   findOne: async (req, res) => {
-    const accessTokenData = verifyAccessToken(req);
+    const accessTokenData = isAuthorized(req);
     if (!accessTokenData) {
       return res.status(401).send("not authorized");
     }
@@ -25,7 +25,7 @@ module.exports = {
   // * PATCH mypage/users
   update: async (req, res) => {
     const { password, editPassword, userName } = req.body;
-    const accessToken = verifyAccessToken(req);
+    const accessToken = isAuthorized(req);
 
     if (accessToken) {
       return res.status(401).send("not authorized");
@@ -52,7 +52,7 @@ module.exports = {
   },
   // * DELETE  mypage/users 회원탈퇴
   delete: async (req, res) => {
-    const accessTokenData = verifyAccessToken(req);
+    const accessTokenData = isAuthorized(req);
 
     if (!accessTokenData) {
       return res.status(401).send("not authorized");

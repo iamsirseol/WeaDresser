@@ -6,16 +6,12 @@ import { isLoginHandler, isShowLoginModalHandler, isShowSignUpModalHandler } fro
 import LoadingIndicator from './components/Loading/LoadingIndicator'
 import NavBar from "./components/NavBar/NavBar"
 import OotdListPage from "./pages/OotdPage/OotdListPage"
-import {SolidHeart} from "./components/SvgIcon/SvgIcon"
 import Login from "./components/Modal/Login"
 import Signup from "./components/Modal/Signup"
 import LandingPage from './pages/LandingPage/LandingPage';
 import LandingPageSub from './pages/LandingPage/LandingPageSub';
-import OotdListPage from "./pages/OotdPage/OotdListPage"
+import SideBar from './components/SideBar/SideBar'
 import {SolidHeart} from "./components/SvgIcon/SvgIcon"
-import Login from "./components/Modal/Login"
-import Signup from "./components/Modal/Signup"
-import LandingPage from './pages/LandingPage/LandingPage';
 import RecordPage from './pages/RecordPage/RecordPage';
 
 function App() {
@@ -28,10 +24,14 @@ function App() {
   return (
     <div className="App">
       <LoadingIndicator />
+      {/* <LandingPage />
+      <LandingPageSub /> */}
+      <SideBar />
+      <NavBar />
+      <OotdListPage /> {/* 지울것 */}
       <LandingPage />
       {/* <RecordPage /> */}
       {/* <LandingPageSub /> */}
-      <NavBar />
       {/* <SolidHeart></SolidHeart> */}
       {/* <OotdListPage /> */}
       { 
