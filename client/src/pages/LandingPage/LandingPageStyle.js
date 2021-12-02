@@ -22,6 +22,10 @@ export const LandingPageContainer = styled.div`
     background-size: cover;
     background-position: center;
     background: linear-gradient(124deg, #5b81fa 13%, #0852a8 98%);
+
+    @media screen and (max-width: 77em) {
+      background: linear-gradient(124deg, #36178b 13%, #01041f 98%);
+    }
 `;
 
 export const MainLogo = styled.div`
@@ -32,16 +36,21 @@ export const MainLogo = styled.div`
     width: 68em;
     height: 7.3em;
     position: absolute;
-    top: 30%;
+    top: 27%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    @media screen and (max-width: 77em) {
+      width: 49em;
+      height: 5em;    
+      }
 `
 
 export const WeatherIconBox = styled.ul`
     position: absolute;
     width: 100em;
     height: 23em;
-    top: 55%;
+    top: 52%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-repeat: no-repeat;
@@ -49,7 +58,13 @@ export const WeatherIconBox = styled.ul`
     background-position: center;
     display: flex;
     align-items: center;
-
+    
+    @media screen and (max-width: 77em) {
+      width: 70%;
+      height: 40em;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
     .icon1 {
       width: 22em;
       height: 22em;
@@ -94,9 +109,9 @@ export const WeatherIconBox = styled.ul`
 
 export const WeahterBarBox = styled.div`
     position: absolute;
-    width: 77.5em;
+    width: 80em;
     height: 10.0em;
-    top: 80%;
+    top: 77%;
     left: 50%;
     transform: translate(-50%, -50%);
     box-shadow: 0 20px 20px 0 rgba(12, 35, 114, 0.3);
@@ -138,25 +153,27 @@ export const WeahterBarBox = styled.div`
 
       > span {
         line-height: 10em;
-        width: 37%;
+        width: 40%;
         text-align: center;
         white-space: nowrap;
 
         &:nth-child(2) {
-          width: 30%;
+          width: 33%;
           margin-left: 10px;
         }
         /* display: block; */
       }
     }
-    .icon {
-      width: 10em;
+    
+
+    /* .icon {
+      width: 7em;
       height: 3.8em;
-      background-image: url(${rain});
+      background-image: url(${props => props.imgUrl});
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
-    }
+    } */
     .temp-now {
       margin: 3px 0 0 0;
       font-size: 2.8em;
@@ -183,6 +200,14 @@ export const WeahterBarBox = styled.div`
       color: #69aeff;
     }
 `
+export const WeatherIcon = styled.span`
+width: 7em;
+height: 5.5em;
+background-image: url(${props => props.imgUrl});
+background-repeat: no-repeat;
+background-size: contain;
+background-position: center;
+`
 
 export const Scroll = styled.div`
     background-image: url(${scroll});
@@ -192,7 +217,7 @@ export const Scroll = styled.div`
     width: 4.4em;
     height: 8.6em;
     position: absolute;
-    top: 95%;
+    top: 93%;
     left: 50%;
     transform: translate(-50%, -50%);
     animation: motion 0.4s linear 0s infinite alternate;

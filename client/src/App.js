@@ -5,13 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { isLoginHandler, isShowLoginModalHandler, isShowSignUpModalHandler } from './redux/actions/actions'
 import LoadingIndicator from './components/Loading/LoadingIndicator'
 import NavBar from "./components/NavBar/NavBar"
-
 import OotdListPage from "./pages/OotdPage/OotdListPage"
 import {SolidHeart} from "./components/SvgIcon/SvgIcon"
 import Login from "./components/Modal/Login"
 import Signup from "./components/Modal/Signup"
 import LandingPage from './pages/LandingPage/LandingPage';
-import LandingPageSub from './pages/LandingPage/LandingPageSub';
+import RecordPage from './pages/RecordPage/RecordPage';
 
 function App() {
   const isLogin = useSelector(state => state.isLoginReducer.isLogin)
@@ -23,17 +22,19 @@ function App() {
   return (
     <div className="App">
       <LoadingIndicator />
-      {/* <LandingPage />
-      <LandingPageSub /> */}
+      <LandingPage />
+      {/* <RecordPage /> */}
+      {/* <LandingPageSub /> */}
       <NavBar />
-      <SolidHeart></SolidHeart>
-      <OotdListPage /> {/* 지울것 */}
+      {/* <SolidHeart></SolidHeart> */}
+      {/* <OotdListPage /> */}
       { 
         isShowLoginModal ? <Login /> 
         : isShowSignUpModal ? <Signup /> 
         : null 
       }
     </div>
+
   );
 }
 
