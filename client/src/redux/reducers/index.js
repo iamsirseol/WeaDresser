@@ -25,7 +25,7 @@ const rootReducer = combineReducers({
 function isLoginReducer(state = initialState.isLogin, action) {
   switch (action.type) {
       case IS_LOGIN :
-          return Object.assign({},state, action.payload);
+        return Object.assign({},state, action.payload);
       case ACCESS_TOKEN :
         return Object.assign({},state, action.payload);
       default : return state;
@@ -66,9 +66,9 @@ function accessTokenReducer(state = initialState.accessToken, action){
 function getWeatherDataReducer(state = initialState.weatherData, action){
   switch (action.type) {
     case WEATHER_DATA:
-      return Object.assign({}, {
-        data: action.payload.data
-      });
+      return Object.assign({}, state,
+        action.payload
+      );
     default: return state;
   }
 }

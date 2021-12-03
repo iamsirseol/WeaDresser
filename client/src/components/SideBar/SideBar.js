@@ -71,10 +71,8 @@ const SideBarContainer = styled.aside`
 function SideBar() {
 
     const dispatch = useDispatch()
-
     const sideBarSpreadHandler = (handle) => {dispatch(sideBarHandler(handle))}
     const isShowSideBar = useSelector(state => state.isShowSideBarReducer.isShowSideBar)
-    console.log(isShowSideBar)
     const sideBarSpread = () => {
         let SideBarContainer = document.querySelector('.side-bar-container')
         let sideBarBtn = document.querySelector('.side-bar-btn')

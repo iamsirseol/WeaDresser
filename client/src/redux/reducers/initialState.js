@@ -15,7 +15,11 @@ export const initialState = {
         isShowOotdImageModal : false,
     },
     weatherData: {
-        weatherData: ''
+        coord: null,
+        main: null, 
+        name: null, 
+        sys: null,
+        weather: null
     },
     isShowSideBar: {
         isShowSideBar: false

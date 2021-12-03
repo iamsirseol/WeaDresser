@@ -13,6 +13,7 @@ import LandingPageSub from './pages/LandingPage/LandingPageSub';
 import SideBar from './components/SideBar/SideBar'
 import {SolidHeart} from "./components/SvgIcon/SvgIcon"
 import RecordPage from './pages/RecordPage/RecordPage';
+import UserInfo from './pages/MyPage/UserInfo'
 
 function App() {
   const isLogin = useSelector(state => state.isLoginReducer.isLogin)
@@ -24,12 +25,12 @@ function App() {
   return (
     <div className="App">
       <LoadingIndicator />
-      {/* <LandingPage />
-      <LandingPageSub /> */}
       <SideBar />
       <NavBar />
-      <OotdListPage /> {/* 지울것 */}
-      <LandingPage />
+      <UserInfo/>
+      
+      {/* <OotdListPage /> */}
+      {/* <LandingPage /> */}
       {/* <RecordPage /> */}
       {/* <LandingPageSub /> */}
       {/* <SolidHeart></SolidHeart> */}
