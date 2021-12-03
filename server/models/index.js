@@ -58,7 +58,11 @@ Like.belongsTo(Diarie, { foreignKey: "diariesId", sourceKey: "id" });
 // * Diarie  N: M  Hashtag
 // Diarie 1 : N  DiariesHashtag
 Diarie.hasMany(DiariesHashtag, { foreignKey: "diariesId", sourceKey: "id" });
-DiariesHashtag.belongsTo(Diarie, { foreignKey: "diariesId", sourceKey: "id" });
+DiariesHashtag.belongsTo(Diarie, {
+  foreignKey: "diariesId",
+  as: "H",
+  sourceKey: "id",
+});
 
 // Hashtag 1 : N  DiariesHashtag
 Hashtag.hasMany(DiariesHashtag, { foreignKey: "hashtagsId", sourceKey: "id" });
