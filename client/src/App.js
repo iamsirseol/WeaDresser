@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 // import { isLoginHandler, isShowLoginModalHandler, isShowSignUpModalHandler } from './redux/actions/actions'
 import LoadingIndicator from './components/Loading/LoadingIndicator'
 import NavBar from "./components/NavBar/NavBar"
-import { getGoogleUserInfo } from './api/social'
-// import OotdListPage from "./pages/OotdPage/OotdListPage"
+import { getGoogleUserInfo, getKakaoAccToken } from './api/social'
+import OotdListPage from "./pages/OotdPage/OotdListPage"
 // import {SolidHeart} from "./components/SvgIcon/SvgIcon"
+import {SideBar} from './components/SideBar/SideBar'
 import Login from "./components/Modal/Login"
 import Signup from "./components/Modal/Signup"
 import LandingPage from './pages/LandingPage/LandingPage';
@@ -50,8 +51,6 @@ function App() {
     dispatch(isShowLoginModalHandler(true))
   }
   const googleTokenHandler = async (goolgeAccToken) => {
-    // console.log(goolgeAccToken)
-    // dispatch(loginSuccessHandler(true, goolgeAccToken))
     const googleUser = await getGoogleUserInfo({accessToken : goolgeAccToken});
     const { name, email } = googleUser.data
     const loginResult = await axios.post("http://localhost:80/oauth/google", 
@@ -64,6 +63,26 @@ function App() {
     setSocialDone(true);
   }
 
+  const kakaoTokenHandler = async (kakaoCode) => {
+    // console.log(kakaoCode)
+    const kakaToken = await getKakaoAccToken(kakaoCode);
+    const { accessToken } = kakaToken
+    const loginResult = await axios.post(
+      "http://localhost:80/oauth/kakao",
+      { accessToken },
+      { withCredentials : true }
+    )
+    if(loginResult){
+      // console.log(loginResult)
+    }
+    // const kakaoUser = await axios.post(
+    //   " https://kapi.kakao.com/v2/user/me",
+    //   { headers : { "authorization": `Bearer ${accessToken}` }},
+    //   // { withCredentials:true }
+    // )
+    // console.log(kakaoUser)
+
+  }
 
   useEffect(()=>{
     if(!socialDone){
@@ -75,7 +94,7 @@ function App() {
 
       // google and kakao 로긴 유저 
       if(googleAccToken) googleTokenHandler(googleAccToken);
-      if(kakaoCode) this.kakaoTokenHandler(kakaoCode);
+      if(kakaoCode) kakaoTokenHandler(kakaoCode);
       
     }
     return () => {//clear effect
@@ -90,8 +109,10 @@ function App() {
       {/* <LandingPage /> */}
       {/* <LandingPageSub /> */}
       <NavBar />
-      <TemBtn onClick={tempLoginHandler}>로그인</TemBtn>
-      {
+      <SideBar/>
+      <OotdListPage/>
+      {/* <TemBtn onClick={tempLoginHandler}>로그인</TemBtn> */}
+      {/* {
         isLogin 
           ? <TemDiv>{accessToken}</TemDiv>
           :null
@@ -100,7 +121,8 @@ function App() {
         isShowLoginModal ? <Login /> 
         : isShowSignUpModal ? <Signup /> 
         : null 
-      }
+      } */}
+
     </div>
   );
 }
