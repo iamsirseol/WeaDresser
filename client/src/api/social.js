@@ -43,7 +43,7 @@ const getKakaoAccToken = async (kakaoCode) => {
     console.log(err);
     return { isSuccess : false, accessToken : null , msg : "Server error"} 
   })
-  console.log(data)
+  // console.log(data)
   return data 
     ? { isSuccess : true ,  accessToken : data.data.access_token, msg : "Success" }
     : { isSuccess : false, accessToken : null, msg : "Bad Request" }

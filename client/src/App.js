@@ -8,7 +8,7 @@ import NavBar from "./components/NavBar/NavBar"
 import { getGoogleUserInfo, getKakaoAccToken } from './api/social'
 import OotdListPage from "./pages/OotdPage/OotdListPage"
 // import {SolidHeart} from "./components/SvgIcon/SvgIcon"
-import {SideBar} from './components/SideBar/SideBar'
+// import {SideBar} from './components/SideBar/SideBar'
 import Login from "./components/Modal/Login"
 import Signup from "./components/Modal/Signup"
 import LandingPage from './pages/LandingPage/LandingPage';
@@ -53,35 +53,37 @@ function App() {
   const googleTokenHandler = async (goolgeAccToken) => {
     const googleUser = await getGoogleUserInfo({accessToken : goolgeAccToken});
     const { name, email } = googleUser.data
-    const loginResult = await axios.post("http://localhost:80/oauth/google", 
+    axios.post("http://localhost:80/oauth/google", 
       { email, userName : name }, 
       { withCredentials : true }
     )
-    if(loginResult){
+    .then(loginResult => {
       dispatch(loginSuccessHandler(true, loginResult.data.accessToken));
-    }
-    setSocialDone(true);
+      setSocialDone(true);
+    })
+    .catch(err => {
+      console.log(err.response);
+    })
   }
 
   const kakaoTokenHandler = async (kakaoCode) => {
     // console.log(kakaoCode)
     const kakaToken = await getKakaoAccToken(kakaoCode);
     const { accessToken } = kakaToken
-    const loginResult = await axios.post(
+    axios.post(
       "http://localhost:80/oauth/kakao",
       { accessToken },
       { withCredentials : true }
     )
-    if(loginResult){
-      // console.log(loginResult)
-    }
-    // const kakaoUser = await axios.post(
-    //   " https://kapi.kakao.com/v2/user/me",
-    //   { headers : { "authorization": `Bearer ${accessToken}` }},
-    //   // { withCredentials:true }
-    // )
-    // console.log(kakaoUser)
-
+    .then(loginResult => {
+      console.log(loginResult)
+      dispatch(loginSuccessHandler(true, loginResult.data.accessToken));
+      setSocialDone(true);
+    })
+    .catch(err=> {
+      //err handle
+      console.log(err.response);
+    })
   }
 
   useEffect(()=>{
@@ -108,11 +110,11 @@ function App() {
       {/* <LoadingIndicator /> */}
       {/* <LandingPage /> */}
       {/* <LandingPageSub /> */}
-      <NavBar />
-      <SideBar/>
-      <OotdListPage/>
-      {/* <TemBtn onClick={tempLoginHandler}>로그인</TemBtn> */}
-      {/* {
+      {/* <NavBar /> */}
+      {/* <SideBar/> */}
+      {/* <OotdListPage/> */}
+      <TemBtn onClick={tempLoginHandler}>로그인</TemBtn>
+      {
         isLogin 
           ? <TemDiv>{accessToken}</TemDiv>
           :null
@@ -121,7 +123,7 @@ function App() {
         isShowLoginModal ? <Login /> 
         : isShowSignUpModal ? <Signup /> 
         : null 
-      } */}
+      }
 
     </div>
   );
