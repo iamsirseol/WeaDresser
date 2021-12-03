@@ -34,3 +34,5 @@ package-lock.json
 ./cert.pem
 ./key.pem
 
+/cert.pem 
+/key.pem 
