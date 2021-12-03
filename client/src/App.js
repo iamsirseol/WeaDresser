@@ -46,6 +46,7 @@ function App() {
   const dispatch = useDispatch();
   const [ socialDone, setSocialDone ] = useState(false);
 
+  // console.log(isLogin, accessToken)
 
   const tempLoginHandler =() => {
     dispatch(isShowLoginModalHandler(true))
@@ -76,7 +77,6 @@ function App() {
       { withCredentials : true }
     )
     .then(loginResult => {
-      console.log(loginResult)
       dispatch(loginSuccessHandler(true, loginResult.data.accessToken));
       setSocialDone(true);
     })
@@ -110,7 +110,7 @@ function App() {
       {/* <LoadingIndicator /> */}
       {/* <LandingPage /> */}
       {/* <LandingPageSub /> */}
-      {/* <NavBar /> */}
+      <NavBar />
       {/* <SideBar/> */}
       {/* <OotdListPage/> */}
       <TemBtn onClick={tempLoginHandler}>로그인</TemBtn>

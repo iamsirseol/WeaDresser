@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { getGoogleAccToken, getKakaoCode, getUserAccToken } from '../../api/social'
+import { 
+  getGoogleAccToken, 
+  getKakaoCode,
+  getGoogleUserInfo, 
+  getKakaoAccToken } from '../../api/social'
 import { 
   isShowLoginModalHandler, 
   isShowSignUpModalHandler,
