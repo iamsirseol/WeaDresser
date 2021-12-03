@@ -16,7 +16,7 @@ module.exports = {
   // *  POST users/signin
   signin : async (req, res) => {
     // req.body validation
-    console.log(req.body)
+    // console.log(req.body)
     if( !req.body.email || !req.body.password )
       return res.status(422).send("Insufficient parameters")
 
@@ -60,10 +60,13 @@ module.exports = {
 
   // *  POST users/signup
   signup : (req, res) => {
+    const{ email, password, userName, social} = req.body
+    if( email || password || userName || social)
+      return res.status(422).send("Insufficient parameters")
 
     User.findOrCreate({
       where : { email }, 
-      default : { password }
+      default : { password, userName, social }
     })
     .then(([data, created]) => 
       !created 
@@ -74,7 +77,6 @@ module.exports = {
       return res.status(500).send("Internal server error")
     })
 
-    return res.json({accessToken : 'test accessToken to the client'})
   },
 
   // *  POST users/signout
