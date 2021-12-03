@@ -1,6 +1,6 @@
-const { sequelize } = require('../../models/index');
 const { generateToken } = require('../tokenfunction');
 const { User } = require('../../models')
+const axios = require('axios');
 module.exports = {
   // *  POST oauth/google
   google: async (req, res) => {
@@ -37,13 +37,29 @@ module.exports = {
     })
     .catch(err => {
       // faile to create
-      console.log(err)
+      // console.log(err)
       return res.status(500).send("Internal server error");
     })
   },
 
   // *  POST oauth/kakao
-  kakao: (req, res) => {
-    return res.send("oauth/kakao routing OK");
+  kakao: async (req, res) => {
+   // req body validation
+    const { accessToken } = req.body;
+    if( !accessToken ) return res.status(401).send("Unauthrized")
+    
+    const userInfo = await axios({
+      method: "get",
+      url: `https://kapi.kakao.com/v2/user/me?access_token=${accessToken}`,
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+    })
+    console.log(userInfo.data);
+    console.log(userInfo);
+    return res.send(userInfo.data.properties)
   },
 };
+// id: 2006016493,
+// 2018503437,
+// 2018503437이윤환 
