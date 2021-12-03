@@ -11,6 +11,7 @@ import OotdListPage from "./pages/OotdPage/OotdListPage"
 // import {SideBar} from './components/SideBar/SideBar'
 import Login from "./components/Modal/Login"
 import Signup from "./components/Modal/Signup"
+import Modal from "./components/Modal/Modal"
 import LandingPage from './pages/LandingPage/LandingPage';
 import { isShowLoginModalHandler, loginSuccessHandler } from './redux/actions/actions';
 import styled from 'styled-components';
@@ -110,20 +111,12 @@ function App() {
       {/* <LoadingIndicator /> */}
       {/* <LandingPage /> */}
       {/* <LandingPageSub /> */}
-      <NavBar />
+      {/* <NavBar /> */}
       {/* <SideBar/> */}
       {/* <OotdListPage/> */}
       <TemBtn onClick={tempLoginHandler}>로그인</TemBtn>
-      {
-        isLogin 
-          ? <TemDiv>{accessToken}</TemDiv>
-          :null
-      }
-      { 
-        isShowLoginModal ? <Login /> 
-        : isShowSignUpModal ? <Signup /> 
-        : null 
-      }
+      { isLogin ? <TemDiv>{accessToken}</TemDiv> :null }
+      { isShowLoginModal ?<Modal /> : null  }
 
     </div>
   );
