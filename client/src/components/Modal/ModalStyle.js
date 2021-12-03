@@ -13,8 +13,8 @@ export const ModalBackdrop = styled.div`
 `;
 
 export const ModalContainer = styled.div`
-  width: 60rem;
-  height: 75rem;
+  width: 50rem;
+  height: 60rem;
   z-index: 99;
   position: absolute;
   top: 50%;
@@ -31,7 +31,7 @@ export const ModalContainer = styled.div`
   /* border: 1px solid coral; */
   @media screen and (max-width : 767px){
     width: 40rem;
-    height: 50rem;
+    height: 48rem;
   }
   @media screen and (max-width : 424px){
     width: 28rem;
@@ -62,6 +62,7 @@ export const InputContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 3.5rem; //<- responisive
+  /* background-color: cornsilk; */
   .login-input{
     /* -webkit-appearance: none; */
     font-size: 1.8rem;
@@ -120,11 +121,10 @@ export const LoginError = styled.div`
 export const LoginBtnContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin:2rem;
-  margin-top: 4.5rem;
+  margin:3.5rem auto;
   /* background:cornflowerblue; */
   @media screen and (max-width: 787px){
-    margin-top:2.5rem;
+    margin:1.5rem auto;
   }
   button{
     color: #757575;
@@ -137,7 +137,7 @@ export const LoginBtnContainer = styled.div`
     font-size: 1.6rem;
     cursor: pointer;
     @media screen and (max-width: 767px) {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       margin-left: 1rem;
       width: 22rem;
       height: 3.5rem;
