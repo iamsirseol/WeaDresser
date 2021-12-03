@@ -5,8 +5,7 @@ import axios from 'axios';
 import { 
   getGoogleAccToken, 
   getKakaoCode,
-  getGoogleUserInfo, 
-  getKakaoAccToken } from '../../api/social'
+} from '../../api/social'
 import { 
   isShowLoginModalHandler, 
   isShowSignUpModalHandler,
