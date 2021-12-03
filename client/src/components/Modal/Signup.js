@@ -6,6 +6,7 @@ import {
   ModalContainer,
   InnerContainer,
   InnerBox, InnerInputBox,
+  DivMargin
 } from './ModalStyle';
 import { useState } from 'react';
 
@@ -25,19 +26,19 @@ const SignupBtnCol = styled.div`
     /* min-width: 3.5rem; */
     margin: 0 ;
     padding: .8rem;
-    top: 26.5%;
+    top: 22%;
     right: 20%;
     background-color: cornflowerblue;
     border-radius: 1rem;
     color: #fff;
     @media screen and (max-width : 600px){
       padding:.5rem .3rem;
-      top: 24.5%;
+      top: 21.5%;
     }
     @media screen and (max-width : 400px){
       font-size: 1.2rem;
-      padding:.5rem .1rem;
-      top: 23%;
+      padding:.6rem .1rem;
+      top: 20.5%;
     }
   }
   @media screen and (max-width : 600px){
@@ -71,34 +72,39 @@ function Signup(){
     <>
     <ModalBackdrop onClick={modalOffHandler}>
       <ModalContainer onMouseOver={stayOnHandler} onMouseLeave={stayOffHandler}>
-        <SignupContainer>
+        {/* <SignupContainer> */}
           <InnerContainer inHeight={"60vh"} inWidth={"85%"} marginLeft={"5.5rem"}>
             <div className="modalTitle">회 원 가 입</div>
-            <InnerBox topMargin={"1.5rem"} height={"10%"}>
+            <InnerBox topMargin={"1.5rem"}>
               <div className="innerTextBox">Email</div>
-              <InnerInputBox marginLeft={"1.2rem"}><input/></InnerInputBox>
+              <InnerInputBox ><input/></InnerInputBox>
+              <button className="dupBtn">중복체크</button>
             </InnerBox >
-            <InnerBox  codeMargin={"6.5rem"} height={"10%"}>
+            <InnerBox  codeMargin={"10.5rem"}>
               <div className="innerTextBox">Code</div>
-              <InnerInputBox marginLeft={"1.2rem"}><input/></InnerInputBox>
+              <InnerInputBox ><input/></InnerInputBox>
+              <button className="codeBtn">중복체크</button>
             </InnerBox>
-            <InnerBox height={"10%"}>
+            <DivMargin />
+            <InnerBox>
               <div className="innerTextBox">Name</div>
-              <InnerInputBox marginLeft={"1.2rem"}><input/></InnerInputBox>
+              <InnerInputBox ><input/></InnerInputBox>
+              <button className="codeBtn">중복체크</button>
             </InnerBox>
-            <InnerBox height={"10%"}>
+            <InnerBox>
               <div className="innerTextBox">Password1</div>
-              <InnerInputBox marginLeft={"1.2rem"}><input/></InnerInputBox>
+              <InnerInputBox ><input/></InnerInputBox>
+              <button className="codeBtn">중복체크</button>
             </InnerBox>
-            <InnerBox height={"10%"}>
+            <InnerBox>
               <div className="innerTextBox">Password2</div>
-              <InnerInputBox marginLeft={"1.2rem"}><input/></InnerInputBox>
+              <InnerInputBox ><input/></InnerInputBox>
+              <button className="codeBtn">중복체크</button>
             </InnerBox>
           </InnerContainer>
-          <SignupBtnCol>
-            <button>중복체크</button>
-          </SignupBtnCol>
-        </SignupContainer>
+          {/* <SignupBtnCol> */}
+          {/* </SignupBtnCol> */}
+        {/* </SignupContainer> */}
       </ModalContainer>
     </ModalBackdrop>
     </>
