@@ -19,6 +19,7 @@ import axios from 'axios';
 // import LandingPageSub from './pages/LandingPage/LandingPageSub';
 require('dotenv').config();
 
+// temporal button 
 const TemBtn = styled.button`
   background-color: black;
   width: 10rem;
@@ -46,11 +47,11 @@ function App() {
   const dispatch = useDispatch();
   const [ socialDone, setSocialDone ] = useState(false);
 
-  // console.log(isLogin, accessToken)
-
+  // temporal button to show up login-modal
   const tempLoginHandler =() => {
     dispatch(isShowLoginModalHandler(true))
   }
+  // request to get google user info & accessToken (우리서버)
   const googleTokenHandler = async (goolgeAccToken) => {
     const googleUser = await getGoogleUserInfo({accessToken : goolgeAccToken});
     const { name, email } = googleUser.data
@@ -66,9 +67,9 @@ function App() {
       console.log(err.response);
     })
   }
-
+  
+  // request to get kakao user info & accessToken (우리서버)
   const kakaoTokenHandler = async (kakaoCode) => {
-    // console.log(kakaoCode)
     const kakaToken = await getKakaoAccToken(kakaoCode);
     const { accessToken } = kakaToken
     axios.post(
@@ -88,13 +89,12 @@ function App() {
 
   useEffect(()=>{
     if(!socialDone){
-      // google token on redirect para
-      // kakao code on redirect para
+      // To check redirect para from social user 
       const url = new URL(window.location.href)
       const googleAccToken = url.hash.split("=")[1]
       const kakaoCode = url.searchParams.get("code")
 
-      // google and kakao 로긴 유저 
+      // get social users token and info (only if appropriate para in url)  
       if(googleAccToken) googleTokenHandler(googleAccToken);
       if(kakaoCode) kakaoTokenHandler(kakaoCode);
       
@@ -128,7 +128,5 @@ function App() {
     </div>
   );
 }
-
-
 
 export default App;
