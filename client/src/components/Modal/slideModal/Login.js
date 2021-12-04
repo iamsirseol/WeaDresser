@@ -1,22 +1,14 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from "react";
+import { useHistory} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import { 
-  getGoogleAccToken, 
-  getKakaoCode,
-} from '../../api/social'
-import { 
-  isShowLoginModalHandler, 
-  isShowSignUpModalHandler,
-  loginSuccessHandler 
-} from '../../redux/actions/actions'
-import { 
-  LogoContainer,
-  InputContainer,
-  LoginError,
-  LoginBtnContainer
-} from './ModalStyle';
+import title from './title.svg'
+import { LogoContainer,InputContainer,LoginError,LoginBtnContainer } 
+from './LoginStyle';
+import { getGoogleAccToken, getKakaoCode } 
+from '../../../api/social'
+import { isShowLoginModalHandler, loginSuccessHandler } 
+from '../../../redux/actions/actions'
 
 function Login({ showLoginHandler }){
   const [ loginInfo, setLoginInfo ] = useState({ email: "", password: "" });
@@ -30,12 +22,12 @@ function Login({ showLoginHandler }){
     setLoginInfo({ ...loginInfo, [key]: e.target.value.toLowerCase() });
     setErrorMessage("");
   };
-
-  // On backSpace key => make isValid = false 
+  // On backSpace key => active false 
   const handleKeyPress = (e) => {
     if(e.key === 'Backspace') setActive("")
   };
-  // validition : email=null, password=Null, and email regx@ 
+  // validition : email=null, password=Null, email regx@ 
+  // ! 정규식 추가 
   const validCheckHandler = () => {
     const { email, password } = loginInfo
     if(!email || !password ){
@@ -45,10 +37,9 @@ function Login({ showLoginHandler }){
     else if(!email.includes('@')){
       setErrorMessage('이메일 형식을 확인해 주세요')
     }
-    // if(email && password && email.includes('@')){ 
     else{
     // GET user Access Token from server
-    setActive("-active") // button active
+      setActive("-active") // button active
       userLoginHandler() // login ajax call
     }
   };
@@ -85,12 +76,12 @@ function Login({ showLoginHandler }){
   }
   return (
     <>
-      <LogoContainer><img alter="" src=""/></LogoContainer>
+      <LogoContainer><img alter="" src={title}/></LogoContainer>
       <InputContainer>
         <input 
           className="login-input"
           type="email"
-          placeholder="E-mail"
+          placeholder="Email"
           onChange={ handleInputValue("email") }
           onKeyUp={ handleKeyPress }
           />
@@ -105,10 +96,11 @@ function Login({ showLoginHandler }){
       </InputContainer>
       <LoginBtnContainer>
         <button onClick={validCheckHandler}  className={`login-btn${active}`}> 로그인</button>
+        <button onClick={showLoginHandler} className='singup-btn'>회원가입</button>
         <button onClick={kakaoLoginHandler} className='kakao-btn'>Kakao</button>
         <button onClick={googleLoginHandler} className='google-btn'>Google</button>
-        <button onClick={showLoginHandler} className='singup-btn'>회원가입</button>
       </LoginBtnContainer>
+
     </>
   );
 }

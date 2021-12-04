@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import { useSpring, animated } from 'react-spring'
 import { isShowSignUpModalHandler } from '../../redux/actions/actions'
 import { 
   InnerContainer,
@@ -7,9 +8,11 @@ import {
 } from './ModalStyle';
 import { useState } from 'react';
 
+
 function Signup(){
   const [ prohibit , setProhibit ] = useState(true);
   const dispatch = useDispatch();
+
   // 모달 창 바깥 클릭시 창닫기 
   const modalOffHandler = () => {
     // 바깥쪽 일때만 작동!  

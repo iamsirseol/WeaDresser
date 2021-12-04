@@ -15,8 +15,9 @@ import {
 
 function Modal(){
   const dispatch = useDispatch(); 
+  const { isShowLoginModal, isShowSignUpModal 
+  } = useSelector(state => state.isShowModalReducer);
   const [ prohibit , setProhibit ] = useState(false);
-  const [ showLogin, setShowLogin ] = useState(true);
 
   // 모달 창 바깥 클릭시 창닫기 
   const modalOffHandler = () => {
@@ -32,15 +33,17 @@ function Modal(){
   const stayOffHandler = () => {
     setProhibit(false)
   }
-  const showLoginHandler = () => {
-    setShowLogin(!showLogin)
+  // modal 창 닫기 handler 
+  const userSingupHandler = () => {
+    dispatch(isShowSignUpModalHandler(true))
+    dispatch(isShowLoginModalHandler(false))
   }
 
   return (
     <>
     <ModalBackdrop onClick={modalOffHandler} >
       <ModalContainer onMouseOver={stayOnHandler} onMouseLeave={stayOffHandler}>
-        { showLogin ? <Login showLoginHandler={showLoginHandler}/> : <Signup /> } 
+        { isShowLoginModal ? <Login /> : <Signup /> } 
       </ModalContainer>
     </ModalBackdrop>
     </>
