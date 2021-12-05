@@ -158,8 +158,9 @@ export const LoginBtnContainer = styled.div`
     background-color: #252525;
     color: #fff;
   }
-
 `;
+
+
 export const Button = styled.button`
   color: ${({ textColor }) => textColor || "#757575"};
   background-color:${({ backColor }) => backColor || "white"};
