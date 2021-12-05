@@ -1,6 +1,12 @@
-// import { useDispatch } from 'react-redux';
-// import { useSpring, animated } from 'react-spring'
-// import { isShowSignUpModalHandler } from '../../../redux/actions/actions'
+import { useDispatch, useSelector } from 'react-redux';
+import { 
+  isShowLoginModalHandler, 
+  isShowSignUpModalHandler, 
+  loginSuccessHandler,
+  createUserHandler 
+} 
+from '../../../redux/actions/actions'
+import { useState } from 'react';
 import title from './title.svg'
 import { 
   LogoContainer,
@@ -8,22 +14,27 @@ import {
   BtnContainer,
   InputContainer,
   LoginError,
+  BackButton, 
+  SignupContainer,
 } from './SignupStyle';
-import { useState } from 'react';
-import axios from 'axios'; 
-import { useDispatch } from 'react-redux';
-import { isShowLoginModalHandler } from '../../../redux/actions/actions'
-function Signup(){
+import { CloseModalButton } from './ModalStyle';
+import { useSpring } from '@react-spring/core';
+
+function Signup({ closeModalByBtn }){
   const [ signupInfo, setSignupInfo ] = useState({ 
     email : "", code : "" , 
     password1 : "", password2 : "" 
   })
   const [ errorMessage, setErrorMessage ] = useState("");
   const [ isValid, setIsValid ] = useState([false, false]);
-  const [ isSuccess , setIsSuccess ] = useState(false);
+  const { isShowLoginModal, isShowSignUpModal } = useSelector(state => state.isShowModalReducer)
   const dispatch = useDispatch(); 
-  
 
+
+  const backModalHandler = () => {
+    dispatch(isShowLoginModalHandler(true));
+    dispatch(isShowSignUpModalHandler(false));
+  }
   const handleInputValue = (key) => (e) => {
     setSignupInfo({ ...signupInfo, [key]: e.target.value.toLowerCase() });
     setErrorMessage("");
@@ -39,28 +50,28 @@ function Signup(){
       setIsValid([true, isValid[1]])
     }
   }
+
   const submitHandler = () => {
     const { email, password1, password2 } = signupInfo;
     if(password1 !== password2){
       setErrorMessage('비밀 번호를 다시 확인 하세요')
     }
     else{
-      axios.post(
-        'http://localhost:80/users/signin',
-        { email, password1 },
-        { withCredentials: true }
-      )
-      .then(result => {
-        // isLogin =true & set the accessToken + page redirection
-        setIsSuccess(true);
-        dispatch(isShowLoginModalHandler(false));
-        // history.push('/')
-      })
+      const endpoint = '/users/signup'
+      const reqBody = {
+        email, 
+        password : password1,
+        userName : "testUser", 
+        gender : 'male', 
+        social : true  
+      }
+      dispatch(createUserHandler( endpoint, reqBody ))
     
     }
   }
   return (
     <>
+      <CloseModalButton onClick={closeModalByBtn}/>
       <LogoContainer><img alter="" src={title}/></LogoContainer>
       <InputBtnContainer>
         <InputContainer>
@@ -89,7 +100,7 @@ function Signup(){
         <BtnContainer><button>코드전송</button></BtnContainer>
       </InputBtnContainer>
       <LoginError>{errorMessage}</LoginError>
-
+      <BackButton onClick={backModalHandler}/>
         { !isValid[0] && !isValid[1] ? null :
         <>
         <InputContainer>

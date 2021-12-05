@@ -18,14 +18,6 @@ function NavBar() {
   const closeShowLoginModal =() => {
     dispatch(isShowLoginModalHandler(false));
   }
-    // temporal button to show up login-modal
-    const showModalHandler =() => {
-      dispatch(isShowLoginModalHandler(true))
-    }
-    const closeModalHandler = () => {
-      dispatch(isShowLoginModalHandler(false))
-        
-    }
     return (
         <NavContaier >
             <SvgLogoSmall to='/'></SvgLogoSmall>

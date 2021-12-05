@@ -55,13 +55,13 @@ module.exports = {
 
   // *  POST users/signup
   signup: (req, res) => {
-    const { email, password, userName, social } = req.body;
-    if (email || password || userName || social)
-      return res.status(422).send("Insufficient parameters");
-
+    console.log("okokokokokokokokokokokokokokokokok")
+    const { email, password, userName, social, gender } = req.body;
+    // if (email || password || userName || social)
+      // return res.status(422).send("Insufficient parameters");
+    console.log(email, password, userName , social , gender)
     User.findOrCreate({
-      where: { email },
-      default: { password, userName, social },
+      where: { email , password, userName, social, gender },
     })
       .then(([data, created]) =>
         !created
@@ -69,6 +69,7 @@ module.exports = {
           : res.status(201).send("Created")
       )
       .catch((err) => {
+        console.log(err)
         return res.status(500).send("Internal server error");
       });
   },

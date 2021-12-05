@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { animated } from '@react-spring/web';
 import { MdClose } from 'react-icons/md'
 
-export const ModalBackdrop = styled.div`
+export const ModalBackdrop = styled(animated.div)`
   width: 100%;
   height: 100vh;
   top: 0;
