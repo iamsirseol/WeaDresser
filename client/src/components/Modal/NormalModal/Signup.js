@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { useSpring, animated } from 'react-spring'
+// import { useSpring, animated } from 'react-spring'
 import { isShowSignUpModalHandler } from '../../redux/actions/actions'
 import { 
   InnerContainer,
@@ -7,7 +7,6 @@ import {
   DivMargin
 } from './ModalStyle';
 import { useState } from 'react';
-
 
 function Signup(){
   const [ prohibit , setProhibit ] = useState(true);

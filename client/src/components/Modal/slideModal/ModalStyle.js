@@ -40,11 +40,36 @@ export const ModalContainer = styled(animated.div)`
 export const CloseModalButton = styled(MdClose)`
   width: 2.5rem; height: 2.5rem;
   padding: 0;
-  z-index:10;
+  z-index:1000000000000000000000000; // <-- cursor pointer 왜 안됨;;?
   color: #fff;
-  cursor: pointer;
+  cursor: pointer; 
   position:absolute;
   top: 1rem; right: 1rem;
+  &:hover{
+    cursor: pointer; 
+    color:black;
+  }
+`;
+
+export const LogoContainer =styled.div`
+  width: 25rem; 
+  height: 20rem;
+  align-items: center;
+  > img{
+    position: relative;
+    width: 100%; 
+    top: 50%;
+    margin: auto;
+    cursor: pointer;
+  }
+  @media screen and (max-width : 767px){
+    width: 20rem; 
+    height: 16rem;
+  }
+  @media screen and (max-width : 424px){
+    width:15rem; 
+    height: 12rem;
+  }
 `;
 
 export const TemBtn = styled.div`

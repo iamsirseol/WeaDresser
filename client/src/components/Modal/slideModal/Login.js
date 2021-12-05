@@ -10,14 +10,14 @@ from '../../../api/social'
 import { isShowLoginModalHandler, loginSuccessHandler } 
 from '../../../redux/actions/actions'
 
-function Login({ showLoginHandler }){
+function Login({ modalChangeHandler }){
   const [ loginInfo, setLoginInfo ] = useState({ email: "", password: "" });
   const [ errorMessage, setErrorMessage ] = useState("");
   const [ active, setActive ] = useState("");
   const history= useHistory();
   const dispatch = useDispatch(); 
 
-  // inputvalue Save to the loginInfo States
+  // inputvalue save to the loginInfo States
   const handleInputValue = (key) => (e) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value.toLowerCase() });
     setErrorMessage("");
@@ -43,14 +43,16 @@ function Login({ showLoginHandler }){
       userLoginHandler() // login ajax call
     }
   };
+  // GET User info by request to 80 Server
   const userLoginHandler = async () => {
     const{ email, password } = loginInfo
     axios.post(
       'http://localhost:80/users/signin',
-      { email, password},
+      { email, password },
       { withCredentials: true }
     )
     .then(result => {
+      // isLogin =true & set the accessToken + page redirection
       dispatch(loginSuccessHandler(true, result.data.accessToken));
       dispatch(isShowLoginModalHandler(false))
       history.push('/')
@@ -96,11 +98,10 @@ function Login({ showLoginHandler }){
       </InputContainer>
       <LoginBtnContainer>
         <button onClick={validCheckHandler}  className={`login-btn${active}`}> 로그인</button>
-        <button onClick={showLoginHandler} className='singup-btn'>회원가입</button>
+        <button onClick={modalChangeHandler} className='singup-btn'>회원가입</button>
         <button onClick={kakaoLoginHandler} className='kakao-btn'>Kakao</button>
         <button onClick={googleLoginHandler} className='google-btn'>Google</button>
       </LoginBtnContainer>
-
     </>
   );
 }
