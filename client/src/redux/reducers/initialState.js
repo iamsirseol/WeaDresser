@@ -27,5 +27,8 @@ export const initialState = {
         name: null, 
         sys: null,
         weather: null
-    }
+    },
+    isShowSideBar: {
+        isShowSideBar: false
+    },
 }

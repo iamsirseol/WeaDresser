@@ -58,7 +58,9 @@ const Modal = () => {
   const googleTokenHandler = async (goolgeAccToken) => {
     const googleUser = await getGoogleUserInfo({accessToken : goolgeAccToken});
     const { name, email } = googleUser.data
-    axios.post("http://localhost:80/oauth/google", 
+    // axios.post("http://localhost:80/oauth/google", 
+    console.log(process.env.REACT_APP_SERVER_URL)
+    axios.post(`${process.env.REACT_APP_SERVER_URL}/oauth/google`, 
       { email, userName : name }, 
       { withCredentials : true }
     )
@@ -76,7 +78,7 @@ const Modal = () => {
     const kakaToken = await getKakaoAccToken(kakaoCode);
     const { accessToken } = kakaToken
     axios.post(
-      "http://localhost:80/oauth/kakao",
+      `${process.env.REACT_APP_SERVER_URL}/oauth/kakao`,
       { accessToken },
       { withCredentials : true }
     )

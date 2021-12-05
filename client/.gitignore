@@ -31,7 +31,9 @@ package-lock.json
 ../.github
 
 #pem
-./*.pem
+./cert.pem
+./key.pem
+
 
 /*.pem 
 
