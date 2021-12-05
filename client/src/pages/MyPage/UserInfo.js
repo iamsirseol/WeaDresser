@@ -44,7 +44,7 @@ function UserInfo(){
         /*const curUser = window.sessionStorage.getItem('email');*/
         // 로딩 넣으면 좋을듯
         // console.log(userData)
-        axios.get('http://localhost:80/mypage/users',{withCredentials : true})
+        axios.get(`${process.env.REACT_APP_SERVER_URL}/mypage/users`, {headers : {authorization: `Bearer ${userData}`}})
             .then(res => {
                 console.log('--------------------------')
                 console.log(res)
@@ -52,6 +52,7 @@ function UserInfo(){
                 // const username = res.data.data.username;
                 // setCurUserNickname(username)
                 // setFixUserName(username)
+                setCurUserNickname(res.data.data.userName)
             })
             .catch(err => {
                 // console.log('fail')// 에러창을 추후에 만들면 좋을듯 싶음
@@ -106,7 +107,7 @@ function UserInfo(){
     function updateInfoRequest(e){ // -------------업데이트 요청----------------
         e.preventDefault()
 
-        axios.patch('http://localhost:80/mypage/users', {withCredentials : true})
+        axios.patch(`${process.env.REACT_APP_SERVER_URL}/mypage/users`, {withCredentials : true})
             .then(res => {
                 console.log('유저 정보 업데이트 성공')
                 setSucUpdate(true)

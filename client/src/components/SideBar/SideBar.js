@@ -119,9 +119,10 @@ function SideBar() {
                 </span>
                 <div className="side-bar-menu">
                     <ul>
-                        <li><Link className="side-bar-link" to="/">MyPage</Link></li>
+                        <li><Link className="side-bar-link" to="/mypage">MyPage</Link></li>
                         <li><Link to="ootd-list" className="side-bar-link" >관음증</Link></li>
                         <li><Link className="side-bar-link" to="">Diary</Link></li>
+                        <li><Link className="side-bar-link" to="record">Record</Link></li>
                     </ul>
                 </div>
             </SideBarContainer>

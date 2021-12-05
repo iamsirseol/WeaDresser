@@ -3,11 +3,8 @@ export const initialState = {
         isLogin : false,
         accessToken : "",
     },
-    isLoading : {
+    isLoading : { 
         isLoading : false //<-- 바꾼거 말하기 !
-    },
-    accessToken: {
-        accessToken: ''
     },
     modal : {
         isShowLoginModal : false, 

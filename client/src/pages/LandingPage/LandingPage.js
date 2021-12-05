@@ -1,119 +1,85 @@
-import React from 'react'
-import axios from 'axios';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { getLocationData, getWeatherData } from '../../redux/actions/actions';
 import {
     Container, 
     LandingPageContainer, 
     MainLogo, WeatherIconBox, 
-    WeahterBarBox, WeatherIcon,
+    WeahterBarBox, 
     Scroll,
+    WeatherIcon
 } from './LandingPageStyle';
+import axios from 'axios';
 import sun from '../../images/sun.png';
 import cloud from '../../images/cloud.png';
 import moon from '../../images/moon.png';
 import rain from '../../images/rain.png';
 import snow from '../../images/snow.png';
 
-require('dotenv').config();
 function LandingPage () {
 
-    const [curWeather, setCurWeather] = useState("맑음");
-    const [curIcon, setCurIcon] = useState(moon);
-    const [completed, setCompleted] = useState(false);
-
+    const [curWeather, setCurWeather] = useState(null);
+    const [curIcon, setCurIcon] = useState(null);
     const dispatch = useDispatch();
     const weatherData = useSelector(state => state.getWeatherDataReducer); // redux-thunk 다시 보기
-    const isLoading = useSelector(state => state.isLoadingReducer.isLoading)
-
     // console.log('날씨!',weatherData);
-    // console.log(isLoading)
 
-    // function handleGeoSucces (location) {
-    //     // console.log("handle GEo Sucess")
-    //     const lat = location.coords.latitude;
-    //     const lot = location.coords.longitude;
-    //     console.log(location)
-    //     dispatch(getLocationData(lat, lot));
-    // }
-    // function handleGeoError (err) {
-    //     // console.log("asdfjaisfdhioasdhfiaodsuhf=============");
-    //     console.log(err);
-    //     // console.log('Cannot get your location');
-    // }
-    // console.log(process.env.REACT_APP_API_KEY)
-    // const geoSucc = (location) => {
-    //     const API_KEY = process.env.REACT_APP_API_KEY
-    //     dispatch(getLocationData(location.coords,API_KEY));
-    //     setCompleted(true);
-    // }
-
-    const getGeo = () => {
-        console.log("geo call !!!!!")
+    function askForCoords() {
         const options = {
             enableHighAccuracy: true,
-            maximumAge: 3000,
-            timeout: 2700
+            maximumAge: 30000,
+            timeout: 27000
         };
-        navigator.geolocation.getCurrentPosition(
-            (location)=>{
-                const API_KEY = process.env.REACT_APP_API_KEY
-                dispatch(getLocationData(location.coords,API_KEY));
-                // setCompleted(true);
-            }, 
-            (err)=>{
-                if(err.code === 3){
-                    getGeo();
-                    setCompleted(false)
-                }
-                if(err.code ===1){
-                    alert("위치 권한을 켜주세요");
-                }
-                // if(err.code === 2)
-            }, 
-        options)
+        navigator.geolocation.getCurrentPosition(handleGeoSucces, handleGeoError, options);
+    }
+
+    async function handleGeoSucces (location) {
+        const lat = location.coords.latitude;
+        const lot = location.coords.longitude;
+        // dispatch(getLocationData(lat, lot));
+
+        const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lot}&appid=${process.env.REACT_APP_API_KEY}`)
+            .catch(err => console.log('err', err));
+        const { coord, main, name, sys, weather } = result.data;
+        dispatch(getWeatherData({ coord, main, name, sys, weather }));
+    }
+    
+    function handleGeoError (err) {
+        console.log('Cannot get your location', err);
     }
 
     useEffect (() => {
-        if (!completed)  getGeo()      
-        return () => {
-            setCompleted(true)
+        let complete = false;
+
+        if (!complete) {
+            askForCoords();
+            complete = true;
         }
         
-    }, [completed])
-      // if (weatherData.data) {
-        // }
+    }, []);
 
-        // if ('geolocation' in navigator) {
-        //     navigator.geolocation.getCurrentPosition(location => {
-        //         console.log('found!!', location);
-        //         const lat = location.coords.latitude;
-        //         const lot = location.coords.longitude;
-        //         setNavi([lat, lot]);
-        //     })
-        // } else {
-        //     console.log('Cannot get your location');
-        // }
-        // function askForCoords() {
-        //     console.log('asdfioasjfdasdf==========', 'geolocation' in navigator)
-        // }
+    useEffect(() => {
 
-         
-        // askForCoords();
-        // async function getWeather (lat, lot) {
-        //     const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lot}&appid=${process.env.REACT_APP_API_KEY}`)
-        //         .catch(err => console.log('err', err));
-        //     const { coord, main, name, sys, weather } = result.data;
-        //     dispatch(getWeatherData({ coord, main, name, sys, weather }));
-        // }
+        console.log('날씨!@#',weatherData);
         
-        // return () => {
-        //     if (!complete) {
-        //         askForCoords();
-        //         complete = true;
-        //     }
-        // }
+         if (weatherData.weather) {
+            if (weatherData.weather[0].main === 'Clouds') {
+                setCurWeather('흐림');
+                setCurIcon(cloud);
+            }
+            if (weatherData.weather[0].main === 'Snow') {
+                setCurWeather('눈');
+                setCurIcon(snow);
+            }
+            if (weatherData.weather[0].main === 'Rain' || weatherData.weather[0].main === 'Thunderstrom') {
+                setCurWeather('비');
+                setCurIcon(rain);
+            } else {
+                setCurWeather('맑음');
+                setCurIcon(sun);
+            }
+        }
+    }, [weatherData]);
 
     return (
         <Container>
@@ -128,8 +94,8 @@ function LandingPage () {
                 </WeatherIconBox>
                 <WeahterBarBox>
                 {
-                !isLoading ? 
-                null
+                !weatherData.main ? 
+                null // 로딩페이지로 바꿔서 넣어야 할 듯?
                 :
                     <>
                         <div>

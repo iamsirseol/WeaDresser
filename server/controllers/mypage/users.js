@@ -8,82 +8,101 @@ module.exports = {
     if (!accessTokenData) {
       return res.status(401).send("not authorized");
     }
-    try {
-      const userInfo = await User.findOne({
-        where: {
-          id: accessTokenData,
-        },
-      });
-      res
-        .status(200)
-        .send({ data: { id: userInfo.id, userName: userInfo.userName } });
-    } catch (err) {
+
+    const userInfo = await User.findOne({
+      where: {
+        email: accessTokenData.email,
+      },
+    }).catch((err) => {
       console.log(err);
-    }
+    });
+    //console.log(userInfo);
+
+    res.status(200).send({ data: { userName: userInfo.userName } });
   },
   // * PATCH mypage/users
   update: async (req, res) => {
     const { password, editPassword, userName } = req.body;
-    const accessToken = isAuthorized(req);
-
-    if (accessToken) {
-      return res.status(401).send("not authorized");
-    }
-    try {
-      const checkUserPassword = await User.findOne({
-        where: {
-          password: password,
-        },
-      });
-      if (checkUserPassword) {
-        if (accessToken.id !== checkUserPassword.id) {
-          return res.status(400).send("password id already exitst");
-        }
-      }
-      const editUserInfo = User.update({
-        password: editPassword,
-        userName: userName,
-      });
-      res.status(201).send({ data: editUserInfo.userName, message: "ok" });
-    } catch (err) {
-      console.log(err);
-    }
-  },
-  // * DELETE  mypage/users 회원탈퇴
-  delete: async (req, res) => {
     const accessTokenData = isAuthorized(req);
 
     if (!accessTokenData) {
       return res.status(401).send("not authorized");
     }
-    try {
-      await User.destroy({
-        where: {
-          id: accessTokenData,
-        },
-      });
-      await Diarie.destroy({
-        where: {
-          userId: accessTokenData,
-        },
-      });
-      await Like.destroy({
-        where: {
-          userId: accessTokenData,
-        },
-      });
-      res
-        .clearCookie("authorization", {
-          httpOnly: true,
-          sameSite: "none",
-          secure: true,
-          path: "/",
-          domail: "/",
-        })
-        .status(200)
-        .send("ok");
-    } catch (err) {
+
+    const checkUserPassword = await User.findOne({
+      where: {
+        email: accessTokenData.email,
+        password: password,
+      },
+    }).catch((err) => {
       console.log(err);
+    });
+    // if (checkUserPassword) {
+    //   if (accessToken.id !== checkUserPassword.id) {
+    //     return res.status(400).send("password id already exitst");
+    //   }
+    // }
+    let result;
+    if (!checkUserPassword) {
+      return res.status(401).send("not authorized");
     }
+    if (userName && !editPassword) {
+      result = await User.update({
+        userName: userName,
+      }).catch((err) => {
+        console.log(err);
+      });
+    } else if (!userName && editPassword) {
+      result = await User.update({
+        password: editPassword,
+      }).catch((err) => {
+        console.log(err);
+      });
+    } else if (userName && editPassword) {
+      result = await User.update({
+        password: editPassword,
+        userName: userName,
+      }).catch((err) => {
+        console.log(err);
+      });
+    }
+
+    res.status(201).send({ data: result.userName });
   },
-}
+  // * DELETE  mypage/users 회원탈퇴
+  delete: async (req, res) => {
+    const accessTokenData = isAuthorized(req);
+    console.log(accessTokenData);
+    if (!accessTokenData) {
+      return res.status(401).send("not authorized");
+    }
+    await User.destroy({
+      where: {
+        id: accessTokenData.id,
+      },
+    }).catch((err) => {
+      console.log(err);
+    });
+
+    // await Diarie.destroy({
+    //   where: {
+    //     userId: accessTokenData.id,
+    //   },
+    // });
+    // await Like.destroy({
+    //   where: {
+    //     userId: accessTokenData.id,
+    //   },
+    // });
+    res
+      .clearCookie("authorization", {
+        httpOnly: true,
+        sameSite: "none",
+        secure: true,
+        path: "/",
+        domail: "/",
+      })
+      .status(200)
+      .send("ok");
+  },
+};

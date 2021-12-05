@@ -12,11 +12,10 @@ export const NavContaier = styled.nav`
     position: fixed;
     top: 0;
     left: 0;
-    background: #ddd; // 지울것
     z-index: 9999999;
 `;
 
-export const NavBtnLink = styled(Link)`
+export const NavBtn = styled.button`
     border-radius: 50px;
     background: transparent;
     padding: 0.5em 2em;
