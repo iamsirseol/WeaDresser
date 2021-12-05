@@ -1,5 +1,6 @@
 const { User, Diarie,sequelize } = require('../models')
 const { Op } = require('Sequelize');
+
 module.exports = {
   // * GET  /home
   findRandom : async (req, res) => {

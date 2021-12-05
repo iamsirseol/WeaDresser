@@ -9,6 +9,7 @@ export const WEATHER_DATA = "WEATHER_DATA";
 
 export function loginSuccessHandler(boolean, accessToken) {
     return (dispatch) => {
+        console.log(boolean, accessToken)
         dispatch(isLoginHandler(boolean))
         dispatch(setAccessToken(accessToken))
     }
