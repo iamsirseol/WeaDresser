@@ -10,12 +10,19 @@ import {
   LoginError,
 } from './SignupStyle';
 import { useState } from 'react';
-
-
+import axios from 'axios'; 
+import { useDispatch } from 'react-redux';
+import { isShowLoginModalHandler } from '../../../redux/actions/actions'
 function Signup(){
-  const [ signupInfo, setSignupInfo ] = useState({ email : "", code : "" })
+  const [ signupInfo, setSignupInfo ] = useState({ 
+    email : "", code : "" , 
+    password1 : "", password2 : "" 
+  })
   const [ errorMessage, setErrorMessage ] = useState("");
   const [ isValid, setIsValid ] = useState([false, false]);
+  const [ isSuccess , setIsSuccess ] = useState(false);
+  const dispatch = useDispatch(); 
+  
 
   const handleInputValue = (key) => (e) => {
     setSignupInfo({ ...signupInfo, [key]: e.target.value.toLowerCase() });
@@ -30,6 +37,26 @@ function Signup(){
     else{
       setErrorMessage('사용 가능한 이메일 입니다.')
       setIsValid([true, isValid[1]])
+    }
+  }
+  const submitHandler = () => {
+    const { email, password1, password2 } = signupInfo;
+    if(password1 !== password2){
+      setErrorMessage('비밀 번호를 다시 확인 하세요')
+    }
+    else{
+      axios.post(
+        'http://localhost:80/users/signin',
+        { email, password1 },
+        { withCredentials: true }
+      )
+      .then(result => {
+        // isLogin =true & set the accessToken + page redirection
+        setIsSuccess(true);
+        dispatch(isShowLoginModalHandler(false));
+        // history.push('/')
+      })
+    
     }
   }
   return (
@@ -61,6 +88,7 @@ function Signup(){
         </InputContainer>
         <BtnContainer><button>코드전송</button></BtnContainer>
       </InputBtnContainer>
+      <LoginError>{errorMessage}</LoginError>
 
         { !isValid[0] && !isValid[1] ? null :
         <>
@@ -69,6 +97,7 @@ function Signup(){
             className="signup-input"
             type="password"
             placeholder="비밀번호1"
+            onChange={ handleInputValue("password1") }
             />
         </InputContainer>
         <InputContainer>
@@ -76,11 +105,12 @@ function Signup(){
             className="signup-input"
             type="password"
             placeholder="비밀번호2"
+            onChange={ handleInputValue("password2") }
             />
         </InputContainer>
+        <BtnContainer><button onClick={submitHandler}>회원가입</button></BtnContainer>
         </>
         }    
-      <LoginError>{errorMessage}</LoginError>
     </>
   );
 }
