@@ -11,20 +11,20 @@ module.exports = {
     try {
       const userInfo = await User.findOne({
         where: {
-          id: accessTokenData,
+          id: id,
         },
       });
-      res
-        .status(200)
-        .send({ data: { id: userInfo.id, userName: userInfo.userName } });
+      console.log(userInfo);
+
+      res.status(200).send({ data: { userName: userInfo.userName } });
     } catch (err) {
       console.log(err);
     }
   },
-
   // * PATCH mypage/users
   update: async (req, res) => {
     const { password, editPassword, userName } = req.body;
+    // console.log('@@@',req.body)
     const accessToken = isAuthorized(req);
 
     if (accessToken) {
@@ -45,7 +45,7 @@ module.exports = {
         password: editPassword,
         userName: userName,
       });
-      res.status(201).send({ data: editUserInfo.userName, message: "ok" });
+      res.status(201).send({ data: editUserInfo.userName });
     } catch (err) {
       console.log(err);
     }
@@ -53,24 +53,24 @@ module.exports = {
   // * DELETE  mypage/users 회원탈퇴
   delete: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-
+    console.log(accessTokenData);
     if (!accessTokenData) {
       return res.status(401).send("not authorized");
     }
     try {
       await User.destroy({
         where: {
-          id: accessTokenData,
+          id: accessTokenData.id,
         },
       });
       await Diarie.destroy({
         where: {
-          userId: accessTokenData,
+          userId: accessTokenData.id,
         },
       });
       await Like.destroy({
         where: {
-          userId: accessTokenData,
+          userId: accessTokenData.id,
         },
       });
       res
@@ -87,4 +87,4 @@ module.exports = {
       console.log(err);
     }
   },
-};
+}

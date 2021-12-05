@@ -44,11 +44,31 @@ const getKakaoAccToken = async (kakaoCode) => {
   })
   
   return data 
-    ? { isSuccess : true ,  accessToken : data.data.access_token, msg : "Success" }
+    ? { isSuccess : true ,  accessToken : data.access_token, msg : "Success" }
     : { isSuccess : false, accessToken : null, msg : "Bad Request" }
+}
+
+const getUserAccToken = (loginInfo) => {
+  const { email, password } = loginInfo; 
+  axios.post(
+    'http://localhost:80/users/signin',
+    { email, password},
+    { withCredentials: true }
+  )
+  .then(data => { 
+    // console.log(data)
+    return [ true ,  data.data.accessToken,  "Success" ]
+  })
+  .catch(err => {
+      // console.log(err.response)
+      return err.response.status === 401 
+      ? [ false,  null,  "이메일 과 비밀번호를 다시 확인해 주세요" ]  
+      : [ false,  null ,  "Server error" ] 
+    })
 }
 
 export {
   getGoogleAccToken, getGoogleUserInfo, 
   getKakaoCode, getKakaoAccToken, 
+  getUserAccToken
 }

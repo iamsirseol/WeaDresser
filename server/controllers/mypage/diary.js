@@ -1,27 +1,110 @@
-const { Diarie, DiariesHashtag } = require("../../models");
+const { Diarie, DiariesHashtag, Hashtag } = require("../../models");
 const { isAuthorized } = require("../tokenfunction/index");
 
 module.exports = {
   // * GET mypage/diary
-  findOne: (req, res) => {
-    return res.send("GET mypage/diary routing good now");
+  findOne: async (req, res) => {
+    // const { id } = req.params;
+    // const createdAt = req.body;
+    // const accessToken = isAuthorized(req);
+    // if (!accessToken) {
+    //   return res.status(401).send("not authorized");
+    // }
+    // try {
+    //   const create = await Diarie.findAll({
+    //     order: [["createdAt", "DESC"]],
+    //   });
+    //   if (createdAt === create) {
+    //     const data = await Diarie.findOne({
+    //       where: {
+    //         id,
+    //       },
+    //       include: [
+    //         {
+    //           model: DiariesHashtag,
+    //           as: "H",
+    //           attributes: ["hashtagsId"],
+    //         },
+    //       ],
+    //     });
+    //     res.status(200).send({
+    //       contnet: data.contnet,
+    //       image: data.image,
+    //       weather: data.weather,
+    //       tempMin: data.tempMin,
+    //       temMax: data.tempMax,
+    //       hashtag: data.ashtagsId,
+    //     });
+    //   }
+    // } catch (err) {
+    //   console.log(err);
+    // }
   },
   // * GET  mypage/diary:createdAt
-  findOnebyDate: (req, res) => {
-    return res.send(
-      `GET mypage/diary:createdAt routing good now, para=${req.params.createdAt}`
-    );
+  findOnebyDate: async (req, res) => {
+    const { id } = req.params;
+    const createdAt = req.body;
+    const accessToken = isAuthorized(req);
+
+    if (!accessToken) {
+      return res.status(401).send("not authorized");
+    }
+    try {
+      const create = await Diarie.findOne({
+        where: { createdAt: createdAt },
+      });
+      if (create) {
+        const data = await Diarie.findOne({
+          where: {
+            id,
+          },
+          include: [
+            {
+              model: DiariesHashtag,
+              as: "H",
+              attributes: ["hashtagsId"],
+            },
+          ],
+        });
+        res.status(200).send({
+          contnet: data.contnet,
+          image: data.image,
+          weather: data.weather,
+          tempMin: data.tempMin,
+          temMax: data.tempMax,
+          hashtag: data.ashtagsId,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   },
   // * PATCH mypage/diary
-  update: (req, res) => {
-    return res.send("PATCH mypage/diary routing good now, check your req.body");
+  update: async (req, res) => {
+    //   const { id } = req.params;
+    //   const { content, image, share, hashtag } = req.body;
+    //   const accessToken = isAuthorized(req);
+    //   if (!accessToken) {
+    //     return res.status(401).send("not authorized");
+    //   }
+    //   try{
+    //     await Diarie.update({
+    //       content: content,
+    //       image:image,
+    //       share:share,
+    //     },{
+    //       where:{
+    //         id,
+    //       }
+    //     })
+    //   }
   },
   // * DELETE  mypage/diary (게시글 삭제)
   delete: async (req, res) => {
     const { id } = req.params;
     const accessToken = isAuthorized(req);
 
-    if (accessToken) {
+    if (!accessToken) {
       return res.status(401).send("not authorized");
     }
     try {
