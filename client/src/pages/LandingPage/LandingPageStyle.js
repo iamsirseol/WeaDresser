@@ -23,9 +23,9 @@ export const LandingPageContainer = styled.div`
     background-position: center;
     background: linear-gradient(124deg, #5b81fa 13%, #0852a8 98%);
 
-    @media screen and (max-width: 77em) {
+    /* @media screen and (max-width: 77em) {
       background: linear-gradient(124deg, #36178b 13%, #01041f 98%);
-    }
+    } */
 `;
 
 export const MainLogo = styled.div`
@@ -40,10 +40,10 @@ export const MainLogo = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
 
-    @media screen and (max-width: 77em) {
+    /* @media screen and (max-width: 77em) {
       width: 49em;
       height: 5em;    
-      }
+      } */
 `
 
 export const WeatherIconBox = styled.ul`
@@ -109,7 +109,7 @@ export const WeatherIconBox = styled.ul`
 
 export const WeahterBarBox = styled.div`
     position: absolute;
-    width: 80em;
+    width: 85em;
     height: 10.0em;
     top: 77%;
     left: 50%;
@@ -142,7 +142,7 @@ export const WeahterBarBox = styled.div`
         content: "";
         width: 1px;
         height: 2em;
-        background-color: #fff;
+        background-color: #6975d3;
       }
 
       &:nth-child(3) {
@@ -180,7 +180,7 @@ export const WeahterBarBox = styled.div`
       color: #fff;
     }
     .desc {
-      margin: 3px 0 0 0;
+      margin: 0 30px 0 0;
       font-size: 2.6em;
       color: #fff;
     }

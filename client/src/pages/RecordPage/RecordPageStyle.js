@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import photo from '../../images/photo.png'
 
-export const RecordContainer = styled.div`
+export const Container = styled.div` 
     width: 100%; 
     height: 100vh; 
     position: relative;
@@ -10,56 +10,125 @@ export const RecordContainer = styled.div`
     box-sizing: border-box;
     background-size: cover;
     background-position: center;
-    background: linear-gradient(124deg, #5b81fa 13%, #0852a8 98%);
+    background-color: #eceaf5;
+`
+export const RecordContainer = styled.div`
+    width: 80%; 
+    height: 80%; 
+    position: absolute;
+    display: flex;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    .content {
+        width: 47%;
+        display: flex;
+        justify-content: space-between;
+
+        .content-head {
+            height: 3em;
+            font-family: NotoSansKR;
+            font-size: 20px;
+            line-height: 1.2;
+            color: #17191d;
+            text-align: center;
+        }
+    }
+`
+export const ContentBox = styled.textarea`
+    padding-left: 10px;
+    padding-top: 5px;
+    width: 40%;
+    height: 60%;
+    left: 0;
+    position: absolute;
+    background: beige;
+    align-items: center;
+    border: none;
+    resize: none;
+    font-size: 2em;
+    letter-spacing: 2px;
+`
+
+export const HashtagBox = styled.textarea`
+    width: 45%;
+    height: 10%;
+    position: absolute;
+    top: 80%;
+    left: 0;
+    background: beige;
+    align-items: center;
+    border: none;
+    resize: none;
+    padding-left: 10px;
+    padding-top: 5px;
+    font-size: 2em;
+    letter-spacing: 2px;
 `
 
 export const ImageUploadBox = styled.div`
-    width: 30em;
-    height: 60em;
-    position: absolute;
-    top: 50%;
-    left: 25%;
-    transform: translate(-50%, -50%);
+    width: 95%;
+    height: 70%;
+    position: relative;
+    margin-top: 0 auto;
+    left: 0%;
     background: beige;
     border-radius: 15px;
     display: flex;
     align-items: center;
+    cursor: pointer;
 
-    .photo {
-        margin: 0 auto;
-        width: 15em;
-        height: 15em;
+    .photo-logo {
+        width: 30%;
+        height: 30%;
+        position: absolute;
         background-image: url(${photo});
         background-repeat: no-repeat;
         background-size: contain;
         background-position: center;
     }
+    .input-blind {
+        display: none;
+    }
+
+    .img-preview {
+        width: 100%;
+        height: 100%;
+        background-size: contain;
+        display: block;
+        background-color: #ddd;
+        cursor: pointer;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+`
+export const UploadButton = styled.div`
+    width: 30%;
+    height: 5em;
+    top: 84%;
+    /* right: 0; */
+    position: absolute;
+    background-color: #4970ed;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 10px;
+    color: #ffff;
+    margin: 0 auto;
+
+    div {
+        margin: auto;
+        width: 100%;
+        height: 100%;
+        width: 10em;
+        height: 4em;
+        font-family: NotoSansKR;
+        font-size: 22px;
+        font-weight: 500;
+        color: #fff;
+        letter-spacing: 5px;
+    }
 `
 
-export const ContentBox = styled.textarea`
-    width: 50em;
-    height: 40em;
-    position: absolute;
-    top: 60%;
-    left: 65%;
-    transform: translate(-50%, -75%);
-    background: beige;
-    display: flex;
-    align-items: center;
-    border: none;
-    resize: none;
-`
 
-export const TagBox = styled.textarea`
-    width: 50em;
-    height: 10em;
-    position: absolute;
-    top: 90%;
-    left: 65%;
-    transform: translate(-50%, -75%);
-    background: beige;
-    display: flex;
-    align-items: center;
-    border: none;
-    resize: none;
-`
+

@@ -9,7 +9,6 @@ import OotdListPage from "./pages/OotdPage/OotdListPage"
 import Login from "./components/Modal/Login"
 import Signup from "./components/Modal/Signup"
 import LandingPage from './pages/LandingPage/LandingPage';
-import LandingPageSub from './pages/LandingPage/LandingPageSub';
 import SideBar from './components/SideBar/SideBar'
 import {SolidHeart} from "./components/SvgIcon/SvgIcon"
 import RecordPage from './pages/RecordPage/RecordPage';
@@ -29,7 +28,6 @@ function App() {
       {/* <OotdListPage /> */}
       <LandingPage />
       {/* <RecordPage /> */}
-      {/* <LandingPageSub /> */}
       {/* <SolidHeart></SolidHeart> */}
       {/* <OotdListPage /> */}
       { 
