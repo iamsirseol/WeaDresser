@@ -1,5 +1,6 @@
-import { Link, useHistory } from 'react-router-dom';
+
 import { useSelector, useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import { isLoginHandler, isShowLoginModalHandler, isShowSignUpModalHandler, sideBarHandler} from '../../redux/actions/actions'
 import styled from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
@@ -119,8 +120,8 @@ function SideBar() {
                 <div className="side-bar-menu">
                     <ul>
                         <li><Link className="side-bar-link" to="/">MyPage</Link></li>
-                        <li><Link className="side-bar-link" to="/">관음증</Link></li>
-                        <li><Link className="side-bar-link" to="/">Diary</Link></li>
+                        <li><Link to="ootd-list" className="side-bar-link" >관음증</Link></li>
+                        <li><Link className="side-bar-link" to="">Diary</Link></li>
                     </ul>
                 </div>
             </SideBarContainer>

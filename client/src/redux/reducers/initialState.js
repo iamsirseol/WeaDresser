@@ -4,7 +4,7 @@ export const initialState = {
         accessToken : "",
     },
     isLoading : {
-        isLoading : true
+        isLoading : false //<-- 바꾼거 말하기 !
     },
     accessToken: {
         accessToken: ''
@@ -14,7 +14,17 @@ export const initialState = {
         isShowSignUpModal : false,
         isShowOotdImageModal : false,
     },
-    weatherData: {
+    // isShowLoginModal: {
+    //     isShowLoginModal : false
+    // },
+    // isShowSignUpModal: {
+    //     isShowSignUpModal: false
+    // },
+    // accessToken: {
+    //     accessToken: ''
+    // },
+    weatherData: 
+    {
         coord: null,
         main: null, 
         name: null, 

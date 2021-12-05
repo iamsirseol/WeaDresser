@@ -68,17 +68,24 @@ export const UserInfoChkPassword = styled.input.attrs(props => ({
     id:"checkPassword"
 }))`
 `
-export const UserInfoSubmitBtn = styled.button`
+export const UserInfoSubmitBtn = styled.button.attrs(props => ({
+    type: "submit",
+}))`
     width: 200px;
     border: none; 
     padding: 10px 5px;
     box-sizing: border-box;
     margin-top: 20px;
-    background: #cc6b6b;
+    background: #e94b4b;
     color: #fff;
     font-size: 15px;
     &:hover{
-        background: #a52f2f
+        background: #be0000
+    }
+    &:disabled{
+        background: #e94b4b;
+        opacity: .8;
+        cursor: auto;
     }
 `
 export const UserInfoSnsLogined = styled.p`

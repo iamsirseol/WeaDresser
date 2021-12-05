@@ -21,7 +21,6 @@ module.exports = {
       console.log(err);
     }
   },
-
   // * PATCH mypage/users
   update: async (req, res) => {
     const { password, editPassword, userName } = req.body;
@@ -87,4 +86,4 @@ module.exports = {
       console.log(err);
     }
   },
-};
+}

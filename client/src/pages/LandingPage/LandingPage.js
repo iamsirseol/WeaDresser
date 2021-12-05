@@ -7,9 +7,8 @@ import {
     Container, 
     LandingPageContainer, 
     MainLogo, WeatherIconBox, 
-    WeahterBarBox, 
+    WeahterBarBox, WeatherIcon,
     Scroll,
-    WeatherIcon
 } from './LandingPageStyle';
 import sun from '../../images/sun.png';
 import cloud from '../../images/cloud.png';
@@ -17,35 +16,73 @@ import moon from '../../images/moon.png';
 import rain from '../../images/rain.png';
 import snow from '../../images/snow.png';
 
+require('dotenv').config();
 function LandingPage () {
 
-    const [curWeather, setCurWeather] = useState('');
+    const [curWeather, setCurWeather] = useState("맑음");
     const [curIcon, setCurIcon] = useState(moon);
+    const [completed, setCompleted] = useState(false);
+
     const dispatch = useDispatch();
     const weatherData = useSelector(state => state.getWeatherDataReducer); // redux-thunk 다시 보기
-    console.log('날씨!',weatherData);
+    const isLoading = useSelector(state => state.isLoadingReducer.isLoading)
 
-    // if (weatherData.weather[0].main === 'Clouds') {
-    //     setCurWeather('흐림');
-    //     setCurIcon(cloud);
+    // console.log('날씨!',weatherData);
+    // console.log(isLoading)
+
+    // function handleGeoSucces (location) {
+    //     // console.log("handle GEo Sucess")
+    //     const lat = location.coords.latitude;
+    //     const lot = location.coords.longitude;
+    //     console.log(location)
+    //     dispatch(getLocationData(lat, lot));
     // }
-    // if (weatherData.weather[0].main === 'Snow') {
-    //     setCurWeather('눈');
-    //     setCurIcon(snow);
+    // function handleGeoError (err) {
+    //     // console.log("asdfjaisfdhioasdhfiaodsuhf=============");
+    //     console.log(err);
+    //     // console.log('Cannot get your location');
     // }
-    // if (weatherData.weather[0].main === 'Rain' || weatherData.weather[0].main === 'Thunderstrom') {
-    //     setCurWeather('비');
-    //     setCurIcon(rain);
-    // } else {
-    //     setCurWeather('맑음');
-    //     setCurIcon(sun);
+    // console.log(process.env.REACT_APP_API_KEY)
+    // const geoSucc = (location) => {
+    //     const API_KEY = process.env.REACT_APP_API_KEY
+    //     dispatch(getLocationData(location.coords,API_KEY));
+    //     setCompleted(true);
     // }
+
+    const getGeo = () => {
+        console.log("geo call !!!!!")
+        const options = {
+            enableHighAccuracy: true,
+            maximumAge: 3000,
+            timeout: 2700
+        };
+        navigator.geolocation.getCurrentPosition(
+            (location)=>{
+                const API_KEY = process.env.REACT_APP_API_KEY
+                dispatch(getLocationData(location.coords,API_KEY));
+                // setCompleted(true);
+            }, 
+            (err)=>{
+                if(err.code === 3){
+                    getGeo();
+                    setCompleted(false)
+                }
+                if(err.code ===1){
+                    alert("위치 권한을 켜주세요");
+                }
+                // if(err.code === 2)
+            }, 
+        options)
+    }
 
     useEffect (() => {
+        if (!completed)  getGeo()      
+        return () => {
+            setCompleted(true)
+        }
         
-        let complete = false;
-        
-        // if (weatherData.data) {
+    }, [completed])
+      // if (weatherData.data) {
         // }
 
         // if ('geolocation' in navigator) {
@@ -58,21 +95,12 @@ function LandingPage () {
         // } else {
         //     console.log('Cannot get your location');
         // }
-        function askForCoords() {
-            navigator.geolocation.getCurrentPosition(handleGeoSucces, handleGeoError);
-        }
+        // function askForCoords() {
+        //     console.log('asdfioasjfdasdf==========', 'geolocation' in navigator)
+        // }
 
-        function handleGeoSucces (location) {
-            const lat = location.coords.latitude;
-            const lot = location.coords.longitude;
-            console.log(location)
-            dispatch(getLocationData(lat, lot));
-        }
-        
-        function handleGeoError () {
-            console.log('Cannot get your location');
-        }
-        
+         
+        // askForCoords();
         // async function getWeather (lat, lot) {
         //     const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lot}&appid=${process.env.REACT_APP_API_KEY}`)
         //         .catch(err => console.log('err', err));
@@ -80,14 +108,12 @@ function LandingPage () {
         //     dispatch(getWeatherData({ coord, main, name, sys, weather }));
         // }
         
-        return () => {
-            if (!complete) {
-                askForCoords();
-                complete = true;
-            }
-        }
-        
-    }, []);
+        // return () => {
+        //     if (!complete) {
+        //         askForCoords();
+        //         complete = true;
+        //     }
+        // }
 
     return (
         <Container>
@@ -102,22 +128,22 @@ function LandingPage () {
                 </WeatherIconBox>
                 <WeahterBarBox>
                 {
-                !weatherData.data ? 
-                null // 로딩페이지로 바꿔서 넣어야 할 듯
+                !isLoading ? 
+                null
                 :
                     <>
-                        {/* <div>
+                        <div>
                             <WeatherIcon imgUrl={curIcon}></WeatherIcon>
-                            <span className="temp-now">{(parseInt((weatherData.data.main.temp - 273.15) * 10)) / 10}°C</span>
+                            <span className="temp-now">{(parseInt((weatherData.main.temp - 273.15) * 10)) / 10}°C</span>
                             <span className="desc">{curWeather}</span>
                         </div>
                         <div>
                             <span className="temp1">최고기온</span>
-                            <span className="temp2">{(parseInt((weatherData.data.main.temp_max - 273.15) * 10)) / 10}°C</span>
+                            <span className="temp2">{(parseInt((weatherData.main.temp_max - 273.15) * 10)) / 10}°C</span>
                         </div><div>
                             <span className="temp1">최저기온</span>
-                            <span className="temp3">{(parseInt((weatherData.data.main.temp_min - 273.15) * 10)) / 10}°C</span>
-                        </div> */}
+                            <span className="temp3">{(parseInt((weatherData.main.temp_min - 273.15) * 10)) / 10}°C</span>
+                        </div>
                     </>
                 }
                 </WeahterBarBox>

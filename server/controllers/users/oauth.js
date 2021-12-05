@@ -1,3 +1,4 @@
+const { sequelize } = require('../../models/index')
 module.exports = {
   // *  POST oauth/google
   google: (req, res) => {
