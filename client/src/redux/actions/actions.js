@@ -63,15 +63,14 @@ export function setAccessToken(accessToken) {
         }
     }
 };
-export function getLocationData(lat, lot) {
-    console.log(lat, lot, '@@@@')
-    return (async dispatch => {
-        const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lot}&appid=${process.env.REACT_APP_API_KEY}`)
-            .catch(err => console.log('err', err));
-        const { coord, main, name, sys, weather } = result.data;
-        dispatch(getWeatherData({ coord, main, name, sys, weather }))
-    })
-};
+// export function getLocationData(lat, lot) {
+//     return (async dispatch => {
+//         const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lot}&appid=${process.env.REACT_APP_API_KEY}`)
+//             .catch(err => console.log('err', err));
+//         const { coord, main, name, sys, weather } = result.data;
+//         dispatch(getWeatherData({ coord, main, name, sys, weather }))
+//     })
+// };
 export function getWeatherData(data) {
     return {
         type : WEATHER_DATA,
