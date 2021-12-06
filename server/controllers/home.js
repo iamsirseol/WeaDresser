@@ -1,5 +1,5 @@
 const { User, Diarie,sequelize } = require('../models')
-const { Op } = require('Sequelize');
+const { Op } = require('sequelize');
 module.exports = {
   // * GET  /home
   findRandom : async (req, res) => {

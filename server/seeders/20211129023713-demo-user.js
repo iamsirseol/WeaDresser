@@ -29,7 +29,7 @@ module.exports = {
       const obj = {
         id : idx+1,
         userName : "minchan " + ranNum,
-        email : "minchan@eamil"+ ranNum +".com",
+        email : "minchan@email"+ ranNum +".com",
         password: "1234",
         gender: "male",
         social:shareBool,

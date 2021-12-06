@@ -1,6 +1,6 @@
 const { User, Diarie, sequelize } = require("../models");
 const { isAuthorized } = require("./tokenfunction/index");
-const { Op } = require("Sequelize");
+const { Op } = require("sequelize");
 module.exports = {
   // * GET  /ootd   또는   /ootd?offset= & limit= 
   findTopLike :async (req, res) => {

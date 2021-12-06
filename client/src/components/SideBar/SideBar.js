@@ -1,7 +1,9 @@
-import { Link, useHistory } from 'react-router-dom';
+
 import { useSelector, useDispatch } from 'react-redux';
-import { isLoginHandler, isShowLoginModalHandler, isShowSignUpModalHandler } from '../../redux/actions/actions'
+import { Link, useHistory } from 'react-router-dom';
+import { isLoginHandler, isShowLoginModalHandler, isShowSignUpModalHandler, sideBarHandler} from '../../redux/actions/actions'
 import styled from 'styled-components';
+import { useEffect, useRef, useState } from 'react';
    
 const SideBarContainer = styled.aside`
     width: 3em;
@@ -44,13 +46,14 @@ const SideBarContainer = styled.aside`
         left: 7.5px;
         height: 0;
         overflow: hidden;
-        opacity: inherit.8;
+        opacity: .8;
         >ul{
             >li{
                 background: #000;
                 border-bottom: 1px solid #fff;
                 white-space: nowrap;
                 padding: 5px;
+
                 >.side-bar-link{
                     font-size: 1.8em;
                     color: #fff;
@@ -68,40 +71,47 @@ const SideBarContainer = styled.aside`
 
 function SideBar() {
 
-    // useState
-
+    const dispatch = useDispatch()
+    const sideBarSpreadHandler = (handle) => {dispatch(sideBarHandler(handle))}
+    const isShowSideBar = useSelector(state => state.isShowSideBarReducer.isShowSideBar)
     const sideBarSpread = () => {
+        let SideBarContainer = document.querySelector('.side-bar-container')
         let sideBarBtn = document.querySelector('.side-bar-btn')
         let sideBarMenu = document.querySelector('.side-bar-menu');
-        let spread = true;
 
-        if(spread === true){
-            console.log(spread)
-            spread = false;
+        if(isShowSideBar === false){
+            sideBarSpreadHandler(true)
             sideBarBtn.children[0].style.transform="rotate(-405deg)";
-            sideBarBtn.children[0].style.top="50%";
+            sideBarBtn.children[0].style.top="44%";
+            sideBarBtn.children[0].style.background="#000";
             sideBarBtn.children[1].style.left="100%";
+            sideBarBtn.children[1].style.background="#000";
             sideBarBtn.children[2].style.transform="rotate(-495deg)";
-            sideBarBtn.children[2].style.top="11.5px"
+            sideBarBtn.children[2].style.top="0.65em"
+            sideBarBtn.children[2].style.background="#000";
             sideBarMenu.style.transition = "all .3s";
             sideBarMenu.style.height = "150px";
+            SideBarContainer.style.background="transparent"
         }
-        else if(spread === false){
-            console.log(spread)
-            spread = true;
+        else if(isShowSideBar === true){
+            sideBarSpreadHandler(false)
             sideBarBtn.children[0].style.transform="rotate(0)";
             sideBarBtn.children[0].style.top="0px";
+            sideBarBtn.children[0].style.background="#fff";
             sideBarBtn.children[1].style.left="0px";
+            sideBarBtn.children[1].style.background="#fff";
             sideBarBtn.children[2].style.transform="rotate(0)";
-            sideBarBtn.children[2].style.top="23px"
+            sideBarBtn.children[2].style.top="calc(100% - 2px)"
+            sideBarBtn.children[2].style.background="#fff";
             sideBarMenu.style.transition = "all .3s";
             sideBarMenu.style.height = "0px";
+            SideBarContainer.style.background="#000"
         }
     }
 
     return (
         <>
-            <SideBarContainer>
+            <SideBarContainer className="side-bar-container">
                 <span className="side-bar-btn" onClick = {() => sideBarSpread()}>
                     <i></i>
                     <i></i>
@@ -109,9 +119,10 @@ function SideBar() {
                 </span>
                 <div className="side-bar-menu">
                     <ul>
-                        <li><Link className="side-bar-link" to="/">MyPage</Link></li>
-                        <li><Link className="side-bar-link" to="/">관음증</Link></li>
-                        <li><Link className="side-bar-link" to="/">Diary</Link></li>
+                        <li><Link className="side-bar-link" to="/mypage">MyPage</Link></li>
+                        <li><Link to="ootd-list" className="side-bar-link" >관음증</Link></li>
+                        <li><Link className="side-bar-link" to="">Diary</Link></li>
+                        <li><Link className="side-bar-link" to="record">Record</Link></li>
                     </ul>
                 </div>
             </SideBarContainer>

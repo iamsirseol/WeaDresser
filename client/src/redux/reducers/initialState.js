@@ -3,7 +3,7 @@ export const initialState = {
         isLogin : false,
         accessToken : "",
     },
-    isLoading : {
+    isLoading : { 
         isLoading : false //<-- 바꾼거 말하기 !
     },
     modal : {
@@ -27,5 +27,8 @@ export const initialState = {
         name: null, 
         sys: null,
         weather: null
-    }
+    },
+    isShowSideBar: {
+        isShowSideBar: false
+    },
 }
