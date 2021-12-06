@@ -72,24 +72,28 @@ module.exports = {
   },
 
   // *  POST users/signup
-  signup: (req, res) => {
-    console.log("okokokokokokokokokokokokokokokokok")
+  signup: async (req, res) => {
+    console.log("end point here")
     const { email, password, userName, social, gender } = req.body;
     // if (email || password || userName || social)
       // return res.status(422).send("Insufficient parameters");
-    console.log(email, password, userName , social , gender)
-    User.findOrCreate({
-      where: { email , password, userName, social, gender },
+    const found = await User.findOne({
+      where: { email }
     })
-      .then(([data, created]) =>
-        !created
-          ? res.status(409).send("Conflict")
-          : res.status(201).send("Created")
-      )
-      .catch((err) => {
-        console.log(err)
-        return res.status(500).send("Internal server error");
-      });
+    
+    return found 
+      ? res.status(403).send("Conflict")
+      : User.create({
+          email, password, userName, social, gender
+        })
+      .then( created => {
+        if(!created)
+          return res.status(500).send("Failed to create")
+        return res.status(200).send("Created")
+      })
+      .catch(err => {
+        return res.status(500).send("Internal server Error")
+      })
   },
 
   // *  POST users/signout

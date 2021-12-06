@@ -29,7 +29,7 @@ const FormContainer = styled(animated.div)`
   };
 
 `;
-const EmailDiv = styled.div`
+const EmailDiv = styled(animated.div)`
   width : 30em; height: 2em;
   margin: 0 center;
   margin-top: 5em;
@@ -68,16 +68,14 @@ const SignForm = ({ isValid, email }) => {
     values, errors, gender,
     handleInputChange, handleKeyPress, 
     handleRadioChange , handleSubmit} = useForm()
-    
     // Translate animation by useSpring 
     const props = useSpring({
-      transform: isValid[1] ? 'translateY(0%)' : 'translateY(100%)',
-      opacity : isValid[1] ? 1 : 0 
+      transform: isValid[0] && isValid[1]? 'translateY(0%)' : 'translateY(100%)',
+      opacity : isValid[0] && isValid[1] ? 1 : 0 
     });
-    console.log("asdfadf", )
   return(
     <>
-    { isValid[0] && isValid[1] ? <EmailDiv>{email}</EmailDiv> : null }
+    { isValid[0] && isValid[1] ? <EmailDiv className='emailDiv' style={props}>{email}</EmailDiv> : null }
     <form id='signForm' onSubmit={handleSubmit}>
       <FormContainer style={props}>
         <InputContainer2 >
@@ -117,12 +115,12 @@ const SignForm = ({ isValid, email }) => {
         { errors.password && <ErrP >{errors.password}</ErrP>} 
         <RadioContainer>
             <label>
-              <input type="radio" value="male" checked={gender == 'male'}
+              <input type="radio" value= 'male' checked={values.gender == 'male'}
                     onChange={handleRadioChange} />
               <span>Male</span>
             </label>
             <label>
-              <input type="radio" value="female" checked={gender == 'female'}
+              <input type="radio" value='female' checked={values.gender == 'female'}
                     onChange={handleRadioChange} 
                     />
               <span>Female</span>

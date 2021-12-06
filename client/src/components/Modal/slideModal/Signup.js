@@ -24,12 +24,12 @@ function Signup({ closeModalByBtn }){
     transform: !isValid[0] ? 'translateY(0%)' : 'translateY(100%)',
     opacity : !isValid[0] ? 1 : 0 
   });
-  
+  // Translate animation by useSpring 
   const displayOn = useSpring({
     transform: isValid[0] ? 'translateY(0%)' : 'translateY(100%)',
     opacity : isValid[0] ? 1 : 0 
   });
-
+  // back to login modal handler 
   const backModalHandler = () => {
     dispatch(isShowLoginModalHandler(true));
     dispatch(isShowSignUpModalHandler(false));
@@ -70,18 +70,29 @@ function Signup({ closeModalByBtn }){
           />
       </InputContainer>
         <InputButton onClick={codeValidation}>코드 인증</InputButton>
-      </>}
-        {errors.on && <ErrPtag>{errors.msg}</ErrPtag>}
-        {codeMsg.on && <ErrPtag height = {'0.5em'} width ={'25em'} size={'1.5em'}>{codeMsg.msg}</ErrPtag>}
-        {toLogin.on && 
-        <>
-          <BackContainer>
-            <p>로그인 하시겠습니까?</p>
-            <BackButton className="toLoginBtn" onClick={backModalHandler}/>
-          </BackContainer>
-        </> 
+      </>
+      }
+      { errors.on && <ErrPtag>{errors.msg}</ErrPtag>}
+      { codeMsg.on && 
+        <ErrPtag 
+          height = {'0.5em'} 
+          width = {'25em'} 
+          size = {'1.5em'}>
+          { codeMsg.msg }
+        </ErrPtag>
         }
-        { isValid[0] && isValid[1] ? <SignForm isValid={isValid}  email = {values.email} /> : null}
+      { toLogin.on && 
+      <>
+        <BackContainer>
+          <p>로그인 하시겠습니까?</p>
+          <BackButton className="toLoginBtn" onClick={backModalHandler}/>
+        </BackContainer>
+      </> 
+      }
+      { isValid[0] && isValid[1] ? 
+        <SignForm isValid={isValid}  email = {values.email} /> 
+        : null
+      }
   </>
   );
 }
