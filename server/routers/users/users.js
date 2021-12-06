@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const usersController = require("../../controllers/users/users");
 
-// *  POST users/email
+// *  GET users/email
 router.get("/email", usersController.checkEmail);
 
 // *  GET users/send-email

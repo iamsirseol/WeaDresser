@@ -95,7 +95,7 @@ export const InputButton = styled.div`
     border-radius: 1em;
     border: 0.5px solid rgba(255,255,255,0.5);
     
-    &:hover{ background-color:coral; }
+    &:hover{ background-color:#fff; color: #000; }  
     @media screen and (max-width : 767px){
       width: 6.5em;
       font-size: 1.1em;
@@ -109,23 +109,40 @@ export const InputButton = styled.div`
 
 `;
 
-export const ErrPtag = styled.div`
-  width: 20em;
-  height: 2em;
-  color: #fff;
-  font-size: 1.8em;
-  text-align: center;
-  margin-top: 2em ; // responsive 
-  font-size: 1.8em;
+export const InputContainer2 = styled(InputContainer)`
+  margin : 1em auto;
+  width: 25em;
   @media screen and (max-width : 767px){
-    height: 1.8em;
-    margin-top: 1.5rem;
-    font-size: 1.5rem;
+    margin : .8em auto;
+    width : 20em;
   }
   @media screen and (max-width : 424px){
-    width: 18rem;
-    height: 1.2rem;
-    margin-top: 0.2rem;
+      margin: .6em auto;
+      width : 18em;
+      font-size: 1.2em;
+    }
+`; 
+
+export const ErrPtag = styled.div`
+  width: ${({width}) => width || '20em'};
+  height: ${({height}) => height || '1em'};
+  color: #fff;
+  text-align: center;
+  margin-top: ${({ margin }) => margin|| '1.8em'}; // responsive 
+  font-size: ${({ size }) => size||'1.8em'};
+  @media screen and (max-width : 767px){
+    /* height: 1.8em; */
+    width: ${({width}) => width || '18em'};
+    height: ${({height}) => height || '1em'};
+    margin-top: ${({ margin }) => margin|| '1em'}; // responsive 
+    font-size: 1.3rem;
+  }
+  @media screen and (max-width : 424px){
+    /* width: 18rem; */
+    /* height: 1.2rem; */
+    width: ${({width}) => width || '18em'};
+    height: ${({height}) => height || '1em'};
+    margin-top: ${({ margin }) => margin|| '0.5em'}; // responsive 
     font-size: 1rem;
   }
 `;
@@ -142,6 +159,21 @@ export const BackButton = styled(FiArrowLeftCircle)`
   &:hover{
     cursor: pointer; 
     color:coral;
+  }
+`;
+
+export const BackContainer = styled(ErrPtag)`
+  position: relative;
+  width:100%;
+  /* border: 1px solid coral; */
+  margin: .8em auto; 
+  .toLoginBtn{
+    position: relative;
+    top: -1em; left: 0;
+    width :1.8em; height: 1.8em;
+  }
+  p{
+    color: #fff;
   }
 `;
 

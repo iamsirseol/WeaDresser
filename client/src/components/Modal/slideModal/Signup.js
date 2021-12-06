@@ -5,19 +5,20 @@ import { useSpring } from 'react-spring'
 import title from './title.svg'
 import { useDispatch, useSelector } from 'react-redux';
 import { isShowLoginModalHandler, isShowSignUpModalHandler,} from '../../../redux/actions/actions'
-import { LogoContainer,InputContainer,InputButton, BackButton, ErrPtag,} from './SignupStyle';
+import { LogoContainer,InputContainer,InputButton, BackButton, ErrPtag, BackContainer,} from './SignupStyle';
 import { CloseModalButton } from './ModalStyle';
+
 function Signup({ closeModalByBtn }){
   const { isShowLoginModal, isShowSignUpModal } = useSelector(state => state.isShowModalReducer)
   const dispatch = useDispatch(); 
-
   const 
   { handleInputChange, 
     handleKeyPress, 
     emailValidation,
     codeValidation,
-    values, errors, isValid
+    values, errors, isValid, codeMsg, toLogin
   } = useForm();
+
   // Translate animation by useSpring 
   const displayOff = useSpring({
     transform: !isValid[0] ? 'translateY(0%)' : 'translateY(100%)',
@@ -35,11 +36,12 @@ function Signup({ closeModalByBtn }){
   }
 
   return (
-  <> 
-    <BackButton onClick={backModalHandler}/>
+  <> { !isValid[0] && !isValid[1] ? <BackButton onClick={backModalHandler}/> : null}
     <CloseModalButton onClick={closeModalByBtn}/>
-    <LogoContainer><img alter="" src={title}/></LogoContainer>
-      { isValid[0] ? null : 
+    { isValid[0] && isValid[1] ? null : 
+      <LogoContainer><img alter="" src={title}/></LogoContainer>
+    }
+      { isValid[0]  ? null : 
       <>
         <InputContainer style={displayOff} width = {'35em'}>
           <input 
@@ -55,7 +57,7 @@ function Signup({ closeModalByBtn }){
         <InputButton onClick={emailValidation}>이메일 인증</InputButton>
       </>
       }
-      { !isValid[0] ? null :<>
+      { !isValid[0]|| isValid[0]&& isValid[1] ? null :<>
       <InputContainer style={displayOn} width = {'35em'}>
         <input 
           className="signup-input"
@@ -70,7 +72,16 @@ function Signup({ closeModalByBtn }){
         <InputButton onClick={codeValidation}>코드 인증</InputButton>
       </>}
         {errors.on && <ErrPtag>{errors.msg}</ErrPtag>}
-        { isValid[0] && isValid[1] ?    <SignForm isValid={isValid}/> : null}
+        {codeMsg.on && <ErrPtag height = {'0.5em'} width ={'25em'} size={'1.5em'}>{codeMsg.msg}</ErrPtag>}
+        {toLogin.on && 
+        <>
+          <BackContainer>
+            <p>로그인 하시겠습니까?</p>
+            <BackButton className="toLoginBtn" onClick={backModalHandler}/>
+          </BackContainer>
+        </> 
+        }
+        { isValid[0] && isValid[1] ? <SignForm isValid={isValid}  email = {values.email} /> : null}
   </>
   );
 }

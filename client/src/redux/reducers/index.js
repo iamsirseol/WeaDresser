@@ -8,8 +8,6 @@ import {
     ACCESS_TOKEN,
     WEATHER_DATA,
     IS_SHOW_SIDE_BAR,
-
-    
 } from '../actions/actions';
 import { initialState } from './initialState';
 
