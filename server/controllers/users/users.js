@@ -33,11 +33,10 @@ module.exports = {
   // *  POST users/signin
   signin: async (req, res) => {
     // req.body validation
-    // console.log(req.body)
     if (!req.body.email || !req.body.password)
       return res.status(422).send("Insufficient parameters");
 
-    const result = await User.findOne({
+      const result = await User.findOne({
       where: { email: req.body.email },
     }).catch((err) => {
       // db error
@@ -63,10 +62,12 @@ module.exports = {
       process.env.ACCESS_SECRET,
       { expiresIn: "1d" } // <-- test 용 1day
     );
-    //refresh_token  <--  현재 불필요
-    const refreshToken = sign({ id, email }, process.env.REFRESH_SECRET, {
-      expiresIn: "30d",
+    
+    res.cookie('Bearer', accessToken, {
+      path: "/",
+      httpOnly: true,  // <-- http , htps Only
     });
+
     return res.json({ email, accessToken });
   },
 

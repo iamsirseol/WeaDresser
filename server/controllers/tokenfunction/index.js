@@ -1,5 +1,4 @@
 require("dotenv").config();
-
 const { sign, verify } = require("jsonwebtoken");
 
 module.exports = {
@@ -21,7 +20,6 @@ module.exports = {
   },
 
   isAuthorized: (req) => {
-    
     const authorization =
       req.headers.authorization || req.cookies.authorization;
     if (!authorization) {
