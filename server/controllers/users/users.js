@@ -3,7 +3,7 @@ const { User } = require("../../models");
 require("dotenv").config();
 
 module.exports = {
-  // *  POST users/check-email
+  // *  POST users/email
   checkEmail: (req, res) => {
     return res.send("POST /users/check-email OK");
   },

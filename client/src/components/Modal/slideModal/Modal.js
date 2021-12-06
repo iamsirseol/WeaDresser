@@ -1,16 +1,11 @@
 import React,{ useCallback, useRef, useState, useEffect } from "react";
 import { useSpring } from 'react-spring'
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios'
 import Login from './Login'
 import { getGoogleUserInfo, getKakaoAccToken } from '../../../api/social'
-import axios from 'axios'
-import { isShowLoginModalHandler, loginSuccessHandler, isShowSignUpModalHandler } 
-from '../../../redux/actions/actions'
-import { 
-  ModalBackdrop, 
-  ModalContainer,
-  CloseModalButton,
-} from './ModalStyle'
+import { isShowLoginModalHandler, loginSuccessHandler, isShowSignUpModalHandler } from '../../../redux/actions/actions'
+import { ModalBackdrop } from './ModalStyle'
 
 const Modal = () => {
   const { isShowLoginModal , isShowSignUpModal} = useSelector(state => state.isShowModalReducer)

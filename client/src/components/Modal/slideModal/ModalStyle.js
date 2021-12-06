@@ -12,6 +12,7 @@ export const ModalBackdrop = styled(animated.div)`
   display: flex;
   justify-content: center;
   align-items: center;
+
 `;
 
 export const ModalContainer = styled(animated.div)`
@@ -39,7 +40,8 @@ export const ModalContainer = styled(animated.div)`
 
 export const CloseModalButton = styled(MdClose)`
   width: 2.5rem; height: 2.5rem;
-  padding: 0;
+  padding: 1rem;
+  /* background-color: black; */
   z-index:1000000000000000000000000; // <-- cursor pointer 왜 안됨;;?
   color: #fff;
   cursor: pointer; 
@@ -47,49 +49,6 @@ export const CloseModalButton = styled(MdClose)`
   top: 1rem; right: 1rem;
   &:hover{
     cursor: pointer; 
-    color:black;
+    color:coral;
   }
-`;
-
-export const LogoContainer =styled.div`
-  width: 25rem; 
-  height: 20rem;
-  align-items: center;
-  > img{
-    position: relative;
-    width: 100%; 
-    top: 50%;
-    margin: auto;
-    cursor: pointer;
-  }
-  @media screen and (max-width : 767px){
-    width: 20rem; 
-    height: 16rem;
-  }
-  @media screen and (max-width : 424px){
-    width:15rem; 
-    height: 12rem;
-  }
-`;
-
-export const TemBtn = styled.div`
-  background-color: black;
-  text-align:center;
-  color: #fff;
-  width: 8rem;
-  height: 3rem;
-  cursor: pointer;
-  margin-top:25rem;
-  margin-left:10rem;
-  font-size: 2rem;
-`;
-
-export const TemDiv =styled.div`
-  background-color: black;
-  width: 100%;
-  height: 5rem;
-  margin-top:1rem;
-  margin-left:10rem;
-  color: #FFF;
-  font-size: 2rem;
 `;
