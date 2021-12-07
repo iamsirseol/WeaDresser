@@ -10,8 +10,6 @@ import NavBar from "./components/NavBar/NavBar"
 
 import OotdListPage from "./pages/OotdPage/OotdListPage"
 // import {SolidHeart} from "./components/SvgIcon/SvgIcon"
-import Login from "./components/Modal/slideModal/Login"
-import Signup from "./components/Modal/slideModal/Signup"
 import LandingPage from './pages/LandingPage/LandingPage';
 import SideBar from './components/SideBar/SideBar'
 import {SolidHeart} from "./components/SvgIcon/SvgIcon"
@@ -26,11 +24,6 @@ require('dotenv').config();
 
 function App() {
   const { isLogin, accessToken } = useSelector(state => state.isLoginReducer)
-  const { isShowLoginModal, isShowSignUpModal 
-  } = useSelector(state => state.isShowModalReducer);
-  const dispatch = useDispatch();
-  const [ socialDone, setSocialDone ] = useState(false);
-  console.log(isLogin, accessToken);
 
   return (
     <BrowserRouter>

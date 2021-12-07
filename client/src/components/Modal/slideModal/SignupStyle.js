@@ -46,6 +46,7 @@ export const InputContainer = styled(animated.div)`
     width : ${({width}) => width || '23em'} ;
     height: 1.5em;
     margin: 0.5em; // responsive 
+    /* font-size: 2.8em; */
     font-size: ${({size})=> size|| '1.8em'};
     color: #fff;
     background-color: #5b81fa;

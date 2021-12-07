@@ -7,9 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { isShowLoginModalHandler, isShowSignUpModalHandler,} from '../../../redux/actions/actions'
 import { LogoContainer,InputContainer,InputButton, BackButton, ErrPtag, BackContainer,} from './SignupStyle';
 import { CloseModalButton } from './ModalStyle';
+import { useEffect } from 'react';
 
 function Signup({ closeModalByBtn }){
   const { isShowLoginModal, isShowSignUpModal } = useSelector(state => state.isShowModalReducer)
+  const [ stopClxModal, setStopClxModal ] = useState(true);
   const dispatch = useDispatch(); 
   const 
   { handleInputChange, 
@@ -34,6 +36,16 @@ function Signup({ closeModalByBtn }){
     dispatch(isShowLoginModalHandler(true));
     dispatch(isShowSignUpModalHandler(false));
   }
+  // Prohibit to clx by backdrop 
+  useEffect(()=> {
+    console.log(stopClxModal)
+    console.log(isShowLoginModal)
+    console.log(isShowSignUpModal)
+
+    if(stopClxModal){
+      dispatch(isShowSignUpModalHandler(true))
+    }
+  },[stopClxModal])
 
   return (
   <> { !isValid[0] && !isValid[1] ? <BackButton onClick={backModalHandler}/> : null}

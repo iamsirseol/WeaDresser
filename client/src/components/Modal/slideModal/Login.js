@@ -23,12 +23,12 @@ function Login({ closeModalByBtn }){
   const history= useHistory();
   const dispatch = useDispatch(); 
 
-  // Translate animation by useSpring 
+  // Translate animation (Signin)
   const props = useSpring({
     transform: isShowLoginModal ? 'translateY(0%)' : 'translateY(100%)',
     opacity : isShowLoginModal ? 1 : 0 
   });
-  
+  // Translate animation (Signup)
   const props2 = useSpring({
     transform: isShowSignUpModal ? 'translateX(0%)' : 'translateX(100%)', 
     opacity : isShowSignUpModal ? 1 : 0 
@@ -44,7 +44,7 @@ function Login({ closeModalByBtn }){
     if(e.key === 'Backspace') setActive("")
   };
   // validition : email=null, password=Null, email regx@ 
-  // ! 정규식 추가 
+  // !Todo  정규식 추가 
   const validCheckHandler = () => {
     const { email, password } = loginInfo
     if(!email || !password ){
@@ -57,7 +57,7 @@ function Login({ closeModalByBtn }){
     else{
     // GET user Access Token from server
       setActive("-active") // button active
-      userLoginHandler() // login ajax call
+      userLoginHandler() // * login ajax call
     }
   };
   // GET User info by request to 80 Server
