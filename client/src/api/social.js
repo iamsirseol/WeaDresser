@@ -1,6 +1,7 @@
 import axios from 'axios';
 require('dotenv').config();
 
+//!Todo Client id, Secret key,숨기기
 const getGoogleAccToken = () => {
   const client_id 
     = process.env.REACT_APP_KEY_GOOGLE 
