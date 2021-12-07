@@ -1,5 +1,5 @@
-const { sign } = require("jsonwebtoken");
 const { User } = require("../../models");
+const { generateToken , sendToken } = require('../tokenfunction')
 require("dotenv").config();
 
 module.exports = {
@@ -36,7 +36,7 @@ module.exports = {
     if (!req.body.email || !req.body.password)
       return res.status(422).send("Insufficient parameters");
 
-      const result = await User.findOne({
+    const result = await User.findOne({
       where: { email: req.body.email },
     }).catch((err) => {
       // db error
@@ -55,22 +55,12 @@ module.exports = {
     // password 불일치
     if (!user) return res.status(401).send("Unauthorized");
 
-    // generate token
-    const { id, email } = user.dataValues;
-    const accessToken = sign(
-      { id, email },
-      process.env.ACCESS_SECRET,
-      { expiresIn: "1d" } // <-- test 용 1day
-    );
-    
-    res.cookie('Bearer', accessToken, {
-      path: "/",
-      httpOnly: true,  // <-- http , htps Only
-    });
-
-    return res.json({ email, accessToken });
+    const { id, email } = user.dataValues; 
+    const token = generateToken({ id, email });
+    sendToken(res, token);
+    return res.json({ email, token }); 
+    //! accessToken 을 body에 안줘도 됨 ! 추후 다시 협의 보기
   },
-
   // *  POST users/signup
   signup: async (req, res) => {
     console.log("end point here")
