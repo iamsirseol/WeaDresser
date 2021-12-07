@@ -23,7 +23,8 @@ import RecordPage from './pages/RecordPage/RecordPage'
 require('dotenv').config();
 
 function App() {
-  const { isLogin, accessToken } = useSelector(state => state.isLoginReducer)
+  //!Todo : 랜더링시 session 로그인 정보 확인 후 isLogin 값 변경 해주기
+  const { isLogin } = useSelector(state => state.isLoginReducer)
 
   return (
     <BrowserRouter>

@@ -28,7 +28,7 @@ export const LogoContainer =styled.div`
 
 export const InputContainer = styled(animated.div)`
   width: ${({ width })=> width || '40em'};
-  height: 3em;
+  height: ${({ height })=> height || '3em'};
   display: flex;
   align-items: center;
   text-align: center;
@@ -86,7 +86,7 @@ export const InputButton = styled.div`
     width: 7em;
     padding: 0.6em 0.3em;
     margin-left:1.5em;
-    margin-top: 0.6em;
+    margin-top: 2em;
     color: #fff;
     font-size: 1.3em;
     display: inline-block;
@@ -100,11 +100,14 @@ export const InputButton = styled.div`
       width: 6.5em;
       font-size: 1.1em;
       padding: 0.5em 0.4em;
+      margin-top: 2.5em;
+      margin: 1.5em auto;
     }
     @media screen and (max-width : 424px){
       width: 4em;
-      font-size: 1.2em;
+      font-size: 1.3em;
       padding: 0.5em 0.2em;
+
     }
 
 `;
@@ -112,6 +115,7 @@ export const InputButton = styled.div`
 export const InputContainer2 = styled(InputContainer)`
   margin : 1em auto;
   width: 25em;
+  font-size:1.2rem;
   @media screen and (max-width : 767px){
     margin : .8em auto;
     width : 20em;
@@ -135,7 +139,7 @@ export const ErrPtag = styled.div`
     width: ${({width}) => width || '18em'};
     height: ${({height}) => height || '1em'};
     margin-top: ${({ margin }) => margin|| '1em'}; // responsive 
-    font-size: 1.3rem;
+    font-size: 1.5rem;
   }
   @media screen and (max-width : 424px){
     /* width: 18rem; */
@@ -143,7 +147,7 @@ export const ErrPtag = styled.div`
     width: ${({width}) => width || '18em'};
     height: ${({height}) => height || '1em'};
     margin-top: ${({ margin }) => margin|| '0.5em'}; // responsive 
-    font-size: 1rem;
+    font-size: 1.3rem;
   }
 `;
 

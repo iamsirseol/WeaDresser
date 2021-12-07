@@ -55,7 +55,9 @@ function Signup({ closeModalByBtn }){
     }
       { isValid[0]  ? null : 
       <>
-        <InputContainer style={displayOff} width = {'35em'}>
+        <InputContainer 
+          style={displayOff} 
+          height = {"5em"} width = {'35em'}>
           <input 
             className="signup-input"
             type="email"

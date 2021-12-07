@@ -6,7 +6,7 @@ import { useSpring } from '@react-spring/core';
 
 const FormContainer = styled(animated.div)`
   width: 40em;
-  padding-top: 2em;
+  padding-top: 5em;
   background-color: transparent;
   text-align: center;
   /* border: 1px solid coral; */
@@ -18,6 +18,10 @@ const FormContainer = styled(animated.div)`
     border: .5px solid #fff;
     border-radius: 5px; 
     margin-bottom: 1.6em;
+    &:hover{
+      color:black;
+      background-color: #fff;
+    }
     @media screen and (max-width : 767px){
       width: 6em;
       font-size: 1.4em;
@@ -34,11 +38,11 @@ const EmailDiv = styled(animated.div)`
   margin: 0 center;
   margin-top: 5em;
   text-align: center;
-  font-size: 1.8em;
+  font-size: 2.2em;
   color: #fff;
   @media screen and (max-width : 767px){
-    
-    font-size: 1.6em;
+    font-size: 1.8em;
+    margin-top: 3.8em;
   }
 `;
 const ErrP  = styled.p`
@@ -60,7 +64,6 @@ const RadioContainer =styled.div`
     font-size:1.5em;
     color: #ffffff;
   }
-
 `;
 
 const SignForm = ({ isValid, email }) => {
@@ -69,15 +72,15 @@ const SignForm = ({ isValid, email }) => {
     handleInputChange, handleKeyPress, 
     handleRadioChange , handleSubmit} = useForm()
     // Translate animation by useSpring 
-    const props = useSpring({
+    const slidUp = useSpring({
       transform: isValid[0] && isValid[1]? 'translateY(0%)' : 'translateY(100%)',
       opacity : isValid[0] && isValid[1] ? 1 : 0 
     });
   return(
     <>
-    { isValid[0] && isValid[1] ? <EmailDiv className='emailDiv' style={props}>{email}</EmailDiv> : null }
+    { isValid[0] && isValid[1] ? <EmailDiv className='emailDiv' style={slidUp}>{email}</EmailDiv> : null }
     <form id='signForm' onSubmit={handleSubmit}>
-      <FormContainer style={props}>
+      <FormContainer style={slidUp}>
         <InputContainer2 >
           <input 
             id="surName"
