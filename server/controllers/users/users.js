@@ -23,10 +23,11 @@ module.exports = {
     : res.status(200).send("request on valid");
   },
 
-  // *  GET users/send-email
+  // *  GET users/email?:email
   sendEmail: (req, res) => {
+    const { email } = req.params;
     console.log("ok it works");
-    return res.send("GET /users/send-email OK");
+    return res.send({ email });
   },
 
   // *  POST users/signin
