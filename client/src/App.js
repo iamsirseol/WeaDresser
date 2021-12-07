@@ -1,3 +1,5 @@
+
+   
 import React, { useEffect, useState } from "react";
 import './styles/reset.css';
 // import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -28,8 +30,6 @@ function App() {
   const { isShowLoginModal, isShowSignUpModal 
   } = useSelector(state => state.isShowModalReducer);
   const dispatch = useDispatch();
-  const [ socialDone, setSocialDone ] = useState(false);
-  console.log(isLogin, accessToken);
 
   return (
     <BrowserRouter>

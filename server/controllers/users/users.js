@@ -1,12 +1,30 @@
 const { sign } = require("jsonwebtoken");
 const { User } = require("../../models");
+const { generateToken , sendToken } = require('../tokenfunction')
 require("dotenv").config();
 
 module.exports = {
-  // *  POST users/check-email
-  checkEmail: (req, res) => {
-    return res.send("POST /users/check-email OK");
+  // *  GET users/email
+  checkEmail: async (req, res) => {
+    // request query validation
+    const { email } = req.query
+    console.log( {email} )
+    if( !email ){
+      return res.status(422).send("Insufficient parameters");
+    }
+    // check the email conflict
+    const found = await User.findOne({ 
+      where : { email } 
+    })
+    .catch( err =>{
+      return res.status(500).send("Internal server error")
+    })
+    // found=true : email exists 203 , found=false: email good to go 
+    return found 
+    ? res.status(203).send("User found by email")
+    : res.status(200).send("request on valid");
   },
+
   // *  GET users/send-email
   sendEmail: (req, res) => {
     console.log("ok it works");
@@ -16,11 +34,10 @@ module.exports = {
   // *  POST users/signin
   signin: async (req, res) => {
     // req.body validation
-    // console.log(req.body)
     if (!req.body.email || !req.body.password)
       return res.status(422).send("Insufficient parameters");
 
-    const result = await User.findOne({
+      const result = await User.findOne({
       where: { email: req.body.email },
     }).catch((err) => {
       // db error
@@ -39,38 +56,36 @@ module.exports = {
     // password 불일치
     if (!user) return res.status(401).send("Unauthorized");
 
-    // generate token
-    const { id, email } = user.dataValues;
-    const accessToken = sign(
-      { id, email },
-      process.env.ACCESS_SECRET,
-      { expiresIn: "1d" } // <-- test 용 1day
-    );
-    //refresh_token  <--  현재 불필요
-    const refreshToken = sign({ id, email }, process.env.REFRESH_SECRET, {
-      expiresIn: "30d",
-    });
-    return res.json({ email, accessToken });
+    const { id, email } = user.dataValues; 
+    const token = generateToken({ id, email });
+    sendToken(res, token);
+    return res.json({ email, token }); 
+    //! accessToken 을 body에 안줘도 됨 ! 추후 다시 협의 보기
   },
 
   // *  POST users/signup
-  signup: (req, res) => {
-    const { email, password, userName, social } = req.body;
-    if (email || password || userName || social)
-      return res.status(422).send("Insufficient parameters");
-
-    User.findOrCreate({
-      where: { email },
-      default: { password, userName, social },
+  signup: async (req, res) => {
+    console.log("end point here")
+    const { email, password, userName, social, gender } = req.body;
+    // if (email || password || userName || social)
+      // return res.status(422).send("Insufficient parameters");
+    const found = await User.findOne({
+      where: { email }
     })
-      .then(([data, created]) =>
-        !created
-          ? res.status(409).send("Conflict")
-          : res.status(201).send("Created")
-      )
-      .catch((err) => {
-        return res.status(500).send("Internal server error");
-      });
+    
+    return found 
+      ? res.status(403).send("Conflict")
+      : User.create({
+          email, password, userName, social, gender
+        })
+      .then( created => {
+        if(!created)
+          return res.status(500).send("Failed to create")
+        return res.status(200).send("Created")
+      })
+      .catch(err => {
+        return res.status(500).send("Internal server Error")
+      })
   },
 
   // *  POST users/signout

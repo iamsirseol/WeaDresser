@@ -42,6 +42,7 @@ function UserInfo(){
     const userData =  useSelector(state => state.isLoginReducer.accessToken)
 
     useEffect(() => {
+        console.log("useEffect get request")
         /*const curUser = window.sessionStorage.getItem('email');*/
         // 로딩 넣으면 좋을듯
         // console.log(userData)

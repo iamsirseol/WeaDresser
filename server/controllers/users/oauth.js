@@ -3,7 +3,7 @@ const { User } = require('../../models')
 const axios = require('axios');
 module.exports = {
 
-  // *  POST oauth/google
+  // *  POST users/oauth/google
   google: async (req, res) => {
     const{ email, userName } = req.body; 
     if(!email) return res.status(401).send("Unauthorized")
@@ -43,7 +43,7 @@ module.exports = {
     })
   },
 
-  // *  POST oauth/kakao
+  // *  POST users/oauth/kakao
   kakao: async (req, res) => {
    // req body validation
     const { accessToken } = req.body;
