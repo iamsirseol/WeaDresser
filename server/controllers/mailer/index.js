@@ -11,7 +11,7 @@ const emailer = {
 }
 
 module.exports = {
-
+  //! mailer 확인
   sendEmailCode : async (res, userEmail) => {
     const contentData = {
       from : "a53bc43658-7eade4@inbox.mailtrap.io", 
