@@ -76,7 +76,7 @@ const Modal = () => {
     const kakaToken = await getKakaoAccToken(kakaoCode);
     const { accessToken } = kakaToken
     axios.post(
-      "http://localhost:80/oauth/kakao",
+      `http://localhost:80/oauth/kakao`,
       { accessToken },
       { withCredentials : true }
     )

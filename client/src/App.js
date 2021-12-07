@@ -19,7 +19,8 @@ import MyPage from './pages/MyPage/MyPage'
 import { isShowLoginModalHandler } from './redux/actions/actions';
 import styled from 'styled-components';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import RecordPage from './pages/RecordPage/RecordPage'
+import RecordPage from './pages/RecordPage/RecordPage';
+import DiaryPage from './pages/MyPage/DiaryPage';
 require('dotenv').config();
 
 function App() {
@@ -38,11 +39,12 @@ function App() {
         {/* <UserInfo/> */}
         <Switch>
           <Route exact path = '/'><LandingPage /></Route>
-          <Route path = '/mypage'><MyPage/></Route>
+          <Route path = '/mypage'><MyPage /></Route>
           <Route path = '/ootd-list'><OotdListPage /></Route>
-          <Route path = '/record'><RecordPage/></Route>
+          <Route path = '/record'><RecordPage /></Route>
         </Switch>
         <Modal/>
+        {/* <DiaryPage /> */}
       </div>
     </BrowserRouter>
   );

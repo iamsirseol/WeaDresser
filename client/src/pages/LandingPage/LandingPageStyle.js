@@ -109,7 +109,7 @@ export const WeatherIconBox = styled.ul`
 
 export const WeahterBarBox = styled.div`
     position: absolute;
-    width: 85em;
+    width: 87em;
     height: 10.0em;
     top: 77%;
     left: 50%;
@@ -217,7 +217,7 @@ export const Scroll = styled.div`
     width: 4.4em;
     height: 8.6em;
     position: absolute;
-    top: 93%;
+    top: 92%;
     left: 50%;
     transform: translate(-50%, -50%);
     animation: motion 0.4s linear 0s infinite alternate;
@@ -225,7 +225,7 @@ export const Scroll = styled.div`
 
     @keyframes motion {
       0% {
-        margin-top: 10px;
+        margin-top: 1em;
       }
       100% {
         margin-top: 0px;

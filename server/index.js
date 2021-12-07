@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
     origin: true,
-    // ["https://weadresser.cf"],
+    // `${process.env.CLIENT_URL}` || "https://localhost:3000",
     credentials: true,
     methods: ["GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"],
   })
