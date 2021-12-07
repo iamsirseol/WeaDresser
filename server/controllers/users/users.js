@@ -63,25 +63,26 @@ module.exports = {
   },
   // *  POST users/signup
   signup: async (req, res) => {
-    console.log("end point here")
+    // req body validation
     const { email, password, userName, social, gender } = req.body;
-    // if (email || password || userName || social)
-      // return res.status(422).send("Insufficient parameters");
-    const found = await User.findOne({
-      where: { email }
-    })
-    
+    console.log(email, password, userName, social, gender)
+    if (!email || !password || !userName || !gender)
+      return res.status(422).send("Insufficient parameters");
+
+    // validate to check duplicated
+    const found = await User.findOne({ where: { email } })
     return found 
-      ? res.status(403).send("Conflict")
-      : User.create({
+      ? res.status(403).send("Conflict") 
+      : User.create({ 
           email, password, userName, social, gender
         })
+      // not duplicated, Response Created or not 
       .then( created => {
-        if(!created)
-          return res.status(500).send("Failed to create")
-        return res.status(200).send("Created")
+        return !created
+          ? res.status(500).send("Failed to create")
+          : res.status(200).send("Created")
       })
-      .catch(err => {
+      .catch(err => { // DB error to excute findOne 
         return res.status(500).send("Internal server Error")
       })
   },
