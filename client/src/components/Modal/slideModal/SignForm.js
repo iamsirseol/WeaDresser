@@ -12,7 +12,7 @@ const FormContainer = styled(animated.div)`
   /* border: 1px solid coral; */
   button{
     width: 8em;
-    font-size: 1.4em;
+    font-size: 1.6em;
     padding: 0.5em 0.3em;
     color: #fff;
     border: .5px solid #fff;
@@ -20,7 +20,7 @@ const FormContainer = styled(animated.div)`
     margin-bottom: 1.6em;
     @media screen and (max-width : 767px){
       width: 6em;
-      font-size: 1.2em;
+      font-size: 1.4em;
       padding: 0.4em 0.2em;
       color: #fff;
       border: .5px solid #fff;

@@ -7,7 +7,6 @@ module.exports = {
   checkEmail: async (req, res) => {
     // request query validation
     const { email } = req.query
-    console.log( {email} )
     if( !email ){
       return res.status(422).send("Insufficient parameters");
     }

@@ -2,7 +2,6 @@ import styled from "styled-components"
 import { FiArrowLeftCircle } from 'react-icons/fi'
 import { animated } from "@react-spring/web";
 
-
 export const LogoContainer =styled.div`
   width: 25rem; 
   height: 20rem;
@@ -71,7 +70,7 @@ export const InputContainer = styled(animated.div)`
       width: ${({ width })=> width || '18em'};
       height: 2em;
       margin-top: 0.2rem;
-      font-size: 1.5rem
+      font-size: 1.6rem
     }
     @media screen and (max-width : 424px){
       width: 16rem;

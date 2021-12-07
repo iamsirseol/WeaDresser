@@ -8,7 +8,7 @@ import { isShowLoginModalHandler, loginSuccessHandler, isShowSignUpModalHandler 
 import { ModalBackdrop } from './ModalStyle'
 
 const Modal = () => {
-  const { isShowLoginModal , isShowSignUpModal} = useSelector(state => state.isShowModalReducer)
+  const { isShowLoginModal } = useSelector(state => state.isShowModalReducer)
   const [ socialDone, setSocialDone ] = useState(false);
   const dispatch = useDispatch();
   const  modalRef = useRef();
@@ -35,7 +35,7 @@ const Modal = () => {
   const closeKeyPress = useCallback( e => {
     if(e.key === 'Escape' && isShowLoginModal){
       dispatch(isShowLoginModalHandler(false))
-      dispatch(isShowSignUpModalHandler(false))
+      // dispatch(isShowSignUpModalHandler(false))
     }
   }, [isShowLoginModalHandler, isShowLoginModal])
 
