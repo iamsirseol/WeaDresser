@@ -22,6 +22,8 @@ module.exports = {
   },
   // * PATCH mypage/users
   update: async (req, res) => {
+    // console.log(req.body)
+    // console.log(req.headers)
     const { password, editPassword, userName } = req.body;
     const accessTokenData = isAuthorized(req);
 
@@ -47,27 +49,33 @@ module.exports = {
       return res.status(401).send("not authorized");
     }
     if (userName && !editPassword) {
-      result = await User.update({
-        userName: userName,
+      console.log(userName)
+      result = await User.update({userName: userName},{
+        where: {
+          email: accessTokenData.email,
+        }
       }).catch((err) => {
         console.log(err);
       });
     } else if (!userName && editPassword) {
-      result = await User.update({
-        password: editPassword,
+      result = await User.update({password: editPassword,},{
+        where: {
+          email: accessTokenData.email,
+        }
       }).catch((err) => {
         console.log(err);
       });
     } else if (userName && editPassword) {
-      result = await User.update({
-        password: editPassword,
-        userName: userName,
+      result = await User.update({password: editPassword,userName: userName,},{
+        where: {
+          email: accessTokenData.email,
+        }
       }).catch((err) => {
         console.log(err);
       });
     }
 
-    res.status(201).send({ data: result.userName });
+    res.status(201).send("info change success");
   },
   // * DELETE  mypage/users 회원탈퇴
   delete: async (req, res) => {

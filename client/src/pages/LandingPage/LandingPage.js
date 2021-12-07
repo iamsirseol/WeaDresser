@@ -15,11 +15,13 @@ import cloud from '../../images/cloud.png';
 import moon from '../../images/moon.png';
 import rain from '../../images/rain.png';
 import snow from '../../images/snow.png';
+import LandingPageLower from './LandingPageLower'
 
 function LandingPage () {
 
     const [curWeather, setCurWeather] = useState(null);
     const [curIcon, setCurIcon] = useState(null);
+    // const [dayNight, setDayNight] = useState('day');
     const dispatch = useDispatch();
     const weatherData = useSelector(state => state.getWeatherDataReducer); // redux-thunk 다시 보기
     // console.log('날씨!',weatherData);
@@ -60,8 +62,7 @@ function LandingPage () {
 
     useEffect(() => {
 
-        console.log('날씨!@#',weatherData);
-        
+        // console.log('날씨!@#',weatherData);
          if (weatherData.weather) {
             if (weatherData.weather[0].main === 'Clouds') {
                 setCurWeather('흐림');
@@ -79,43 +80,47 @@ function LandingPage () {
                 setCurIcon(sun);
             }
         }
+        
     }, [weatherData]);
 
     return (
-        <Container>
-             <LandingPageContainer>
-                <MainLogo></MainLogo>
-                <WeatherIconBox>
-                    <li className="icon1"></li>
-                    <li className="icon2"></li>
-                    <li className="icon3"></li>
-                    <li className="icon4"></li>
-                    <li className="icon5"></li>
-                </WeatherIconBox>
-                <WeahterBarBox>
-                {
-                !weatherData.main ? 
-                null // 로딩페이지로 바꿔서 넣어야 할 듯?
-                :
-                    <>
-                        <div>
-                            <WeatherIcon imgUrl={curIcon}></WeatherIcon>
-                            <span className="temp-now">{(parseInt((weatherData.main.temp - 273.15) * 10)) / 10}°C</span>
-                            <span className="desc">{curWeather}</span>
-                        </div>
-                        <div>
-                            <span className="temp1">최고기온</span>
-                            <span className="temp2">{(parseInt((weatherData.main.temp_max - 273.15) * 10)) / 10}°C</span>
-                        </div><div>
-                            <span className="temp1">최저기온</span>
-                            <span className="temp3">{(parseInt((weatherData.main.temp_min - 273.15) * 10)) / 10}°C</span>
-                        </div>
-                    </>
-                }
-                </WeahterBarBox>
-                <Scroll />
-            </LandingPageContainer>
-        </Container>
+        <>
+            <Container>
+                 <LandingPageContainer>
+                    <MainLogo></MainLogo>
+                    <WeatherIconBox>
+                        <li className="icon1"></li>
+                        <li className="icon2"></li>
+                        <li className="icon3"></li>
+                        <li className="icon4"></li>
+                        <li className="icon5"></li>
+                    </WeatherIconBox>
+                    <WeahterBarBox>
+                    {
+                    !weatherData.main ? 
+                    null // 로딩페이지로 바꿔서 넣어야 할 듯?
+                    :
+                        <>
+                            <div>
+                                <WeatherIcon imgUrl={curIcon}></WeatherIcon>
+                                <span className="temp-now">{(parseInt((weatherData.main.temp - 273.15) * 10)) / 10}°C</span>
+                                <span className="desc">{curWeather}</span>
+                            </div>
+                            <div>
+                                <span className="temp1">최고기온</span>
+                                <span className="temp2">{(parseInt((weatherData.main.temp_max - 273.15) * 10)) / 10}°C</span>
+                            </div><div>
+                                <span className="temp1">최저기온</span>
+                                <span className="temp3">{(parseInt((weatherData.main.temp_min - 273.15) * 10)) / 10}°C</span>
+                            </div>
+                        </>
+                    }
+                    </WeahterBarBox>
+                    <Scroll />
+                </LandingPageContainer>
+            </Container>
+            <LandingPageLower />
+        </>
     )
 }
 

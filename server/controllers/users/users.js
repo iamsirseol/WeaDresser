@@ -6,25 +6,23 @@ require("dotenv").config();
 module.exports = {
   // *  GET users/email
   checkEmail: async (req, res) => {
-    
-    return res.send("req ok")
     // request query validation
-    // const { email } = req.query
-    // console.log( {email} )
-    // if( !email ){
-    //   return res.status(422).send("Insufficient parameters");
-    // }
-    // // check the email conflict
-    // const found = await User.findOne({ 
-    //   where : { email } 
-    // })
-    // .catch( err =>{
-    //   return res.status(500).send("Internal server error")
-    // })
-    // // found=true : email exists 203 , found=false: email good to go 
-    // return found 
-    // ? res.status(203).send("User found by email")
-    // : res.status(200).send("request on valid");
+    const { email } = req.query
+    console.log( {email} )
+    if( !email ){
+      return res.status(422).send("Insufficient parameters");
+    }
+    // check the email conflict
+    const found = await User.findOne({ 
+      where : { email } 
+    })
+    .catch( err =>{
+      return res.status(500).send("Internal server error")
+    })
+    // found=true : email exists 203 , found=false: email good to go 
+    return found 
+    ? res.status(203).send("User found by email")
+    : res.status(200).send("request on valid");
   },
 
   // *  GET users/send-email
@@ -35,7 +33,6 @@ module.exports = {
 
   // *  POST users/signin
   signin: async (req, res) => {
-    console.log("로긴 한다~~~~~~~~~~~~~~")
     // req.body validation
     if (!req.body.email || !req.body.password)
       return res.status(422).send("Insufficient parameters");
@@ -62,7 +59,6 @@ module.exports = {
     const { id, email } = user.dataValues; 
     const token = generateToken({ id, email });
     sendToken(res, token);
-    console.log("쿠키 토큰 날렸다!~~~~~~, 세션도 간다~~ ")
     return res.json({ email, token }); 
     //! accessToken 을 body에 안줘도 됨 ! 추후 다시 협의 보기
   },

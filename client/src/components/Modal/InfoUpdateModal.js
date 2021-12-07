@@ -22,6 +22,9 @@ const UpdateModalContainer = styled.div`
     padding: 20px 80px;
     box-sizing: border-box
 `
+const UpdateModalBtn = styled.div`
+
+`
 
 function UpdateModal({setShowUpdateModal, showUpdateModal, sucUpdate}) {
 
@@ -32,22 +35,17 @@ function UpdateModal({setShowUpdateModal, showUpdateModal, sucUpdate}) {
             setShowUpdateModal(false)
         }
     }
-        return(
+    return(
         <>
-            <div className="update-modal-background">
-            </div>
-            <div className="update-modal-container">
+            <UpdateModalBackground></UpdateModalBackground>
+            <UpdateModalContainer>
             {sucUpdate ? <p>정보 변경이 성공했습니다.</p> : <p>정보 변경이 실패하였습니다 비밀번호를 확인해주세요</p>}
             <button className="update-modal-close-btn"onClick={closeCondition}>
-                    <span>
-                        <i></i>
-                        <i></i>
-                    </span>
                     닫기
                 </button>
-            </div>
+            </UpdateModalContainer>
         </>
-        )
+    )
 }
 
 export default UpdateModal
