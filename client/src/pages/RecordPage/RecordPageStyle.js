@@ -7,11 +7,6 @@ export const Container = styled.div`
     width: 100%; 
     height: 100vh; 
     position: relative;
-    top: 0;
-    left: 0;
-    box-sizing: border-box;
-    background-size: cover;
-    background-position: center;
     background-color: #eceaf5;
 `
 export const RecordContainer = styled.div`

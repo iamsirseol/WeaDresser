@@ -19,7 +19,7 @@ function RecordPage() {
     const [uploadImage, setUploadImage] = useState(null);
     const [inputContent, setInputContent] = useState('');
     const [inputHashtag, setInputHashtag] = useState(["#구찌갱", "#국밥문신충"]);
-    const [previewImage, setPreviewImage] = useState();
+    const [previewImage, setPreviewImage] = useState(null);
     const [sharePost, setSharePost] = useState(true);
     const weatherData = useSelector(state => state.getWeatherDataReducer);
 
@@ -29,7 +29,7 @@ function RecordPage() {
         if (image[0]) {
             setPreviewImage(window.URL.createObjectURL(image[0]));
         } 
-        window.URL.revokeObjectURL(previewImage);
+        // window.URL.revokeObjectURL(previewImage); // 해당작업을 주석하여도 url이 변경되는 현상이 일어나지 않음
     }
 
     function inputBtn(e, inputValue) {
