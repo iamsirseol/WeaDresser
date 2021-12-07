@@ -9,8 +9,24 @@ module.exports = {
 
   sendToken: (res, token) => {
     res.cookie("Bearer", token, {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+      maxAge: 60 * 60 * 24 * 1000,
+      domain: "localhost",
       path: "/",
-      httpOnly: true, //!cors option 나중에 보기 
+      ovewrite: true,
+      // signed : true
+    });
+    res.cookie("Login", "true", {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+      maxAge: 60 * 60 * 24 * 1000,
+      domain: "localhost",
+      path: "/",
+      ovewrite: true,
+      signed : true
     });
   },
 

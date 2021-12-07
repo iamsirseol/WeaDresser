@@ -33,6 +33,7 @@ module.exports = {
 
   // *  POST users/signin
   signin: async (req, res) => {
+    console.log("로긴 한다~~~~~~~~~~~~~~")
     // req.body validation
     if (!req.body.email || !req.body.password)
       return res.status(422).send("Insufficient parameters");
@@ -59,9 +60,9 @@ module.exports = {
     const { id, email } = user.dataValues; 
     const token = generateToken({ id, email });
     sendToken(res, token);
-
-    //! accessToken 을 body에 안줘도 됨 ! 추후 다시 협의 보기
+    console.log("쿠키 토큰 날렸다!~~~~~~, 세션도 간다~~ ")
     return res.json({ email, token }); 
+    //! accessToken 을 body에 안줘도 됨 ! 추후 다시 협의 보기
   },
 
   // *  POST users/signup
