@@ -6,7 +6,7 @@ const usersController = require("../../controllers/users/users");
 router.get("/email", usersController.checkEmail);
 
 // *  GET users/send-email
-router.get("/email/:email", usersController.sendEmail);
+router.get("/email/:code", usersController.sendEmail);
 
 // *  POST users/signin
 router.post("/signin", usersController.signin);

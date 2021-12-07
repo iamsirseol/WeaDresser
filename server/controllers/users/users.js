@@ -1,5 +1,6 @@
 const { User } = require("../../models");
 const { generateToken , sendToken } = require('../tokenfunction')
+const { sendEmailCode } = require('../mailer')
 require("dotenv").config();
 
 module.exports = {
@@ -18,16 +19,18 @@ module.exports = {
       return res.status(500).send("Internal server error")
     })
     // found=true : email exists 203 , found=false: email good to go 
-    return found 
-    ? res.status(203).send("User found by email")
-    : res.status(200).send("request on valid");
+    if(found) 
+      return res.status(203).send("User found by email")
+
+    sendEmailCode(res, email)
+    return res.status(200).send("request on valid");
   },
 
-  // *  GET users/email?:email
+  // *  GET users/email?:code
   sendEmail: (req, res) => {
     const { email } = req.params;
-    console.log("ok it works");
-    return res.send({ email });
+    console.log("ok it works", req.params);
+
   },
 
   // *  POST users/signin
