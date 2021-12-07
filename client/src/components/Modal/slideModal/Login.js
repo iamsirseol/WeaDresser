@@ -63,9 +63,10 @@ function Login({ closeModalByBtn }){
   // GET User info by request to 80 Server
   const userLoginHandler = async () => {
     const{ email, password } = loginInfo
+    const LOCAL = process.env.REACT_APP_SERVER_LOCAL;
+    const SERVER = process.env.REACT_APP_SERVER;
     axios.post(
-      `http://localhost:80/users/signin`,
-      // `${process.env.REACT_APP_SERVER_URL}/users/signin`,
+      `${LOCAL}/users/signin`,
       { email, password },
       { withCredentials: true }
     )

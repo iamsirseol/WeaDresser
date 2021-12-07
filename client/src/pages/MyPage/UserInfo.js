@@ -41,11 +41,12 @@ function UserInfo(){
     const userData =  useSelector(state => state.isLoginReducer.accessToken)
 
     useEffect(() => {
+        console.log("useEffect get request")
         /*const curUser = window.sessionStorage.getItem('email');*/
         // 로딩 넣으면 좋을듯
         // console.log(userData)
-        axios.get(`${process.env.REACT_APP_SERVER_URL}/mypage/users`, {headers : {authorization: `Bearer ${userData}`}})
-            .then(res => {
+        axios.get(`${process.env.REACT_APP_SERVER_URL}/mypage/users`, { withCredentials : true })
+        .then(res => {
                 console.log('--------------------------')
                 console.log(res)
                 console.log('--------------------------')
@@ -106,7 +107,6 @@ function UserInfo(){
 
     function updateInfoRequest(e){ // -------------업데이트 요청----------------
         e.preventDefault()
-
         axios.patch(`${process.env.REACT_APP_SERVER_URL}/mypage/users`, {withCredentials : true})
             .then(res => {
                 console.log('유저 정보 업데이트 성공')

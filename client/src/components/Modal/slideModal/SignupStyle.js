@@ -2,7 +2,6 @@ import styled from "styled-components"
 import { FiArrowLeftCircle } from 'react-icons/fi'
 import { animated } from "@react-spring/web";
 
-
 export const LogoContainer =styled.div`
   width: 25rem; 
   height: 20rem;
