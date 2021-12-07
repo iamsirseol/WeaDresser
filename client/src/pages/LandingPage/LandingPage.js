@@ -20,6 +20,7 @@ function LandingPage () {
 
     const [curWeather, setCurWeather] = useState(null);
     const [curIcon, setCurIcon] = useState(null);
+    // const [dayNight, setDayNight] = useState('day');
     const dispatch = useDispatch();
     const weatherData = useSelector(state => state.getWeatherDataReducer); // redux-thunk 다시 보기
     // console.log('날씨!',weatherData);
@@ -60,8 +61,7 @@ function LandingPage () {
 
     useEffect(() => {
 
-        console.log('날씨!@#',weatherData);
-        
+        // console.log('날씨!@#',weatherData);
          if (weatherData.weather) {
             if (weatherData.weather[0].main === 'Clouds') {
                 setCurWeather('흐림');
@@ -79,6 +79,7 @@ function LandingPage () {
                 setCurIcon(sun);
             }
         }
+        
     }, [weatherData]);
 
     return (
