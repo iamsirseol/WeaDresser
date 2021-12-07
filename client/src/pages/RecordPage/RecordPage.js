@@ -73,7 +73,8 @@ function RecordPage() {
         formData.append('hashtag', inputHashtag);
         formData.append('share', sharePost);
 
-        const url = process.env.REACT_APP_SERVER_URL || 'http://localhost:80/diary' // server랑 확인할때 환경변수 x
+        // const url = process.env.REACT_APP_SERVER_URL || 
+        const url = 'http://localhost:80/diary' // server랑 확인할때 환경변수 x
         axios.post(url, formData, { 
             headers: {
                 'content-type': 'multipart/form-data'
