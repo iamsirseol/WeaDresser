@@ -1,38 +1,21 @@
 import React, { useState } from "react";
 import { useHistory} from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import Signup from "./Signup";
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import title from './title.svg'
-import { LoginContainer,LogoContainer,InputContainer,LoginError,LoginBtnContainer } 
+import { LogoContainer,InputContainer,LoginError,LoginBtnContainer } 
 from './LoginStyle';
-import { CloseModalButton } from "./ModalStyle";
 import { getGoogleAccToken, getKakaoCode } 
 from '../../../api/social'
-import { isShowLoginModalHandler, isShowSignUpModalHandler, loginSuccessHandler } 
+import { isShowLoginModalHandler, loginSuccessHandler } 
 from '../../../redux/actions/actions'
-import { useSpring } from 'react-spring'
-import { SignupContainer } from "./SignupStyle";
 
-function Login({ closeModalByBtn }){
+function Login({ modalChangeHandler }){
   const [ loginInfo, setLoginInfo ] = useState({ email: "", password: "" });
   const [ errorMessage, setErrorMessage ] = useState("");
-  const { isShowLoginModal, isShowSignUpModal } = useSelector(state => state.isShowModalReducer)
-
   const [ active, setActive ] = useState("");
   const history= useHistory();
   const dispatch = useDispatch(); 
-
-  // Translate animation by useSpring 
-  const props = useSpring({
-    transform: isShowLoginModal ? 'translateY(0%)' : 'translateY(100%)',
-    opacity : isShowLoginModal ? 1 : 0 
-  });
-  
-  const props2 = useSpring({
-    transform: isShowSignUpModal ? 'translateX(0%)' : 'translateX(100%)', 
-    opacity : isShowSignUpModal ? 1 : 0 
-  })
 
   // inputvalue save to the loginInfo States
   const handleInputValue = (key) => (e) => {
@@ -63,10 +46,8 @@ function Login({ closeModalByBtn }){
   // GET User info by request to 80 Server
   const userLoginHandler = async () => {
     const{ email, password } = loginInfo
-    const LOCAL = process.env.REACT_APP_SERVER_LOCAL;
-    const SERVER = process.env.REACT_APP_SERVER;
     axios.post(
-      `${LOCAL}/users/signin`,
+      'http://localhost:80/users/signin',
       { email, password },
       { withCredentials: true }
     )
@@ -95,43 +76,32 @@ function Login({ closeModalByBtn }){
   const kakaoLoginHandler = () => {
     getKakaoCode()
   }
-  const modalChangeHandler = () => {
-    dispatch(isShowSignUpModalHandler(true));
-  }
   return (
-    <>{ isShowSignUpModal ? 
-      <LoginContainer style={props2}>
-        <Signup closeModalByBtn={closeModalByBtn}/> 
-      </LoginContainer>
-      :
-      <LoginContainer style={props}>
-        <LogoContainer><img alter="" src={title}/></LogoContainer>
-        <InputContainer>
-          <input 
-            className="login-input"
-            type="email"
-            placeholder="Email"
-            onChange={ handleInputValue("email") }
-            onKeyUp={ handleKeyPress }
-            />
-          <input 
-            className="login-input"
-            type="password"
-            placeholder="비밀번호"
-            onChange={ handleInputValue("password") }
-            onKeyUp={ handleKeyPress }
-            />
-            <LoginError>{errorMessage}</LoginError>
-        </InputContainer>
-        <LoginBtnContainer>
-          <button onClick={validCheckHandler}  className={`login-btn${active}`}> 로그인</button>
-          <button onClick={modalChangeHandler} className='singup-btn'>회원가입</button>
-          <button onClick={kakaoLoginHandler} className='kakao-btn'>Kakao</button>
-          <button onClick={googleLoginHandler} className='google-btn'>Google</button>
-        </LoginBtnContainer>
-        <CloseModalButton onClick={closeModalByBtn}/>
-      </LoginContainer>
-      }
+    <>
+      <LogoContainer><img alter="" src={title}/></LogoContainer>
+      <InputContainer>
+        <input 
+          className="login-input"
+          type="email"
+          placeholder="Email"
+          onChange={ handleInputValue("email") }
+          onKeyUp={ handleKeyPress }
+          />
+        <input 
+          className="login-input"
+          type="password"
+          placeholder="비밀번호"
+          onChange={ handleInputValue("password") }
+          onKeyUp={ handleKeyPress }
+          />
+          <LoginError>{errorMessage}</LoginError>
+      </InputContainer>
+      <LoginBtnContainer>
+        <button onClick={validCheckHandler}  className={`login-btn${active}`}> 로그인</button>
+        <button onClick={modalChangeHandler} className='singup-btn'>회원가입</button>
+        <button onClick={kakaoLoginHandler} className='kakao-btn'>Kakao</button>
+        <button onClick={googleLoginHandler} className='google-btn'>Google</button>
+      </LoginBtnContainer>
     </>
   );
 }

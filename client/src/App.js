@@ -23,7 +23,6 @@ import styled from 'styled-components';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import RecordPage from './pages/RecordPage/RecordPage'
 import axios from 'axios';
-
 require('dotenv').config();
 
 function App() {
@@ -31,9 +30,7 @@ function App() {
   const { isShowLoginModal, isShowSignUpModal 
   } = useSelector(state => state.isShowModalReducer);
   const dispatch = useDispatch();
-  const [ socialDone, setSocialDone ] = useState(false);
-  console.log(isLogin, accessToken);
-  
+
   return (
     <BrowserRouter>
       <div className="App">

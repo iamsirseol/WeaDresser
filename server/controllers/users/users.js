@@ -6,23 +6,25 @@ require("dotenv").config();
 module.exports = {
   // *  GET users/email
   checkEmail: async (req, res) => {
+    
+    return res.send("req ok")
     // request query validation
-    const { email } = req.query
-    console.log( {email} )
-    if( !email ){
-      return res.status(422).send("Insufficient parameters");
-    }
-    // check the email conflict
-    const found = await User.findOne({ 
-      where : { email } 
-    })
-    .catch( err =>{
-      return res.status(500).send("Internal server error")
-    })
-    // found=true : email exists 203 , found=false: email good to go 
-    return found 
-    ? res.status(203).send("User found by email")
-    : res.status(200).send("request on valid");
+    // const { email } = req.query
+    // console.log( {email} )
+    // if( !email ){
+    //   return res.status(422).send("Insufficient parameters");
+    // }
+    // // check the email conflict
+    // const found = await User.findOne({ 
+    //   where : { email } 
+    // })
+    // .catch( err =>{
+    //   return res.status(500).send("Internal server error")
+    // })
+    // // found=true : email exists 203 , found=false: email good to go 
+    // return found 
+    // ? res.status(203).send("User found by email")
+    // : res.status(200).send("request on valid");
   },
 
   // *  GET users/send-email
