@@ -1,7 +1,7 @@
 const { sequelize } = require('../models')
 const { findTopLikeById, findLatestById, findRandomOne, findTopLikeOne } = require('./query/query')
 module.exports = {
-  // * GET  /? tempMin= {}& tempMax={}
+  // * GET  /?tempMin={}&tempMax={}
   findRandom : async (req, res) => {
     const { tempMin, tempMax } = req.query;
 
@@ -32,7 +32,7 @@ module.exports = {
       })    
   }, 
 
-  // * GET  /user  Login user 
+  // * GET  /user/?userId={}&tempMax={}&tempMin={}  
   findById : async (req, res) => {
     
     const { userId, tempMax, tempMin }= req.query

@@ -6,12 +6,13 @@ module.exports = {
     const query = `
       SELECT OOTD.* 
       from (
-        SELECT A.id as diariesId, A.image as diariesImage, A.createdAt as createdAt,
-          A.tempMax, A.tempMin, A.share, A.likeCounts as likeCounts, B.userName, 
+        SELECT A.id as diariesId, A.image as diariesImage,A.likeWhether as likeWhether,
+        A.createdAt as createdAt, A.tempMax, A.tempMin, A.share, A.likeCounts as likeCounts, B.userName, 
         group_concat(H.name separator ', ') as hashtag
         from (
           SELECT Diaries.id, Diaries.image, Diaries.tempMax, Diaries.tempMin, Diaries.createdAt,
-            Diaries.content, Diaries.share, Diaries.userId as diarayUserId, Diaries.likeCounts
+            Diaries.content, Diaries.share, Diaries.userId as diarayUserId, Diaries.likeCounts,
+            CASE WHEN Likes.id is null then false else true end as likeWhether
           from Diaries 
           LEFT join Likes on Diaries.id = Likes.diariesId
           )A 
@@ -19,7 +20,7 @@ module.exports = {
         Left join DiariesHashtags DH on A.id = DH.diariesId 
         Left join Hashtags H on DH.hashtagsId = H.id 
         where A.share = false AND A.diarayUserId = ${parseInt(userId)}
-        Group by A.id) OOTD 
+        Group by A.id, A.likeWhether) OOTD 
       where ${parseFloat(maxTem)} >= OOTD.tempMax And OOTD.tempMin >= ${parseFloat(minTem)} 
       ORDER BY OOTD.createdAt DESC
       LIMIT 1;
