@@ -43,9 +43,9 @@ module.exports = (sequelize, DataTypes) => {
       //   key: 'id'
       // }
     },
-    likeCount:{
+    likeCounts:{
       type: DataTypes.INTEGER,
-      // allowNull :false,
+      allowNull :false,
       defaultValue :0
     },
     share:{

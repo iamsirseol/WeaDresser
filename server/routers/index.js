@@ -7,7 +7,7 @@ const mypageRouter = require('./mypage')
 const usersRouter = require('./users/users')
 const oauthRouter = require('./users/oauth')
 
-router.use('/home', homeRouter); 
+router.use('/', homeRouter); 
 router.use('/ootd', ootdRouter); 
 router.use('/record', recordRouter); 
 router.use('/mypage', mypageRouter); 
