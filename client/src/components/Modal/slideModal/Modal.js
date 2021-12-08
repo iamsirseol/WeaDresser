@@ -1,21 +1,14 @@
 import React,{ useCallback, useRef, useState, useEffect } from "react";
 import { useSpring } from 'react-spring'
 import { useDispatch, useSelector } from 'react-redux';
-import Login from './Login'
-import Signup from "./Signup";
-import { getGoogleUserInfo, getKakaoAccToken } from '../../../api/social'
 import axios from 'axios'
-import { isShowLoginModalHandler, loginSuccessHandler } 
-from '../../../redux/actions/actions'
-import { 
-  ModalBackdrop, 
-  ModalContainer,
-  CloseModalButton,
-} from './ModalStyle'
+import Login from './Login'
+import { getGoogleUserInfo, getKakaoAccToken } from '../../../api/social'
+import { isShowLoginModalHandler, loginSuccessHandler, isShowSignUpModalHandler } from '../../../redux/actions/actions'
+import { ModalBackdrop } from './ModalStyle'
 
 const Modal = () => {
-  const { isShowLoginModal } = useSelector(state => state.isShowModalReducer)
-  const [ isSingupModal, setIsSingupModal ] = useState(false);
+  const { isShowLoginModal , isShowSignUpModal} = useSelector(state => state.isShowModalReducer)
   const [ socialDone, setSocialDone ] = useState(false);
   const dispatch = useDispatch();
   const  modalRef = useRef();
@@ -29,24 +22,23 @@ const Modal = () => {
   // Modal False by clx btn 
   const closeModalByBtn = e => {
     dispatch(isShowLoginModalHandler(false))
+    dispatch(isShowSignUpModalHandler(false))
   }
   // Modal False by backDrop <- useRef only 
   const closeModalHandler = e => {
     if(modalRef.current === e.target){
       dispatch(isShowLoginModalHandler(false))
-    }
+    dispatch(isShowSignUpModalHandler(false))
   }
-  // Modal False by Esc key <- useEffect only!! 
+  }
+  // Modal False by Esc key <- useCallback only!! 
   const closeKeyPress = useCallback( e => {
     if(e.key === 'Escape' && isShowLoginModal){
       dispatch(isShowLoginModalHandler(false))
+      dispatch(isShowSignUpModalHandler(false))
     }
   }, [isShowLoginModalHandler, isShowLoginModal])
 
-  // Component change 
-  const modalChangeHandler  =() => {
-    setIsSingupModal(!isSingupModal)
-  }
   // useEffect to set keydown event 
   useEffect( ()=> {
     document.addEventListener('keydown', closeKeyPress);
@@ -58,7 +50,9 @@ const Modal = () => {
   const googleTokenHandler = async (goolgeAccToken) => {
     const googleUser = await getGoogleUserInfo({accessToken : goolgeAccToken});
     const { name, email } = googleUser.data
-    axios.post(`${process.env.REACT_APP_SERVER_URL}/oauth/google`, 
+    const LOCAL = process.env.REACT_APP_SERVER_LOCAL;
+    const SERVER = process.env.REACT_APP_SERVER;
+    axios.post(`${LOCAL}/oauth/google`, 
       { email, userName : name }, 
       { withCredentials : true }
     )
@@ -75,8 +69,10 @@ const Modal = () => {
   const kakaoTokenHandler = async (kakaoCode) => {
     const kakaToken = await getKakaoAccToken(kakaoCode);
     const { accessToken } = kakaToken
+    const LOCAL = process.env.REACT_APP_SERVER_LOCAL;
+    const SERVER = process.env.REACT_APP_SERVER;
     axios.post(
-      `http://localhost:80/oauth/kakao`,
+      `${LOCAL}/oauth/kakao`,
       { accessToken },
       { withCredentials : true }
     )
@@ -100,6 +96,7 @@ const Modal = () => {
       // get social users token and info (only if appropriate para in url)  
       if(googleAccToken) googleTokenHandler(googleAccToken);
       if(kakaoCode) kakaoTokenHandler(kakaoCode);
+      
     }
     return () => {//clear effect
       setSocialDone(true)
@@ -109,19 +106,8 @@ const Modal = () => {
 
   return (
     <>{ !isShowLoginModal ? null : 
-      <ModalBackdrop ref={modalRef} onClick={closeModalHandler}>
-          <ModalContainer style={props}>
-            { isSingupModal 
-              ? <Signup
-                  isSingupModal={isSingupModal}
-                  modalChangeHandler={modalChangeHandler} 
-                /> 
-              : <Login 
-                  isSingupModal={isSingupModal} 
-                  modalChangeHandler = {modalChangeHandler}/>
-            }
-            <CloseModalButton onClick={closeModalByBtn}/>
-          </ModalContainer>
+      <ModalBackdrop style={props} ref={modalRef} onClick={closeModalHandler}>
+        <Login closeModalByBtn={closeModalByBtn}/>
        </ModalBackdrop>
       }
     </>

@@ -1,4 +1,28 @@
 import styled from "styled-components"
+import { animated } from '@react-spring/web';
+
+export const LoginContainer = styled(animated.div)`
+  width: 50rem;
+  height: 60rem;
+  box-shadow: 2px 5px 16px rgba(0,0,0, 0.2), -2px -5px -16px rgba(255, 255, 255, 0.883);
+  background: #5b81fa;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+  border-radius: 1.5rem;
+  text-decoration: none;
+  @media screen and (max-width : 767px){
+    width: 40rem;
+    height: 48rem;
+  }
+  @media screen and (max-width : 424px){
+    width: 28rem;
+    height: 35rem;
+  }
+`;
 
 export const LogoContainer =styled.div`
   width: 25rem; 

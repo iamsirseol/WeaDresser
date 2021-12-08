@@ -8,8 +8,6 @@ import {
     ACCESS_TOKEN,
     WEATHER_DATA,
     IS_SHOW_SIDE_BAR,
-
-    
 } from '../actions/actions';
 import { initialState } from './initialState';
 
@@ -49,7 +47,7 @@ function isShowModalReducer(state = initialState.modal, action){
         case IS_SHOW_SIGNUP_MODAL:
           return Object.assign({}, state, action.payload);
         case IS_SHOW_OOTD_IMAGE_MODAL:
-          return Object.assign({}, state, action.payload)
+          return Object.assign({}, state, action.payload);
         default: return state;
       }
 }

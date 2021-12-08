@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { getLocationData, getWeatherData } from '../../redux/actions/actions';
 import {
@@ -12,9 +12,10 @@ import {
 import axios from 'axios';
 import sun from '../../images/sun.png';
 import cloud from '../../images/cloud.png';
-import moon from '../../images/moon.png';
+// import moon from '../../images/moon.png';
 import rain from '../../images/rain.png';
 import snow from '../../images/snow.png';
+import LandingPageLower from './LandingPageLower'
 
 function LandingPage () {
 
@@ -83,40 +84,44 @@ function LandingPage () {
     }, [weatherData]);
 
     return (
-        <Container>
-             <LandingPageContainer>
-                <MainLogo></MainLogo>
-                <WeatherIconBox>
-                    <li className="icon1"></li>
-                    <li className="icon2"></li>
-                    <li className="icon3"></li>
-                    <li className="icon4"></li>
-                    <li className="icon5"></li>
-                </WeatherIconBox>
-                <WeahterBarBox>
-                {
-                !weatherData.main ? 
-                null // 로딩페이지로 바꿔서 넣어야 할 듯?
-                :
-                    <>
-                        <div>
-                            <WeatherIcon imgUrl={curIcon}></WeatherIcon>
-                            <span className="temp-now">{(parseInt((weatherData.main.temp - 273.15) * 10)) / 10}°C</span>
-                            <span className="desc">{curWeather}</span>
-                        </div>
-                        <div>
-                            <span className="temp1">최고기온</span>
-                            <span className="temp2">{(parseInt((weatherData.main.temp_max - 273.15) * 10)) / 10}°C</span>
-                        </div><div>
-                            <span className="temp1">최저기온</span>
-                            <span className="temp3">{(parseInt((weatherData.main.temp_min - 273.15) * 10)) / 10}°C</span>
-                        </div>
-                    </>
-                }
-                </WeahterBarBox>
-                <Scroll />
-            </LandingPageContainer>
-        </Container>
+        <>
+            <Container>
+                 <LandingPageContainer>
+                    <MainLogo></MainLogo>
+                    <WeatherIconBox>
+                        <li className="icon1"></li>
+                        <li className="icon2"></li>
+                        <li className="icon3"></li>
+                        <li className="icon4"></li>
+                        <li className="icon5"></li>
+                    </WeatherIconBox>
+                    <WeahterBarBox>
+                    {
+                    !weatherData.main ? 
+                    null // 로딩페이지로 바꿔서 넣어야 할 듯?
+                    :
+                        <>
+                            <div>
+                                <WeatherIcon imgUrl={curIcon}></WeatherIcon>
+                                <span className="temp-now">{(parseInt((weatherData.main.temp - 273.15) * 10)) / 10}°C</span>
+                                <span className="desc">{curWeather}</span>
+                            </div>
+                            <div>
+                                <span className="temp1">최고기온</span>
+                                <span className="temp2">{(parseInt((weatherData.main.temp_max - 273.15) * 10)) / 10}°C</span>
+                            </div>
+                            <div>
+                                <span className="temp1">최저기온</span>
+                                <span className="temp3">{(parseInt((weatherData.main.temp_min - 273.15) * 10)) / 10}°C</span>
+                            </div>
+                        </>
+                    }
+                    </WeahterBarBox>
+                    <Scroll />
+                </LandingPageContainer>
+            </Container>
+            <LandingPageLower />
+        </>
     )
 }
 

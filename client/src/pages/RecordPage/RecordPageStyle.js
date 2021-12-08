@@ -2,19 +2,54 @@ import styled from 'styled-components';
 import photo from '../../images/photo_ic.svg';
 import close from '../../images/close_ic.png';
 import check from '../../images/check_ic_sel.svg';
+import recordicon from '../../images/record_ic.svg';
 
 export const Container = styled.div` 
     width: 100%; 
     height: 100vh; 
-    position: relative;
     background-color: #eceaf5;
 `
+export const PageHeader = styled.div`
+    margin: 0 auto;
+    width: 100em;
+    height: 10em;
+    position: relative;
+    top: 11%;
+    display: flex;
+
+    &:after {
+        position: absolute;
+        width: 100em;
+        margin-top: 6em;
+        content: "";
+        border-bottom: 0.1em solid #717171;
+    }
+    
+    > h1 {
+        margin-left: 1rem;
+        font-family: NotoSansKR;
+        font-size: 3.0em;
+        font-style: normal;
+        letter-spacing: normal;
+        color: #17191d;    
+    }
+`
+
+export const RecordIcon = styled.div`
+    width: 6em;
+    height: 6em;
+    position: relative;
+    margin-bottom: 20em;
+    background-image: url(${recordicon});
+    bottom: 10%;
+`
+
 export const RecordContainer = styled.div`
     width: 100em; 
     min-height: 51em; 
     position: absolute;
     display: flex;
-    top: 20%;
+    top: 23%;
     left: 50%;
     transform: translateX(-50%);
     justify-content: space-between;
@@ -44,15 +79,16 @@ export const RecordContainer = styled.div`
         text-align: center;
         padding-top: 5%;
         font-weight: bold;
+        letter-spacing: 0.1em;
     }
 `
 
 export const ContentBox = styled.textarea`
     /* padding-left: 1.5em;
     padding-top: 1em; */
-    padding: 1em 1.5em 0em 1em;
-    width: 42rem;
-    height: 25rem;
+    padding: 0.5em 1em 0.5em 1em;
+    width: 43rem;
+    height: 22rem;
     /* position: absolute; */
     background-color: #f9f9fb;
     /* align-items: center; */
@@ -67,15 +103,16 @@ export const ContentBox = styled.textarea`
 export const HashtagBox = styled.div`
     margin: 1em auto;
     width: 43rem;
-    min-height: 10rem;
+    height: 11rem;
     padding: 0.5em 1em 0.5em 1em;
     background-color: #f9f9fb;
     align-items: center;
     font-size: 1.4em;
     letter-spacing: 2px;
     color: #93969b;
- 
-    ul {
+    overflow-y: auto;
+
+    > ul {
         display: flex;
         flex-wrap: wrap;
 
@@ -92,7 +129,10 @@ export const HashtagBox = styled.div`
             border-radius: 4px;
             margin: 0 4px 4px 0;
             background-color: #5694F8;
-            
+            :hover {
+                background-color: #3471d5;
+            }
+
             .close-button {
                 width: 1.2rem;
                 height: 1.2rem;
@@ -107,7 +147,7 @@ export const HashtagBox = styled.div`
         }
     }
     .input-tag {
-        width: 42rem;
+        width: 41rem;
         border: none;
         resize: none;
         padding: 0.1em 0.2em 0.1em 0.5em;
@@ -120,8 +160,8 @@ export const HashtagBox = styled.div`
 `
 export const ShareBox = styled.div`
     width: 46rem;
-    min-height: 3rem;
-    margin: 0 auto;
+    height: 3rem;
+    margin: 2em auto;
     position: relative;
     /* background-color: yellow; */
     display: flex;
@@ -205,12 +245,35 @@ export const ImageUploadBox = styled.div`
     
 `
 export const UploadButton = styled.div`
-    margin: 1em auto;
+    margin: 0 auto;
     padding-top: 1.1em;
-    width: 18.8em;
-    height: 2.5em;
-    top: 85%;
-    position: relative;
+    width: 23rem;
+    height: 6rem;
+    top: 82.5%;
+    position: absolute;
+    cursor: ${props => props.canSubmit ? 'pointer' : 'default'};
+    text-align: center;
+    border-radius: 10px;
+    font-family: NotoSansKR;
+    font-size: 2.5em;
+    color: #fff;
+    opacity: ${props => props.canSubmit ? null : '0.6'};
+    font-weight: 500;
+    letter-spacing: 5px;
+    background-color: ${props => props.canSubmit ? '#4970ed' : '#a6a9af'};
+    :hover {
+        background-color: ${props => props.canSubmit ? '#16409f' : null};
+    }
+`
+
+export const CancelButton = styled.div`
+    margin: 0 auto;
+    padding-top: 1.1em;
+    width: 23rem;
+    height: 6rem;
+    top: 82.5%;
+    left: 77%;
+    position: absolute;
     cursor: pointer;
     text-align: center;
     border-radius: 10px;
@@ -219,5 +282,8 @@ export const UploadButton = styled.div`
     color: #fff;
     font-weight: 500;
     letter-spacing: 5px;
-    background-color: #4970ed;
+    background-color: #7f838e;
+    :hover {
+        background-color: #42495a;
+    }
 `

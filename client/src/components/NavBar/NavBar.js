@@ -9,16 +9,15 @@ import {
 import {SvgLogoSmall} from "../SvgIcon/SvgIcon"
 
 function NavBar() {
-    const dispatch = useDispatch();
-    const isShowLoginModal =() => {
-        dispatch(isShowLoginModalHandler(true));
-      }
-      const closeShowLoginModal =() => {
-        dispatch(isShowLoginModalHandler(false));
-      }
+  const { isLogin } = useSelector(state => state.isLoginReducer);
+  const dispatch = useDispatch();
 
-
-    const { isLogin } = useSelector(state => state.isLoginReducer);
+  const isShowLoginModal =() => {
+      dispatch(isShowLoginModalHandler(true));
+    }
+  const closeShowLoginModal =() => {
+    dispatch(isShowLoginModalHandler(false));
+  }
     return (
         <NavContaier >
             <SvgLogoSmall to='/'></SvgLogoSmall>

@@ -92,3 +92,27 @@ export function sideBarHandler(boolean){
         }
     }
 }
+
+export function createUserHandler(endpoint, reqBody){
+    // const SERVER = process.env.REACT_APP_SERVER || 'http://localhost:80'
+    const SERVER ='http://localhost:80/'
+    console.log("asdf====================================",SERVER+endpoint)
+    console.log("asdf====================================",reqBody)
+    return (dispatch) => {
+        return axios.post(
+            'http://localhost:80/users/signup', 
+            reqBody, 
+            { withCredentials : true }
+        )
+        .then(result => {
+            console.log("then result ========", result);
+            dispatch(isShowLoginModalHandler(true));
+            dispatch(isShowSignUpModalHandler(false));
+        })
+        .catch(err => {
+            console.log("catch errorrrr========", err.response)
+        })
+    }
+
+}
+
