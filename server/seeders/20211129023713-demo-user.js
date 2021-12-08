@@ -44,7 +44,8 @@ module.exports = {
       let Ddata = [] ; 
       for(let i = 0 ; i < 20 ; i ++){
         // Diaries random obj dada 
-        let ranUser = parseInt(Math.random()*10+1)
+        let ranUser = parseInt(Math.random()*10+1);
+        let ranLikeCnt = parseInt((Math.random()*100)%20);
         let obj = 
         {
           id : i+1,
@@ -55,6 +56,7 @@ module.exports = {
           tempMax: 12.0,
           tempMin: 0.1, 
           userId: uData[ranUser-1].id,
+          likeCounts:ranLikeCnt,
           share:false,
         }
 

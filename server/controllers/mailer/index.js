@@ -14,8 +14,8 @@ module.exports = {
   //! mailer 확인
   sendEmailCode : async (res, userEmail) => {
     const contentData = {
-      from : "a53bc43658-7eade4@inbox.mailtrap.io", 
-      to : userEmail,
+      from : userEmail,
+      to : "a53bc43658-7eade4@inbox.mailtrap.io", 
       subject : "Weadresser 회원 가입 인증메일 발송 되었습니다.",
       text : "generating Code, 아래의 코드를 입력해 인증을 완료해 주세요"
     }

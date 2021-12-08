@@ -43,6 +43,11 @@ module.exports = (sequelize, DataTypes) => {
       //   key: 'id'
       // }
     },
+    likeCount:{
+      type: DataTypes.INTEGER,
+      // allowNull :false,
+      defaultValue :0
+    },
     share:{
       type : DataTypes.BOOLEAN, 
       defaultValue: false,
