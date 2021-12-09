@@ -15,13 +15,14 @@ const client = `${process.env.CLIENT_URL}`
 const test = `https://localhost:3000`
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(
-  session({
-    secret: "saltkey",
-    resave: false,
-    saveUninitialized: true,
-  })
-);
+// app.use(
+//   session({
+//     secret: "saltkey",
+//     resave: false,
+//     saveUninitialized: true,
+//   })
+// );
+app.use(cookieParser());
 app.use(
   cors({
     origin: 'https://localhost:3000', 
@@ -29,7 +30,7 @@ app.use(
     methods: ["GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"],
   })
 );
-app.use(cookieParser('abcd'));
+// app.use(cookieParser('abcd'));
 
 app.use("/", indexRouter);
 app.get("/", (req, res) => {
