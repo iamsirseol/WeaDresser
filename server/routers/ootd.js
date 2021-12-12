@@ -7,5 +7,6 @@ router.get('/', ootdController.findTopLike);
 
 // * Post  /ootd
 router.post('/like', ootdController.addLike);
+router.put('/like', ootdController.handleLike)
 
 module.exports = router;
