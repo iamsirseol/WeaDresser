@@ -3,10 +3,12 @@ export const IS_LOGIN = 'IS_LOGIN';
 export const IS_LOADING = 'IS_LOADING';
 export const IS_SHOW_LOGIN_MODAL = "IS_SHOW_LOGIN_MODAL";
 export const IS_SHOW_SIGNUP_MODAL = "IS_SHOW_SIGNUP_MODAL";
-export const IS_SHOW_OOTD_IMAGE_MODAL = "IS_SHOW_OOTD_IMAGE_MODAL"
+export const IS_SHOW_OOTD_IMAGE_MODAL = "IS_SHOW_OOTD_IMAGE_MODAL";
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
 export const WEATHER_DATA = "WEATHER_DATA";
-export const IS_SHOW_SIDE_BAR = "IS_SHOW_SIDE_BAR"
+export const IS_SHOW_SIDE_BAR = "IS_SHOW_SIDE_BAR";
+export const IS_SHOW_DATE_PICKER = "IS_SHOW_DATE_PICKER";
+export const DATE_DATA = "DATE_DATA";
 
 export function loginSuccessHandler(boolean, accessToken) {
     return (dispatch) => {
@@ -116,3 +118,20 @@ export function createUserHandler(endpoint, reqBody){
 
 }
 
+export function datePickerHandler(boolean){
+    return{
+        type: IS_SHOW_DATE_PICKER,
+        payload: {
+            isShowDatePicker : boolean
+        }
+    }
+}
+
+export function getDateData(data){
+    return{
+        type: DATE_DATA,
+        payload: {
+            dateData : data
+        }
+    }
+}

@@ -8,6 +8,8 @@ import {
     ACCESS_TOKEN,
     WEATHER_DATA,
     IS_SHOW_SIDE_BAR,
+    IS_SHOW_DATE_PICKER,
+    DATE_DATA
 } from '../actions/actions';
 import { initialState } from './initialState';
 
@@ -18,6 +20,8 @@ const rootReducer = combineReducers({
     isShowModalReducer,
     getWeatherDataReducer,
     isShowSideBarReducer,
+    isShowDatePickerReducer,
+    getDateDataReducer
 })
 
 function isLoginReducer(state = initialState.isLogin, action) {
@@ -81,4 +85,25 @@ function isShowSideBarReducer(state = initialState.isShowSideBar, action){
   }
 }
 
+function isShowDatePickerReducer(state = initialState.isShowDatePicker, action){
+  switch (action.type) {
+    case IS_SHOW_DATE_PICKER:
+      return Object.assign({}, {
+        isShowDatePicker: action.payload.isShowDatePicker
+      });
+    default: return state;
+  }
+}
+
+function getDateDataReducer(state = initialState.getDateData, action){
+  switch (action.type) {
+    case DATE_DATA:
+      return Object.assign({}, {
+        getDateData: action.payload.getDateData
+      });
+    default: return state;
+  }
+}
+
 export default rootReducer;
+

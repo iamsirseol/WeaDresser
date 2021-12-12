@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { getLocationData, getWeatherData } from '../../redux/actions/actions';
+import { getWeatherData } from '../../redux/actions/actions';
 import {
     Container, 
     LandingPageContainer, 
@@ -12,7 +12,7 @@ import {
 import axios from 'axios';
 import sun from '../../images/sun.png';
 import cloud from '../../images/cloud.png';
-import moon from '../../images/moon.png';
+// import moon from '../../images/moon.png';
 import rain from '../../images/rain.png';
 import snow from '../../images/snow.png';
 import LandingPageLower from './LandingPageLower'
@@ -109,7 +109,8 @@ function LandingPage () {
                             <div>
                                 <span className="temp1">최고기온</span>
                                 <span className="temp2">{(parseInt((weatherData.main.temp_max - 273.15) * 10)) / 10}°C</span>
-                            </div><div>
+                            </div>
+                            <div>
                                 <span className="temp1">최저기온</span>
                                 <span className="temp3">{(parseInt((weatherData.main.temp_min - 273.15) * 10)) / 10}°C</span>
                             </div>
