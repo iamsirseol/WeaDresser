@@ -78,7 +78,6 @@ function RecordPage() {
 
     const formData = new FormData(); // submitbutton이랑 cancelbutton이랑 둘다 활용
     function submitFn (e) { // 작성완료 버튼
-        e.preventDefault();
         // user 정보도 담아서 줘야하지 않을까 window.sesstionStorage.getItem() 
         // 아니면 server에서 쿠키에 담긴 데이터? // 위 처럼 보내지 않고 server에서 쿠키사용
         formData.append('weatherData', weatherData);
@@ -95,14 +94,13 @@ function RecordPage() {
             }},
             { withCredential: true 
         })
-            .then(res => {}) // axios.post면 res를 보내 줄 필요가 없는지?
+            .then(res => {console.log('submit successfully')}) // axios.post면 res를 보내 줄 필요가 없는지?
             .catch(err => {console.log(err)});
             // history -> diary페이지 -> 다시 get요청 (가장 최신 글)
         history.push('/mypage/diary');
     }
 
     function cancleFn (e) {
-        e.preventDefault();
         // formData 초기화
         formData.delete('weatherData');
         formData.delete('image');
@@ -110,7 +108,6 @@ function RecordPage() {
         formData.delete('hashtag');
         formData.delete('share');
         history.push('/');
-
     }
 
     // useEffect(() => {

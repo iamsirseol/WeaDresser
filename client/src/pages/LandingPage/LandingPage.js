@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { getLocationData, getWeatherData } from '../../redux/actions/actions';
+import { getWeatherData } from '../../redux/actions/actions';
 import {
     Container, 
     LandingPageContainer, 

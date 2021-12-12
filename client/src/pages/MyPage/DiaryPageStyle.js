@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import usericon from '../../images/userinfo_ic.svg';
-import calendar from '../../images/calendar_ic.svg';
-import calendarHover from '../../images/calendar_ic_hover.svg';
 import menuicon from '../../images/menu_ic_nor.svg';
 import menuiconHover from '../../images/menu_ic_press.svg';
+import close from '../../images/close_ic.png';
+import lefticon from '../../images/arrow-left.png';
+import righticon from '../../images/arrow-right.png';
 
 export const Container = styled.div` 
     width: 100%; 
@@ -120,7 +121,7 @@ export const TabBody = styled.div`
 `
 
 export const DateDataBar = styled.div`
-    width: 52em;
+    width: 54em;
     height: 4em;
     position: relative;
     margin: 0 auto;
@@ -148,27 +149,6 @@ export const DateDataBar = styled.div`
 
     }
 
-    .calendar-box {
-        width: 3.5em;
-        height: 3.5em;
-        margin: 0.2em 0 0 0.5em;
-        background-image: url(${calendar});
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-        cursor: pointer;
-        :hover {
-            background-image: url(${calendarHover});
-        }
-    }
-    .date-box {
-        font-size: 2em;
-        font-family: NotoSansKRKR;
-        line-height: 2.2;
-        letter-spacing: 1px;
-        color: #17191d;
-        margin-right: 0.5em;
-    }
     .weather-desc {
         /* margin-left: 0.5em; */
         font-size: 2em;
@@ -209,9 +189,9 @@ export const DateDataBar = styled.div`
 `
 
 export const WeatherIcon = styled.span`
-    width: 3.2em;
-    height: 3.2em;
-    margin: 0.3em 0 0 1em;
+    width: 3.0em;
+    height: 3.0em;
+    margin: 0.4em 1em 0 1em;
     background-image: url(${props => props.icon});
     background-size: contain;
     background-repeat: no-repeat;
@@ -221,48 +201,103 @@ export const WeatherIcon = styled.span`
 export const RecordContainer = styled.div`
     width: 47.8em;
     height: 53.9em;
-    position: relative;
-    background-color: aliceblue;
     margin: 0 auto;
-    top: 5em;
+    top: 7.5%;
+    position: relative;
+    background: burlywood;
+    overflow: hidden;
+`
+export const SlideContainer = styled.div`
+    width: auto;
+    height: 53.9em;
+    margin: 0 auto;
+    display: flex;
+`
+export const BOX = styled.div`
+    margin: 0 auto;
+    height: 50.9em;
 `
 export const ImageBox = styled.div`
-    width: 100%;
+    width: 47.8rem;
     height: 32.4em;
-    position: relative;
-    background-color: #dfdfe0;
-    background-image: url(${props => props.diaryImage});
-    background-repeat: no-repeat;
+    background: aliceblue;
     background-size: contain;
+    background-image: url(${props => props.img});
+    background-repeat: no-repeat;
     background-position: center;
-    border: solid 1px #d3d3d3;
-
 `
-
 export const ContentBox = styled.div`
-    width: 45rem;
-    height: 12rem;
-    padding: 0.5em 1em 0.5em 1em;
-    position: relative;
+    width: 47.0rem;
+    height: 13em;
+    /* background: cornflowerblue; */
+    font-family: NotoSansKR;
     font-size: 1.4em;
+    line-height: 2.5;
     letter-spacing: normal;
+    margin-left: 0.5em;
     color: #3b3c3c;
-    background-color: #fdfdfd;
-    border: solid 1px #d3d3d3;
-    border-top: none;
-   // 수정버튼 눌렀을때 textarea로 변경
 `
-
 export const HashtagBox = styled.div`
-    width: 45.8rem;
-    height: 7.4rem;
-    padding: 0.5em 1em 0.5em 1em;
+    width: 47.8rem;
+    height: 8.5em;
     position: relative;
-    background-color: #fdfdfd;
-    border: solid 1px #d3d3d3;
-    border-top: none;
+    background: wheat;
+    /* display: flex; */
 
+
+    > span {
+        width: auto;
+        height: 3em;
+        /* display: flex; */
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        padding: 0 8px;
+        font-size: 1.4rem;
+        list-style: none;
+        border-radius: 4px;
+        margin: 0 4px 4px 0.5em;
+        background-color: #5694F8;
+        letter-spacing: 1px;
+        :hover {
+            background-color: #3471d5;
+        }
+    }
 `
+export const Button = styled.div`
+    /* all: unset; */
+    top: 25%;
+    left: -1em; 
+    padding: 1em 2em;
+    margin: 2em 2em;
+    border-radius: 10px;
+    border: 1px solid salmon;
+    z-index: 99;
+    position: absolute;
+    &:hover {
+        background-color: salmon;
+        color: #fff;
+    }
+`
+export const Button2 = styled.div`
+    /* all: unset; */
+    top: 25%;
+    right: -1em;
+    padding: 1em 2em;
+    margin: 2em 2em;
+    border-radius: 10px;
+    border: 1px solid salmon;
+    z-index: 99;
+    position: absolute;
+    &:hover {
+        background-color: salmon;
+        color: #fff;
+    }
+`
+
+
+
+
 
 export const DotMenuBox = styled.div`
     bottom: 73.5%;
@@ -292,11 +327,9 @@ export const DotMenu = styled.div`
     border: solid 1px #d9d9d9;
     background-color: #fff;
     left: 2.5em;
-    animation: ${props => props.isDotMenu ? 'fadein 3s' : null};
-    /* display: flex;
-    flex-direction: column; */
 
     .edit-btn {
+        display: ${props => props.isDotMenu ? 'block' : 'none'};
         width: 100%;
         height: 5rem;
         position: relative;
@@ -316,6 +349,7 @@ export const DotMenu = styled.div`
     }
 
     .delete-btn {
+        display: ${props => props.isDotMenu ? 'block' : 'none'};
         width: 100%;
         height: 5rem;
         position: relative;
