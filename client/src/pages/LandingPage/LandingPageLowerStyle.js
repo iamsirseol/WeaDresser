@@ -20,7 +20,10 @@ export const UserWore = styled.div`
     background: #ddd;
 `
 export const UserWoreImage = styled.div`
-
+    background-image: url(${props => props.woreUrl});
+    background-color: #ddd;
+    width: 90%;
+    height: 30em;
 `
 export const UserWoreText = styled.p`
 
@@ -30,7 +33,10 @@ export const BestDresser = styled.div`
     width: 48%;
 `
 export const BestDresserImage = styled.div`
-
+    background-image: url(${props => props.bestUrl});
+    background-color: #ddd;
+    width: 90%;
+    height: 30em;
 `
 export const BestDresserText = styled.p`
 

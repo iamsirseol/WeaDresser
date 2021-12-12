@@ -1,9 +1,9 @@
-const { generateToken } = require('../tokenfunction');
+const { generateToken, sendToken } = require('../tokenfunction');
 const { User } = require('../../models')
 const axios = require('axios');
 module.exports = {
 
-  // *  POST users/oauth/google
+  // *  POST oauth/google
   google: async (req, res) => {
     const{ email, userName } = req.body; 
     if(!email) return res.status(401).send("Unauthorized")
@@ -14,9 +14,11 @@ module.exports = {
     })
     // send token if user exsits 
     if(findUser){
-      const { email } = findUser.dataValues;
-      const accessToken = generateToken( { email })
-      return res.json({ accessToken : accessToken, email })
+      const { id, email } = findUser.dataValues; 
+      const token = generateToken({ id, email });
+      sendToken(res, token);
+      return res.json({ email, token }); 
+      //! accessToken 을 body에 안줘도 됨 ! 추후 다시 협의 보기
     }
 
     // payload to create user-data
@@ -32,10 +34,11 @@ module.exports = {
     User.create(userProperties)
     .then( createdUser => {
       //  success to create
-      const { email } = createdUser.dataValues;
-      const accessToken = generateToken( { email })
-      return res.json({ accessToken : accessToken, email })
-
+      const { id, email } = createdUser.dataValues; 
+      const token = generateToken({ id, email });
+      sendToken(res, token);
+      return res.json({ email, token }); 
+      //! accessToken 을 body에 안줘도 됨 ! 추후 다시 협의 보기
     })
     .catch(err => {
       // faile to create
@@ -43,7 +46,7 @@ module.exports = {
     })
   },
 
-  // *  POST users/oauth/kakao
+  // *  POST oauth/kakao
   kakao: async (req, res) => {
    // req body validation
     const { accessToken } = req.body;
@@ -74,9 +77,11 @@ module.exports = {
     })
     // send token if user exsits 
     if(findUser){
-      const { email } = findUser.dataValues;
-      const accessToken = generateToken( { email })
-      return res.json({ accessToken : accessToken, email })
+      const { id, email } = findUser.dataValues; 
+      const token = generateToken({ id, email });
+      sendToken(res, token);
+      return res.json({ email, token }); 
+      //! accessToken 을 body에 안줘도 됨 ! 추후 다시 협의 보기
     }
     // payload to create user-data 
     const userProperties = {
@@ -89,9 +94,11 @@ module.exports = {
     // create user on Users table
     User.create(userProperties)
     .then( createdUser => { // success to create 
-      const { email } = createdUser.dataValues;
-      const accessToken = generateToken( { email })
-      return res.json({ accessToken : accessToken, email })
+      const { id, email } = createdUser.dataValues; 
+      const token = generateToken({ id, email });
+      sendToken(res, token);
+      return res.json({ email, token }); 
+      //! accessToken 을 body에 안줘도 됨 ! 추후 다시 협의 보기
 
     })// faile to create
     .catch(err => {

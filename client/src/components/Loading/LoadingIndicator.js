@@ -7,6 +7,7 @@ export const LoadingWrap = styled.div`
   position: absolute;
 	top:0;
 	left:0;
+  z-index: -1;
 `;
 const boxFade = keyframes`
   from {transform: rotate(0deg); }
@@ -16,7 +17,8 @@ const boxFade = keyframes`
 export const Spinner  = styled.div`
   box-sizing: border-box;
   position: absolute;
-  top: 50%;
+  /* top: 50%; */
+  bottom: 2em;
   left: 50%;
   width: 64px;
   height: 64px;

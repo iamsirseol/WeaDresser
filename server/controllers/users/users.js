@@ -1,6 +1,6 @@
-const { sign } = require("jsonwebtoken");
 const { User } = require("../../models");
 const { generateToken , sendToken } = require('../tokenfunction')
+const { sendEmailCode } = require('../mailer')
 require("dotenv").config();
 
 module.exports = {
@@ -8,7 +8,6 @@ module.exports = {
   checkEmail: async (req, res) => {
     // request query validation
     const { email } = req.query
-    console.log( {email} )
     if( !email ){
       return res.status(422).send("Insufficient parameters");
     }
@@ -20,15 +19,18 @@ module.exports = {
       return res.status(500).send("Internal server error")
     })
     // found=true : email exists 203 , found=false: email good to go 
-    return found 
-    ? res.status(203).send("User found by email")
-    : res.status(200).send("request on valid");
+    if(found) 
+      return res.status(203).send("User found by email")
+
+    sendEmailCode(res, email)
+    return res.status(200).send("request on valid");
   },
 
-  // *  GET users/send-email
+  // *  GET users/email?:code
   sendEmail: (req, res) => {
-    console.log("ok it works");
-    return res.send("GET /users/send-email OK");
+    const { email } = req.params;
+    console.log("ok it works", req.params);
+
   },
 
   // *  POST users/signin
@@ -37,7 +39,7 @@ module.exports = {
     if (!req.body.email || !req.body.password)
       return res.status(422).send("Insufficient parameters");
 
-      const result = await User.findOne({
+    const result = await User.findOne({
       where: { email: req.body.email },
     }).catch((err) => {
       // db error
@@ -62,28 +64,28 @@ module.exports = {
     return res.json({ email, token }); 
     //! accessToken 을 body에 안줘도 됨 ! 추후 다시 협의 보기
   },
-
   // *  POST users/signup
   signup: async (req, res) => {
-    console.log("end point here")
+    // req body validation
     const { email, password, userName, social, gender } = req.body;
-    // if (email || password || userName || social)
-      // return res.status(422).send("Insufficient parameters");
-    const found = await User.findOne({
-      where: { email }
-    })
-    
+    console.log(email, password, userName, social, gender)
+    if (!email || !password || !userName || !gender)
+      return res.status(422).send("Insufficient parameters");
+
+    // validate to check duplicated
+    const found = await User.findOne({ where: { email } })
     return found 
-      ? res.status(403).send("Conflict")
-      : User.create({
+      ? res.status(403).send("Conflict") 
+      : User.create({ 
           email, password, userName, social, gender
         })
+      // not duplicated, Response Created or not 
       .then( created => {
-        if(!created)
-          return res.status(500).send("Failed to create")
-        return res.status(200).send("Created")
+        return !created
+          ? res.status(500).send("Failed to create")
+          : res.status(200).send("Created")
       })
-      .catch(err => {
+      .catch(err => { // DB error to excute findOne 
         return res.status(500).send("Internal server Error")
       })
   },

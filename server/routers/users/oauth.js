@@ -5,7 +5,7 @@ const oauthController = require('../../controllers/users/oauth')
 // *  POST oauth/google
 router.post('/google', oauthController.google);
 
-// *  POST oauth/kakao
+// *  POST users/signout
 router.post('/kakao', oauthController.kakao);
 
 module.exports = router;

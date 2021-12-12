@@ -42,6 +42,11 @@ module.exports = {
         //   key: 'id'
         // }
       },
+      likeCounts:{
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        default:0
+      },
       share: {
         allowNull: false,
         type: Sequelize.BOOLEAN,
