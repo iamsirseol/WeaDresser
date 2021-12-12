@@ -46,7 +46,7 @@ function UserInfo(){
         /*const curUser = window.sessionStorage.getItem('email');*/
         // 로딩 넣으면 좋을듯
         // console.log(userData)
-        axios.get('http://localhost:80/mypage/users', {headers : {authorization: `Bearer ${userData}`}})
+        axios.get('http://localhost:80/mypage/users', {withCredentials: true})
             .then(res => {
                 setCurUserNickname(res.data.data.userName)
             })
