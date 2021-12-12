@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35">
+    <defs>
+        <style>
+            .cls-1{fill:#2862e5}
+        </style>
+    </defs>
+    <g id="date_ic_hover" transform="translate(-602 -375)">
+        <g id="그룹_6594" data-name="그룹 6594" transform="translate(605.889 380.444)">
+            <path id="패스_569" data-name="패스 569" class="cls-1" d="M11664.266 5545.228h-22.713a2.055 2.055 0 0 1-2.053-2.052v-18.227a2.055 2.055 0 0 1 2.053-2.052h22.713a2.056 2.056 0 0 1 2.054 2.052v18.227a2.056 2.056 0 0 1-2.054 2.052zm-22.713-20.416a.14.14 0 0 0-.137.137v18.227a.14.14 0 0 0 .137.137h22.713a.141.141 0 0 0 .138-.137v-18.227a.141.141 0 0 0-.138-.137z" transform="translate(-11639.5 -5521.886)"/>
+            <path id="패스_570" data-name="패스 570" class="cls-1" d="M11670.564 5541.619h-18.629a.958.958 0 0 1 0-1.916h18.629a.958.958 0 1 1 0 1.916z" transform="translate(-11647.838 -5534.094)"/>
+            <path id="패스_571" data-name="패스 571" class="cls-1" d="M11655.625 5523.143a.958.958 0 0 1-.958-.958v-2.02a.958.958 0 1 1 1.915 0v2.02a.958.958 0 0 1-.957.958z" transform="translate(-11650.517 -5519.207)"/>
+            <path id="패스_572" data-name="패스 572" class="cls-1" d="M11715.472 5523.143a.958.958 0 0 1-.958-.958v-2.02a.958.958 0 0 1 1.916 0v2.02a.958.958 0 0 1-.958.958z" transform="translate(-11693.985 -5519.207)"/>
+            <circle id="타원_2" data-name="타원 2" class="cls-1" cx="1.458" cy="1.458" r="1.458" transform="translate(4.323 9.82)"/>
+            <circle id="타원_3" data-name="타원 3" class="cls-1" cx="1.458" cy="1.458" r="1.458" transform="translate(9.409 9.82)"/>
+            <circle id="타원_4" data-name="타원 4" class="cls-1" cx="1.458" cy="1.458" r="1.458" transform="translate(14.494 9.82)"/>
+            <circle id="타원_5" data-name="타원 5" class="cls-1" cx="1.458" cy="1.458" r="1.458" transform="translate(19.579 9.82)"/>
+            <circle id="타원_6" data-name="타원 6" class="cls-1" cx="1.458" cy="1.458" r="1.458" transform="translate(4.323 14.98)"/>
+            <circle id="타원_7" data-name="타원 7" class="cls-1" cx="1.458" cy="1.458" r="1.458" transform="translate(9.409 14.98)"/>
+            <circle id="타원_8" data-name="타원 8" class="cls-1" cx="1.458" cy="1.458" r="1.458" transform="translate(14.494 14.98)"/>
+        </g>
+        <path id="사각형_5094" data-name="사각형 5094" transform="translate(602 375)" style="fill:none" d="M0 0h35v35H0z"/>
+    </g>
+</svg>
