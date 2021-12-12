@@ -9,9 +9,9 @@ module.exports = {
 
   sendToken: (res, token) => {
     res.cookie("Bearer", token, {
-      // httpOnly: true,
-      // sameSite: "none",
-      // secure: true,
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
       maxAge: 60 * 60 * 24 * 1000,
       domain: "localhost",
       path: "/",
