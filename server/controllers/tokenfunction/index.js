@@ -33,7 +33,7 @@ module.exports = {
   isAuthorized: (req) => {
 
     const cookieToken = req.cookies.Bearer;
-    console.log(req.cookies.Bearer)
+    // console.log(req.cookies.Bearer)
     if (!cookieToken) return null;
     try {
       return verify(cookieToken, process.env.ACCESS_SECRET);

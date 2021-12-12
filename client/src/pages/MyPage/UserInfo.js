@@ -22,8 +22,8 @@ import CheckMsg from "../../components/utils/checkMsg"
 import {conditionPassword} from "../../utils/validator"
 import CheckSignMsg from '../../components/utils/checkMsg';
 import InfoUpdateModal from '../../components/Modal/InfoUpdateModal'
-
-
+import WithDrawalBtn from '../../components/WithDrawal/WithDrawalBtn'
+import WithDrawalModal from '../../components/WithDrawal/WithDrawalModal'
 
 function UserInfo(){
     const [curUserPw, setCurUserPw] = useState('');
@@ -33,7 +33,8 @@ function UserInfo(){
     const [fixUserName, setFixUserName] = useState('')
     const [sucUpdate, setSucUpdate] = useState(true);
     const [showUpdateModal, setShowUpdateModal] = useState(null);
-    const [buttonDisabled, setButtonDisabled] = useState(true)
+    const [buttonDisabled, setButtonDisabled] = useState(true);
+    const [showWithDrawal, setShowWithDrawal] = useState(Boolean);
 
     const [validPw, setValidPw] = useState(false); // 유효성(문자, 숫자, 특수문자 각 하나씩)
     const [samePw, setSamePw] = useState(false); // 비번 확인용
@@ -41,21 +42,16 @@ function UserInfo(){
     const userData =  useSelector(state => state.isLoginReducer.accessToken)
 
     useEffect(() => {
+        console.log("useEffect get request")
         /*const curUser = window.sessionStorage.getItem('email');*/
         // 로딩 넣으면 좋을듯
         // console.log(userData)
-        axios.get(`${process.env.REACT_APP_SERVER_URL}/mypage/users`, {headers : {authorization: `Bearer ${userData}`}})
+        axios.get('http://localhost:80/mypage/users', {withCredentials: true})
             .then(res => {
-                console.log('--------------------------')
-                console.log(res)
-                console.log('--------------------------')
-                // const username = res.data.data.username;
-                // setCurUserNickname(username)
-                // setFixUserName(username)
                 setCurUserNickname(res.data.data.userName)
             })
             .catch(err => {
-                // console.log('fail')// 에러창을 추후에 만들면 좋을듯 싶음
+
             })
 
     }, [])
@@ -75,7 +71,7 @@ function UserInfo(){
 
     useEffect(() => { // disabled 조건문인데 확인 잘하자 이걸로 함수 실행하자 근데 이게 최선인가
         if(curUserPw){
-            if(fixUserName){
+            if(fixUserName && !validPw && samePw){
                 setButtonDisabled(false)
             }else if(validPw && samePw){
                 setButtonDisabled(false)
@@ -104,17 +100,23 @@ function UserInfo(){
         
     },[fixUserName, curUserPw, updatePw, checkUpdatePw])
 
-    function updateInfoRequest(e){ // -------------업데이트 요청----------------
+    function updateInfoRequest(e){
         e.preventDefault()
+        const userData2 = {userName: fixUserName, editPassword: updatePw, password: curUserPw}
 
-        axios.patch(`${process.env.REACT_APP_SERVER_URL}/mypage/users`, {withCredentials : true})
+        axios.patch('http://localhost:80/mypage/users',userData2,{headers: {authorization: `Bearer ${userData}`, withCredentials : true}})
             .then(res => {
-                console.log('유저 정보 업데이트 성공')
+                console.log(res)
                 setSucUpdate(true)
                 setShowUpdateModal(true)
+                setCurUserNickname(fixUserName)
+                setCurUserPw('')
+                setUpdatePw('')
+                setCheckUpdatePw('')
+                setFixUserName('')
+                console.log(curUserPw)
             })
             .catch(err => {
-                console.log('fail')// 에러창을 추후에 만들면 좋을듯 싶음
                 setSucUpdate(false)
                 setShowUpdateModal(true)
             })
@@ -125,27 +127,27 @@ function UserInfo(){
             <UserInfoContainer>
                 <UserInfoHeader>
                     <h2>{curUserNickname}님</h2>
-                    <div>회원탈퇴</div>
+                    <WithDrawalBtn setShowWithDrawal={setShowWithDrawal}/>
                 </UserInfoHeader>
                 <UserInfoUpdate>
                     <UserInfoForm onSubmit={(e) => updateInfoRequest(e)}>
                         <UserInfoBox>
                             <UserInfoLabel htmlFor="nickName">변경 할 닉네임</UserInfoLabel>
-                            <UserInfoNickname onChange={(e) => changeNickName(e)}/>
+                            <UserInfoNickname onChange={(e) => changeNickName(e)} value={fixUserName || ''}/>
                         </UserInfoBox>
                         <UserInfoBox>
                             <UserInfoLabel htmlFor="curPassword">현재 비밀번호 입력</UserInfoLabel >
-                            <UserInfoPwd autocomplete="current-password" onChange={(e) => userPwInfo(e)}/>
+                            <UserInfoPwd autocomplete="current-password" onChange={(e) => userPwInfo(e)} value={ curUserPw || ''}/>
                         </UserInfoBox>
                         <UserInfoBox>
                             <UserInfoLabel htmlFor="changePassword">새 비밀번호 입력</UserInfoLabel>
                             {/* 필수 아님 */}
-                            <UserInfoEditPwd autocomplete="new-password" onChange={(e) => chagePwInfo(e)}/>
+                            <UserInfoEditPwd autocomplete="new-password" onChange={(e) => chagePwInfo(e)} value={ updatePw || ''}/>
                         </UserInfoBox>
                         {!validPw ? <CheckSignMsg message={'숫자, 영문, 특수문자 각 1자리 이상의 8~16 자리'} /> : null}
                         <UserInfoBox>
                             <UserInfoLabel htmlFor="checkPassword">새 비밀번호</UserInfoLabel>
-                            <UserInfoChkPassword onChange={(e) => checkChagePwInfo(e)}/>
+                            <UserInfoChkPassword onChange={(e) => checkChagePwInfo(e)} value={ checkUpdatePw || ''}/>
                         </UserInfoBox>
                         {!samePw ? <CheckSignMsg message={'비밀번호가 일치하지 않습니다.'} /> : null}
                         <UserInfoSubmitBtn disabled={buttonDisabled}>
@@ -154,8 +156,9 @@ function UserInfo(){
                     </UserInfoForm>
                 </UserInfoUpdate>
                 <UserInfoSnsLogined></UserInfoSnsLogined>
-                {showUpdateModal ? <InfoUpdateModal setShowUpdateModal={setShowUpdateModal} showUpdateModal={showUpdateModal} sucUpdate={sucUpdate} /> : null}
             </UserInfoContainer>
+            {showUpdateModal ? <InfoUpdateModal setShowUpdateModal={setShowUpdateModal} showUpdateModal={showUpdateModal} sucUpdate={sucUpdate} /> : null}
+            {showWithDrawal ? <WithDrawalModal setShowWithDrawal={setShowWithDrawal} /> : null}
         </UserInfoBackground>
     )
 

@@ -12,13 +12,21 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   DiariesHashtag.init(
-    { },
+    {
+      diariesId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      hashtagsId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+    },
     {
       timestamps: false,
       sequelize,
       modelName: "DiariesHashtag",
     }
   );
-
   return DiariesHashtag;
 };

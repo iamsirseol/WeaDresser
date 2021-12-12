@@ -31,4 +31,10 @@ export const initialState = {
     isShowSideBar: {
         isShowSideBar: false
     },
+    isShowDatePicker: {
+        isShowDatePicker: false
+    },
+    getDateData: {
+        getDateData: null
+    }
 }
