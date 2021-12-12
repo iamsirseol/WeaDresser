@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const usersController = require("../../controllers/users/users");
 
-// *  POST users/email
+// *  GET users/email
 router.get("/email", usersController.checkEmail);
 
-// *  GET users/email:code
-router.get("/email:code", usersController.sendEmail);
+// *  GET users/send-email
+router.get("/email/:code", usersController.sendEmail);
 
 // *  POST users/signin
 router.post("/signin", usersController.signin);

@@ -6,12 +6,14 @@ import Login from './Login'
 import { getGoogleUserInfo, getKakaoAccToken } from '../../../api/social'
 import { isShowLoginModalHandler, loginSuccessHandler, isShowSignUpModalHandler } from '../../../redux/actions/actions'
 import { ModalBackdrop } from './ModalStyle'
+import { useHistory } from "react-router";
 
-const Modal = () => {
-  const { isShowLoginModal , isShowSignUpModal} = useSelector(state => state.isShowModalReducer)
+const Modal = ({ setGoHomeNow }) => {
+  const { isShowLoginModal } = useSelector(state => state.isShowModalReducer)
   const [ socialDone, setSocialDone ] = useState(false);
   const dispatch = useDispatch();
   const  modalRef = useRef();
+  const history = useHistory();
 
   // Translate animation by useSpring 
   const props = useSpring({
@@ -28,14 +30,14 @@ const Modal = () => {
   const closeModalHandler = e => {
     if(modalRef.current === e.target){
       dispatch(isShowLoginModalHandler(false))
-    dispatch(isShowSignUpModalHandler(false))
-  }
+      dispatch(isShowSignUpModalHandler(false))
+    }
   }
   // Modal False by Esc key <- useCallback only!! 
   const closeKeyPress = useCallback( e => {
     if(e.key === 'Escape' && isShowLoginModal){
       dispatch(isShowLoginModalHandler(false))
-      dispatch(isShowSignUpModalHandler(false))
+      // dispatch(isShowSignUpModalHandler(false))
     }
   }, [isShowLoginModalHandler, isShowLoginModal])
 
@@ -45,48 +47,52 @@ const Modal = () => {
     return () => document.removeEventListener('keydown', closeKeyPress)
   }, [closeKeyPress])
 
-  // moved by App.js
-  // request to get google user info & accessToken (우리서버)
+  // Get google userinfo & cookie token
   const googleTokenHandler = async (goolgeAccToken) => {
     const googleUser = await getGoogleUserInfo({accessToken : goolgeAccToken});
     const { name, email } = googleUser.data
-    const LOCAL = process.env.REACT_APP_SERVER_LOCAL;
-    const SERVER = process.env.REACT_APP_SERVER;
-    axios.post(`${LOCAL}/oauth/google`, 
-      { email, userName : name }, 
-      { withCredentials : true }
-    )
-    .then(loginResult => {
-      dispatch(loginSuccessHandler(true, loginResult.data.accessToken));
-      setSocialDone(true);
-    })
-    .catch(err => {
-      console.log(err.response);
-    })
+    // axios.post("http://localhost:80/oauth/google", 
+    const SERVER 
+      = process.env.REACT_APP_SERVER
+      || "http://localhost:80"
+      axios.post(`${SERVER}/oauth/google`, 
+        { email, userName : name }, 
+        { withCredentials : true }
+      )
+    . then(loginResult => {
+        dispatch(loginSuccessHandler(true, loginResult.data.accessToken));
+        setSocialDone(true);
+        history.push('/');  //! 구글 auth 성공시 back => 다시 구글 로그인 page 
+        // home으로 우선 랜더링  
+      })
+      .catch(err => {
+        console.log(err.response);
+      })
   }
-  
-  // request to get kakao user info & accessToken (우리서버)
+  // Get kakao userinfo & cookie token
   const kakaoTokenHandler = async (kakaoCode) => {
     const kakaToken = await getKakaoAccToken(kakaoCode);
     const { accessToken } = kakaToken
-    const LOCAL = process.env.REACT_APP_SERVER_LOCAL;
-    const SERVER = process.env.REACT_APP_SERVER;
+    const SERVER 
+      = process.env.REACT_APP_SERVER 
+      || "http://localhost:80"
     axios.post(
-      `${LOCAL}/oauth/kakao`,
+      `${SERVER}/oauth/kakao`,
       { accessToken },
       { withCredentials : true }
     )
     .then(loginResult => {
       dispatch(loginSuccessHandler(true, loginResult.data.accessToken));
       setSocialDone(true);
+      history.goBack();
     })
     .catch(err=> {
       //err handle
       console.log(err.response);
     })
   }
-
-  useEffect(()=>{
+  // useEffect to call API for social login 
+  useEffect(()=>{ // only if authen by user from Oauth-website
     if(!socialDone){
       // To check redirect para from social user 
       const url = new URL(window.location.href)
@@ -107,7 +113,7 @@ const Modal = () => {
   return (
     <>{ !isShowLoginModal ? null : 
       <ModalBackdrop style={props} ref={modalRef} onClick={closeModalHandler}>
-        <Login closeModalByBtn={closeModalByBtn}/>
+        <Login setGoHomeNow = {setGoHomeNow} closeModalByBtn={closeModalByBtn}/>
        </ModalBackdrop>
       }
     </>

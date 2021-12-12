@@ -69,8 +69,9 @@ export const useForm = () => {
         const { email } = values ;
         //! the moment to save email on payload 
         if( email ) setPayload({ email })
-        setErrors({ on : true, msg :"사용 가능한 이메일 입니다." });
-        setCodeMsg({ on: true, msg : "이메일 인증을 완료해 주세요" });
+        setErrors({ on : true, msg :"이메일 인증을 완료해 주세요" });
+        // setErrors({ on : true, msg :"사용 가능한 이메일 입니다." });
+        // setCodeMsg({ on: true, msg : "이메일 인증을 완료해 주세요" });
         setIsValid([true, isValid[1]]); // email done so to go on to the next (code validation)
         
       }

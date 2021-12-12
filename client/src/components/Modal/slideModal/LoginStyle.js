@@ -54,8 +54,8 @@ export const InputContainer = styled.div`
   .login-input{
     width: 30rem; 
     height: 3rem;
-    margin: 0.5rem; // responsive 
-    font-size: 1.6rem;
+    margin: 1rem; // responsive 
+    font-size: 2rem;
     color: #fff;
     background-color: #5b81fa;
     border: none;
@@ -75,14 +75,14 @@ export const InputContainer = styled.div`
     @media screen and (max-width : 767px){
       width: 24rem;
       height: 2.3rem;
-      margin-top: 0.2rem;
-      font-size: 1.2rem
+      margin-top: 0.8rem;
+      font-size: 1.6rem
     }
     @media screen and (max-width : 424px){
       width: 18rem;
-      height: 1.2rem;
-      margin-top: 0.2rem;
-      font-size: 1rem;
+      height: 1.5rem;
+      margin-top: 0.4rem;
+      font-size: 1.4rem;
     }
   }
   @media screen and (max-width : 767px){
@@ -114,10 +114,10 @@ export const LoginError = styled.div`
 export const LoginBtnContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin:3.5rem auto;
+  margin: 2.5rem auto;
   /* background:cornflowerblue; */
   @media screen and (max-width: 787px){
-    margin:1.5rem auto;
+    margin:2rem auto;
   }
   button{
     color: #757575;
