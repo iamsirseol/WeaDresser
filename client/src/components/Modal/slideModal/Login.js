@@ -106,12 +106,6 @@ function Login({ closeModalByBtn }){
       }
     })
   }
-  const googleLoginHandler = () => {
-    getGoogleAccToken()
-  }
-  const kakaoLoginHandler = () => {
-    getKakaoCode()
-  }
   const modalChangeHandler = () => {
     dispatch(isShowSignUpModalHandler(true));
   }
@@ -143,8 +137,8 @@ function Login({ closeModalByBtn }){
         <LoginBtnContainer>
           <button onClick={validCheckHandler}  className={`login-btn${active}`}> 로그인</button>
           <button onClick={modalChangeHandler} className='singup-btn'>회원가입</button>
-          <button onClick={kakaoLoginHandler} className='kakao-btn'>Kakao</button>
-          <button onClick={googleLoginHandler} className='google-btn'>Google</button>
+          <button onClick={getKakaoCode} className='kakao-btn'>Kakao</button>
+          <button onClick={getGoogleAccToken} className='google-btn'>Google</button>
         </LoginBtnContainer>
         <CloseModalButton onClick={closeModalByBtn}/>
       </LoginContainer>
