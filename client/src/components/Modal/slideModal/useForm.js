@@ -128,7 +128,7 @@ export const useForm = () => {
 
   // all customed state-hook to use 
   return { 
-    isValid, values, errors, codeMsg, toLogin,
+    isValid, values, errors, codeMsg, toLogin, pattern,
     handleInputChange, handleRadioChange, handleSubmit,
     handleKeyPress, emailValidation, codeValidation, 
   }

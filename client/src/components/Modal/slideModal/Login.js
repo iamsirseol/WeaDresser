@@ -12,7 +12,8 @@ from '../../../api/social'
 import { isShowLoginModalHandler, isShowSignUpModalHandler, loginSuccessHandler } 
 from '../../../redux/actions/actions'
 import { useSpring } from 'react-spring'
-import { SignupContainer } from "./SignupStyle";
+import { useForm } from "./useForm";
+require('dotenv').config();
 
 function Login({ closeModalByBtn }){
   const [ loginInfo, setLoginInfo ] = useState({ email: "", password: "" });
@@ -21,6 +22,7 @@ function Login({ closeModalByBtn }){
 
   const [ active, setActive ] = useState("");
   const history= useHistory();
+  const { pattern } = useForm();
   const dispatch = useDispatch(); 
 
   // Translate animation (Signin)
@@ -47,24 +49,35 @@ function Login({ closeModalByBtn }){
   // !Todo  정규식 추가 
   const validCheckHandler = () => {
     const { email, password } = loginInfo
-    if(!email || !password ){
-      setActive("")
-      setErrorMessage('이메일 과 패스워드를 입력해 주세요')
+
+    setActive("")
+    if(!email){
+      setErrorMessage('이메일를 입력해 주세요')
     }
-    else if(!email.includes('@')){
-      setErrorMessage('이메일 형식을 확인해 주세요')
+    else if( !pattern.test(email) || !email.includes('@') || !email.includes('.') ){
+      setErrorMessage("이메일 형식을 확인해 주세요")
+    }
+    else if(!password){
+      setErrorMessage('비밀번호를 입력해 주세요')
+    }
+    //! 6자리 이상 으로 교체
+    else if(password.length < 3){
+      setErrorMessage('3자리 이상 비밀번호를 입력해 주세요')
     }
     else{
-    // GET user Access Token from server
       setActive("-active") // button active
       userLoginHandler() // * login ajax call
     }
+        
   };
   // GET User info by request to 80 Server
   const userLoginHandler = async () => {
-    const{ email, password } = loginInfo
+    const{ email, password } = loginInfo;
+    //! server uri
+    const SERVER = process.env.REACT_APP_SERVER_URI 
+    || `http://localhost:80/users/signin`
     axios.post(
-      `http://localhost:80/users/signin`,
+      SERVER + "/users/signin",
       // `${process.env.REACT_APP_SERVER_URL}/users/signin`,
       { email, password },
       { withCredentials: true }
