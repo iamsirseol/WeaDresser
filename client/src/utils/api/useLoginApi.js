@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import { loginSuccessHandler } from '../../redux/actions/actions';
 require('dotenv').config();
 //!Todo Client id, Secret key,숨기기
@@ -9,8 +9,8 @@ require('dotenv').config();
 export const useLoginApi = () => {
   const [ socialDone, setSocialDone ] = useState(false);
   const dispatch = useDispatch();
-  const  modalRef = useRef();
-  const history = useHistory();
+  // const  modalRef = useRef();
+  // const history = useHistory();
 
   // 구글 토큰 요청 
   // * doble check ok
@@ -22,6 +22,7 @@ export const useLoginApi = () => {
   };
 
   //구글 유저 정보 조회 요청  
+  // * double check ok 
   const getGoogleUserInfo = async ({accessToken}) => {
     const googleData = await axios.get(
       'https://www.googleapis.com/oauth2/v2/userinfo?access_token=' + accessToken, 
@@ -41,6 +42,7 @@ export const useLoginApi = () => {
   };
     
   //구글 유저 로그인 요청 
+  // * double check ok 
   const handleGoogleLoginApi = async (email, name ) => {
     const SERVER = process.env.REACT_APP_SERVER_URL || "http://localhost:80"
 
@@ -52,7 +54,6 @@ export const useLoginApi = () => {
       dispatch(loginSuccessHandler(true, loginResult.data.accessToken));
       setSocialDone(true);
       sessionStorage.setItem('isLogin', 'true')
-      history.push('/');  //! 구글 auth 성공시 back => 다시 구글 로그인 page  (back 하면 안됨)
       // home으로 우선 랜더링  
     })
     .catch(err => {
@@ -105,7 +106,6 @@ export const useLoginApi = () => {
       setSocialDone(true);
       sessionStorage.setItem('isLogin', 'true')
       // history.goBack();
-      history.push('/');  //!  auth 성공시 back =>  home  
     })
     .catch(err=> {
       //err handle

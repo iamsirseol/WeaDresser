@@ -20,7 +20,7 @@ const Modal = ({ setGoHomeNow }) => {
     getKakaoAccToken, handleKakaoLoginApi, 
     getGoogleUserInfo, handleGoogleLoginApi,
   } = useLoginApi();
-
+  const history = useHistory();
   // Translate animation by useSpring 
   const props = useSpring({
     transform: isShowLoginModal ? 'translateY(0%)' : 'translateY(100%)',
@@ -58,22 +58,8 @@ const Modal = ({ setGoHomeNow }) => {
     const googleUser = await getGoogleUserInfo({accessToken : goolgeAccToken});
     const { name, email } = googleUser.data
     await handleGoogleLoginApi(email, name)
-    // const SERVER 
-    //   = process.env.REACT_APP_SERVER
-    //   || "http://localhost:80"
-    //   axios.post(`${SERVER}/oauth/google`, 
-    //     { email, userName : name }, 
-    //     { withCredentials : true }
-    //   )
-    // . then(loginResult => {
-    //     dispatch(loginSuccessHandler(true, loginResult.data.accessToken));
-    //     setSocialDone(true);
-    //     history.push('/');  //! 구글 auth 성공시 back => 다시 구글 로그인 page 
-    //     // home으로 우선 랜더링  
-    //   })
-    //   .catch(err => {
-    //     console.log(err.response);
-    //   })
+    history.push('/');  //! 구글 oauth back redirect
+
   }
 
   // * 카카오 유저 로그인 요청  Done! 
@@ -81,6 +67,7 @@ const Modal = ({ setGoHomeNow }) => {
     const kakaToken = await getKakaoAccToken(kakaoCode);
     const { accessToken } = kakaToken
     await handleKakaoLoginApi({accessToken})
+    history.push('/');  //!  카카오 oauth back redirect  
 
   }
   // useEffect to call API for social login 
