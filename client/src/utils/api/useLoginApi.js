@@ -1,20 +1,23 @@
 import axios from 'axios';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { useHistory } from 'react-router-dom';
-import { loginSuccessHandler } from '../../redux/actions/actions';
+import { isShowLoginModalHandler, loginSuccessHandler, isShowSignUpModalHandler } from '../../redux/actions/actions'
 require('dotenv').config();
 //!Todo Client id, Secret key,숨기기
 
 export const useLoginApi = () => {
   const [ socialDone, setSocialDone ] = useState(false);
+  const [ errorMessage, setErrorMessage ] = useState("");
   const dispatch = useDispatch();
+  const { isShowLoginModal, isShowSignUpModal } = useSelector(state => state.isShowModalReducer)
   // const  modalRef = useRef();
   // const history = useHistory();
 
   // 구글 토큰 요청 
   // * doble check ok
   const getGoogleAccToken = () => {
+    sessionStorage.setItem('redirect',window.location.href)
+    console.log(window.location.href)
     const client_id = process.env.REACT_APP_KEY_GOOGLE || "218465323122-rtk87nvtaj2j5qmdg72qvas9sj81jee0.apps.googleusercontent.com";
     const redirect_uri = process.env.REACT_APP_REDIRECT_URL || "https://localhost:3000"
     const google= `https://accounts.google.com/o/oauth2/v2/auth?client_id=${client_id}&response_type=token&redirect_uri=${redirect_uri}&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile`
@@ -45,7 +48,8 @@ export const useLoginApi = () => {
   // * double check ok 
   const handleGoogleLoginApi = async (email, name ) => {
     const SERVER = process.env.REACT_APP_SERVER_URL || "http://localhost:80"
-
+    const userPage = window.location.href;
+    // console.log("asdfadsf", userPage)
     axios.post(`${SERVER}/oauth/google`, 
       { email : email, userName : name }, 
       { withCredentials : true }
@@ -54,7 +58,6 @@ export const useLoginApi = () => {
       dispatch(loginSuccessHandler(true, loginResult.data.accessToken));
       setSocialDone(true);
       sessionStorage.setItem('isLogin', 'true')
-      // home으로 우선 랜더링  
     })
     .catch(err => {
       console.log(err.response);
@@ -64,6 +67,7 @@ export const useLoginApi = () => {
   // 카카오 코드 요청 
   // * double check ok 
   const getKakaoCode = () => {
+    sessionStorage.setItem('redirect', window.location.href)
     const client_id = process.env.REACT_APP_KEY_KAKAO 
     const redirect_uri= process.env.REACT_APP_REDIRECT_URL 
     const kakao = `https://kauth.kakao.com/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code`;
@@ -113,11 +117,41 @@ export const useLoginApi = () => {
     })
   }
 
+  const handleUserLoginApi = async ({ email, password }) => {
+    //! server uri dotenv 안될때가 있어요!
+    const SERVER = process.env.REACT_APP_SERVER_URI || 'http://localhost:80'
+    axios.post(
+      SERVER + "/users/signin",
+      // `${process.env.REACT_APP_SERVER_URL}/users/signin`,
+      { email, password },
+      { withCredentials: true }
+    )
+    .then(result => {
+      // isLogin =true & set the accessToken + page redirection
+      dispatch(loginSuccessHandler(true, result.data.accessToken));
+      sessionStorage.setItem('isLogin', 'true')
+      dispatch(isShowLoginModalHandler(false))
+      // history.push('/')
+    })
+    .catch(err =>{
+      dispatch(loginSuccessHandler(false, ""));
+      if(err.response.status === 403){
+        setErrorMessage("회원이 아닙니다. 회원 가입을 진행해 주세요")
+      }
+      else if(err.response.status === 401){
+        setErrorMessage("이메일 비밀번호가 일치하지 않습니다.")
+      }
+      else{
+        setErrorMessage("앗! 서버 error가 낫어요!")
+      }
+    })
+  }
+
   return {
-    socialDone, setSocialDone,
+    socialDone, setSocialDone, errorMessage, setErrorMessage,
     getGoogleAccToken, getGoogleUserInfo, 
     getKakaoCode, getKakaoAccToken, 
-    handleKakaoLoginApi, handleGoogleLoginApi,
+    handleKakaoLoginApi, handleGoogleLoginApi, handleUserLoginApi
   }
 }
 

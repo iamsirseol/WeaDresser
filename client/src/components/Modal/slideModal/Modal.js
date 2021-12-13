@@ -1,14 +1,11 @@
-import React,{ useCallback, useRef, useState, useEffect } from "react";
+import React,{ useCallback, useRef, useEffect } from "react";
 import { useSpring } from 'react-spring'
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios'
 import Login from './Login'
-// import { getGoogleUserInfo, getKakaoAccToken, handleKakaoLoginApi } from '../../../api/social'
-import { isShowLoginModalHandler, loginSuccessHandler, isShowSignUpModalHandler } from '../../../redux/actions/actions'
+import { isShowLoginModalHandler, isShowSignUpModalHandler } from '../../../redux/actions/actions'
 import { ModalBackdrop } from './ModalStyle'
 import { useHistory } from "react-router";
 import { useLoginApi} from '../../../utils/api/useLoginApi'
-
 require('dotenv').config()
 
 const Modal = ({ setGoHomeNow }) => {
@@ -43,9 +40,9 @@ const Modal = ({ setGoHomeNow }) => {
   const closeKeyPress = useCallback( e => {
     if(e.key === 'Escape' && isShowLoginModal){
       dispatch(isShowLoginModalHandler(false))
-      // dispatch(isShowSignUpModalHandler(false))
+    // dispatch(isShowSignUpModalHandler(false))
     }
-  }, [isShowLoginModalHandler, isShowLoginModal])
+  }, [dispatch, isShowLoginModal])
 
   // useEffect to set keydown event 
   useEffect( ()=> {
@@ -53,12 +50,16 @@ const Modal = ({ setGoHomeNow }) => {
     return () => document.removeEventListener('keydown', closeKeyPress)
   }, [closeKeyPress])
 
-  // Get google userinfo & cookie token
+  //* 구글 유저 로그인 요청 Done
   const googleTokenHandler = async (goolgeAccToken) => {
     const googleUser = await getGoogleUserInfo({accessToken : goolgeAccToken});
     const { name, email } = googleUser.data
     await handleGoogleLoginApi(email, name)
-    history.push('/');  //! 구글 oauth back redirect
+      
+    const redirect = new URL(sessionStorage.getItem('redirect')).pathname
+    sessionStorage.removeItem('redirect')
+    history.push(redirect)
+    // window.location.assign(redirect) // ! coockie 사라짐
 
   }
 
@@ -67,8 +68,11 @@ const Modal = ({ setGoHomeNow }) => {
     const kakaToken = await getKakaoAccToken(kakaoCode);
     const { accessToken } = kakaToken
     await handleKakaoLoginApi({accessToken})
-    history.push('/');  //!  카카오 oauth back redirect  
 
+    const redirect = new URL(sessionStorage.getItem('redirect')).pathname
+    sessionStorage.removeItem('redirect')
+    history.push(redirect)
+    // window.location.assign(redirect) // ! coockie 사라짐
   }
   // useEffect to call API for social login 
   useEffect(()=>{ // only if authen by user from Oauth-website

@@ -1,33 +1,28 @@
 import React, { useState } from "react";
-import { useHistory} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Signup from "./Signup";
-import axios from 'axios';
 import title from './title.svg'
 import { LoginContainer,LogoContainer,InputContainer,LoginError,LoginBtnContainer } 
 from './LoginStyle';
 import { CloseModalButton } from "./ModalStyle";
 // import { getGoogleAccToken, getKakaoCode } 
 // from '../../../api/social'
-
 import { useLoginApi} from '../../../utils/api/useLoginApi'
-
-import { isShowLoginModalHandler, isShowSignUpModalHandler, loginSuccessHandler } 
-from '../../../redux/actions/actions'
+import { isShowSignUpModalHandler} from '../../../redux/actions/actions'
 import { useSpring } from 'react-spring'
 import { useForm } from "../../../utils/useForm";
 require('dotenv').config();
 
 function Login({ closeModalByBtn }){
   const [ loginInfo, setLoginInfo ] = useState({ email: "", password: "" });
-  const [ errorMessage, setErrorMessage ] = useState("");
+  // const [ errorMessage, setErrorMessage ] = useState("");
   const { isShowLoginModal, isShowSignUpModal } = useSelector(state => state.isShowModalReducer)
+  const dispatch = useDispatch(); 
 
   const [ active, setActive ] = useState("");
-  const history= useHistory();
+  // const history= useHistory();
   const { pattern } = useForm();
-  const dispatch = useDispatch(); 
-  const { getGoogleAccToken, getKakaoCode } = useLoginApi();
+  const { getGoogleAccToken, getKakaoCode, handleUserLoginApi, errorMessage, setErrorMessage } = useLoginApi();
 
   // Translate animation (Signin)
   const props = useSpring({
@@ -74,37 +69,12 @@ function Login({ closeModalByBtn }){
     }
         
   };
-  // GET User info by request to 80 Server
+
+  // * 일반 유저 로그인 done ! 
   const userLoginHandler = async () => {
     const{ email, password } = loginInfo;
+    handleUserLoginApi({ email, password})
     //! server uri dotenv 안될때가 있어요!
-    const SERVER = process.env.REACT_APP_SERVER_URI || 'http://localhost:80'
-    console.log(" 요청 간다.", SERVER)
-    axios.post(
-      SERVER + "/users/signin",
-      // `${process.env.REACT_APP_SERVER_URL}/users/signin`,
-      { email, password },
-      { withCredentials: true }
-    )
-    .then(result => {
-      // isLogin =true & set the accessToken + page redirection
-      dispatch(loginSuccessHandler(true, result.data.accessToken));
-      dispatch(isShowLoginModalHandler(false))
-      sessionStorage.setItem('isLogin', 'true')
-      history.push('/')
-    })
-    .catch(err =>{
-      dispatch(loginSuccessHandler(false, ""));
-      if(err.response.status === 403){
-        setErrorMessage("회원이 아닙니다. 회원 가입을 진행해 주세요")
-      }
-      else if(err.response.status === 401){
-        setErrorMessage("이메일 비밀번호가 일치하지 않습니다.")
-      }
-      else{
-        setErrorMessage("앗! 서버 error가 낫어요!")
-      }
-    })
   }
   const modalChangeHandler = () => {
     dispatch(isShowSignUpModalHandler(true));
@@ -116,7 +86,7 @@ function Login({ closeModalByBtn }){
       </LoginContainer>
       :
       <LoginContainer style={props}>
-        <LogoContainer><img alter="" src={title}/></LogoContainer>
+        <LogoContainer><img alt="Weadresser" src={title}/></LogoContainer>
         <InputContainer>
           <input 
             className="login-input"
