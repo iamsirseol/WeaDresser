@@ -72,7 +72,7 @@ const Modal = ({ setGoHomeNow }) => {
     const redirect = new URL(sessionStorage.getItem('redirect')).pathname
     sessionStorage.removeItem('redirect')
     history.push(redirect)
-    // window.location.assign(redirect) // ! coockie 사라짐
+    // window.location.assign(redirect) // ! cookie 사라짐
   }
   // useEffect to call API for social login 
   useEffect(()=>{ // only if authen by user from Oauth-website
@@ -87,7 +87,7 @@ const Modal = ({ setGoHomeNow }) => {
       if(kakaoCode) kakaoTokenHandler(kakaoCode);
       
     }
-    return () => {//clear effect
+    return () => {//!clear effect => warning 존재
       setSocialDone(true)
     }// dependency for not changing
   },[socialDone]) 
