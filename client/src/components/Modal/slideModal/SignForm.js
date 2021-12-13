@@ -1,7 +1,7 @@
 import { InputContainer, InputContainer2, } from './SignupStyle';
 import styled from 'styled-components';
 import { animated } from '@react-spring/web'
-import { useForm, validationInfo } from './useForm';
+import { useForm, validationInfo } from '../../../utils/useForm';
 import { useSpring } from '@react-spring/core';
 
 const FormContainer = styled(animated.div)`

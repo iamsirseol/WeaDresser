@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { loginSuccessHandler } from '../redux/actions/actions';
+import { loginSuccessHandler } from '../../redux/actions/actions';
 require('dotenv').config();
 //!Todo Client id, Secret key,숨기기
 

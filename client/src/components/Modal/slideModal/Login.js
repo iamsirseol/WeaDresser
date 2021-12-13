@@ -10,12 +10,12 @@ import { CloseModalButton } from "./ModalStyle";
 // import { getGoogleAccToken, getKakaoCode } 
 // from '../../../api/social'
 
-import { useLoginApi} from '../../../api/useLoginApi'
+import { useLoginApi} from '../../../utils/api/useLoginApi'
 
 import { isShowLoginModalHandler, isShowSignUpModalHandler, loginSuccessHandler } 
 from '../../../redux/actions/actions'
 import { useSpring } from 'react-spring'
-import { useForm } from "./useForm";
+import { useForm } from "../../../utils/useForm";
 require('dotenv').config();
 
 function Login({ closeModalByBtn }){

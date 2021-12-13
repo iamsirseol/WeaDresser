@@ -7,7 +7,7 @@ import Login from './Login'
 import { isShowLoginModalHandler, loginSuccessHandler, isShowSignUpModalHandler } from '../../../redux/actions/actions'
 import { ModalBackdrop } from './ModalStyle'
 import { useHistory } from "react-router";
-import { useLoginApi} from '../../../api/useLoginApi'
+import { useLoginApi} from '../../../utils/api/useLoginApi'
 
 require('dotenv').config()
 

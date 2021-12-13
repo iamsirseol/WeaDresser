@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { getEmailValidation } from '../../../api/signup'
-import { createUserHandler } from '../../../redux/actions/actions'
+import { getEmailValidation } from './api/signup'
+import { createUserHandler } from '../redux/actions/actions'
 import { useDispatch, useSelector } from 'react-redux';
-import { isShowLoginModalHandler, isShowSignUpModalHandler } from '../../../redux/actions/actions';
+import { isShowLoginModalHandler, isShowSignUpModalHandler } from '../redux/actions/actions';
 import axios from 'axios';
 export const useForm = () => {
   // state values to give input value 
