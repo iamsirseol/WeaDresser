@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { isShowLoginModalHandler, loginSuccessHandler, isShowSignUpModalHandler } from '../../redux/actions/actions'
 require('dotenv').config();
 //!Todo Client id, Secret key,숨기기
+// ! dot env 안될 수 있음 
 
 export const useLoginApi = () => {
   const [ socialDone, setSocialDone ] = useState(false);
@@ -15,6 +16,7 @@ export const useLoginApi = () => {
 
   // 구글 토큰 요청 
   // * doble check ok
+  // ! dot env 안될 수 있음 
   const getGoogleAccToken = () => {
     sessionStorage.setItem('redirect',window.location.href)
     console.log(window.location.href)
@@ -46,10 +48,9 @@ export const useLoginApi = () => {
     
   //구글 유저 로그인 요청 
   // * double check ok 
+  // ! dot env 안될 수 있음 
   const handleGoogleLoginApi = async (email, name ) => {
     const SERVER = process.env.REACT_APP_SERVER_URL || "http://localhost:80"
-    const userPage = window.location.href;
-    // console.log("asdfadsf", userPage)
     axios.post(`${SERVER}/oauth/google`, 
       { email : email, userName : name }, 
       { withCredentials : true }
@@ -66,6 +67,7 @@ export const useLoginApi = () => {
 
   // 카카오 코드 요청 
   // * double check ok 
+  // ! dot env 안될 수 있음 
   const getKakaoCode = () => {
     sessionStorage.setItem('redirect', window.location.href)
     const client_id = process.env.REACT_APP_KEY_KAKAO 
@@ -76,6 +78,7 @@ export const useLoginApi = () => {
 
   // 카카오 토큰 요청 (카카오 유저 정보 서버에서 다시 재요청 확인)
   // * double check ok
+  // ! dot env 안될 수 있음 
   const getKakaoAccToken = async (kakaoCode) => {
     const client_id = process.env.REACT_APP_KEY_KAKAO
     const client_secret = process.env.REACT_APP_KAKAO_SECRET
@@ -96,10 +99,9 @@ export const useLoginApi = () => {
   }
   // 카카오 유저 로그인 토큰 요청
   // * double check ok
-  // ! dot env 안됨
+  // ! dot env 안될 수 있음 
   const handleKakaoLoginApi = async ({accessToken}) => {
     const SERVER = process.env.REACT_APP_SERVER_URL || "http://localhost:80"
-
     axios.post(
       `${SERVER}/oauth/kakao`,
       { accessToken }, // 카카오 토큰
@@ -116,9 +118,10 @@ export const useLoginApi = () => {
       console.log(err.response);
     })
   }
-
+  // 일반 유저 로그인 토큰 요청 
+  // * double check ok
+  // ! dot env 안될 수 있음 
   const handleUserLoginApi = async ({ email, password }) => {
-    //! server uri dotenv 안될때가 있어요!
     const SERVER = process.env.REACT_APP_SERVER_URI || 'http://localhost:80'
     axios.post(
       SERVER + "/users/signin",
