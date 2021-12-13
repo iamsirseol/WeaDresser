@@ -74,7 +74,7 @@ function Login({ closeModalByBtn }){
   const userLoginHandler = async () => {
     const{ email, password } = loginInfo;
     handleUserLoginApi({ email, password})
-    //! server uri dotenv 안될때가 있어요!
+    //! server uri dotenv 안될때 있음!
   }
   const modalChangeHandler = () => {
     dispatch(isShowSignUpModalHandler(true));
