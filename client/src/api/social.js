@@ -30,29 +30,25 @@ const getGoogleUserInfo = async ({accessToken}) => {
 };
   
 const getKakaoCode = () => {
-  const client_id 
-    = process.env.REACT_APP_KEY_KAKAO 
-    || "1790cb63ae07847a0629b8b85b1bc2c6";
-  const redirect_uri= process.env.REACT_APP__REDIRECT || "https://localhost:3000"
+  const client_id = process.env.REACT_APP_KEY_KAKAO 
+  const redirect_uri= process.env.REACT_APP_REDIRECT_URL 
   const kakao = `https://kauth.kakao.com/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code`;
   window.location.assign(kakao)
 };
 
 const getKakaoAccToken = async (kakaoCode) => {
-  const client_id 
-    = process.env.REACT_APP_KEY_KAKAO
-    ||"1790cb63ae07847a0629b8b85b1bc2c6";
-  const client_secret 
-    = process.env.REACT_APP_KAKAO_SECRET
-    || "LZl1ctF5A55MsMTwjxUSGioxXtWO5abm";
+  const client_id = process.env.REACT_APP_KEY_KAKAO
+  const client_secret = process.env.REACT_APP_KAKAO_SECRET
   const kakaoUrl = `https://kauth.kakao.com/oauth/token?code=${kakaoCode}&client_id=${client_id}&client_secret=${client_secret}&redirect_uri=https://localhost:3000&grant_type=authorization_code`;
+  
+  //! 카카오 토큰 요청
   const data = await axios.post(
     kakaoUrl,
     { headers: { accept: `application/x-www-form-urlencoded` } },
     { property_keys: ["kakao_account.email"] }
   )
   .catch(err =>{
-    console.log(err);
+    // console.log(err);
     return { isSuccess : false, accessToken : null , msg : "Server error"} 
   })
   // console.log(data)

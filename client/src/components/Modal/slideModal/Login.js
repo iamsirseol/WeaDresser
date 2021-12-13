@@ -75,7 +75,7 @@ function Login({ closeModalByBtn }){
     const{ email, password } = loginInfo;
     //! server uri
     const SERVER = process.env.REACT_APP_SERVER_URI 
-    || `http://localhost:80/users/signin`
+    || `http://localhost:80`
     axios.post(
       SERVER + "/users/signin",
       // `${process.env.REACT_APP_SERVER_URL}/users/signin`,
@@ -86,6 +86,7 @@ function Login({ closeModalByBtn }){
       // isLogin =true & set the accessToken + page redirection
       dispatch(loginSuccessHandler(true, result.data.accessToken));
       dispatch(isShowLoginModalHandler(false))
+      sessionStorage.setItem('isLogin', 'true')
       history.push('/')
     })
     .catch(err =>{
