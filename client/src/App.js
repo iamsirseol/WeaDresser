@@ -18,19 +18,23 @@ import {SolidHeart} from "./components/SvgIcon/SvgIcon"
 import Modal from "./components/Modal/slideModal/Modal"
 // import RecordPage from './pages/RecordPage/RecordPage';
 import MyPage from './pages/MyPage/MyPage'
-// import { isShowLoginModalHandler } from './redux/actions/actions';
+import { loginSuccessHandler } from './redux/actions/actions';
 // import styled from 'styled-components';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import RecordPage from './pages/RecordPage/RecordPage';
 import DiaryPage from './pages/MyPage/DiaryPage';
 import Footer from './components/Footer/Footer'
+import { useEffect } from 'react';
 require('dotenv').config();
 
 function App() {
-  // const { isLogin, accessToken } = useSelector(state => state.isLoginReducer)
-  // const { isShowLoginModal, isShowSignUpModal 
-  // } = useSelector(state => state.isShowModalReducer);
-  // const dispatch = useDispatch();
+  const { accessToken } = useSelector(state => state.isLoginReducer)
+  const dispatch = useDispatch();
+  const loginHandler = bool => dispatch(loginSuccessHandler(bool, accessToken));
+  
+  useEffect( ()=> {
+    if(sessionStorage.getItem('isLogin')) loginHandler(true)
+  }, [])
 
   return (
     <BrowserRouter>

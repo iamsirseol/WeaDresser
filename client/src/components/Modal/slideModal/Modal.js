@@ -86,7 +86,6 @@ const Modal = ({ setGoHomeNow }) => {
       const url = new URL(window.location.href)
       const googleAccToken = url.hash.split("=")[1]
       const kakaoCode = url.searchParams.get("code")
-      console.log("call time ")
       // get social users token and info (only if appropriate para in url)  
       if(googleAccToken) googleTokenHandler(googleAccToken);
       if(kakaoCode) kakaoTokenHandler(kakaoCode);
