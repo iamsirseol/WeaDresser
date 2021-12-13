@@ -9,7 +9,7 @@ export const useLoginApi = () => {
   const [ socialDone, setSocialDone ] = useState(false);
   const [ errorMessage, setErrorMessage ] = useState("");
   const dispatch = useDispatch();
-  const { isShowLoginModal, isShowSignUpModal } = useSelector(state => state.isShowModalReducer)
+  // const { isShowLoginModal, isShowSignUpModal } = useSelector(state => state.isShowModalReducer)
   // const  modalRef = useRef();
   // const history = useHistory();
 
