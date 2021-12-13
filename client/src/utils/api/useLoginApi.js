@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { isShowLoginModalHandler, loginSuccessHandler, isShowSignUpModalHandler } from '../../redux/actions/actions'
+import { useDispatch } from 'react-redux';
+import { isShowLoginModalHandler, loginSuccessHandler } from '../../redux/actions/actions'
 require('dotenv').config();
 //!Todo Client id, Secret key,숨기기
 // ! dot env 안될 수 있음 
