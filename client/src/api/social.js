@@ -29,6 +29,7 @@ const getGoogleUserInfo = async ({accessToken}) => {
 
 };
   
+//! 카카오 코드 요청 
 const getKakaoCode = () => {
   const client_id = process.env.REACT_APP_KEY_KAKAO 
   const redirect_uri= process.env.REACT_APP_REDIRECT_URL 
@@ -36,12 +37,12 @@ const getKakaoCode = () => {
   window.location.assign(kakao)
 };
 
+//! 카카오 토큰 요청
 const getKakaoAccToken = async (kakaoCode) => {
   const client_id = process.env.REACT_APP_KEY_KAKAO
   const client_secret = process.env.REACT_APP_KAKAO_SECRET
   const kakaoUrl = `https://kauth.kakao.com/oauth/token?code=${kakaoCode}&client_id=${client_id}&client_secret=${client_secret}&redirect_uri=https://localhost:3000&grant_type=authorization_code`;
   
-  //! 카카오 토큰 요청
   const data = await axios.post(
     kakaoUrl,
     { headers: { accept: `application/x-www-form-urlencoded` } },

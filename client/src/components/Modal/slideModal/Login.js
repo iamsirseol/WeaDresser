@@ -7,8 +7,11 @@ import title from './title.svg'
 import { LoginContainer,LogoContainer,InputContainer,LoginError,LoginBtnContainer } 
 from './LoginStyle';
 import { CloseModalButton } from "./ModalStyle";
-import { getGoogleAccToken, getKakaoCode } 
-from '../../../api/social'
+// import { getGoogleAccToken, getKakaoCode } 
+// from '../../../api/social'
+
+import { useLoginApi} from '../../../api/useLoginApi'
+
 import { isShowLoginModalHandler, isShowSignUpModalHandler, loginSuccessHandler } 
 from '../../../redux/actions/actions'
 import { useSpring } from 'react-spring'
@@ -24,6 +27,7 @@ function Login({ closeModalByBtn }){
   const history= useHistory();
   const { pattern } = useForm();
   const dispatch = useDispatch(); 
+  const { getGoogleAccToken, getKakaoCode } = useLoginApi();
 
   // Translate animation (Signin)
   const props = useSpring({
@@ -73,9 +77,9 @@ function Login({ closeModalByBtn }){
   // GET User info by request to 80 Server
   const userLoginHandler = async () => {
     const{ email, password } = loginInfo;
-    //! server uri
-    const SERVER = process.env.REACT_APP_SERVER_URI 
-    || `http://localhost:80`
+    //! server uri dotenv 안될때가 있어요!
+    const SERVER = process.env.REACT_APP_SERVER_URI || 'http://localhost:80'
+    console.log(" 요청 간다.", SERVER)
     axios.post(
       SERVER + "/users/signin",
       // `${process.env.REACT_APP_SERVER_URL}/users/signin`,
