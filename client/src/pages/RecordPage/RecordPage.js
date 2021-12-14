@@ -60,16 +60,20 @@ function RecordPage() {
         // else if (inputHashtag.length > 10) return;
         else {
             const trimmedHashtag = e.target.value.split('').filter(el => el !== '#').filter(el2 => el2 !== ' ').join('');
-            setInputHashtag(inputHashtag+ ', ' + trimmedHashtag);
+            if (inputHashtag.length > 0) {
+                setInputHashtag(inputHashtag+ ', ' + trimmedHashtag);
+            } else {
+                setInputHashtag(trimmedHashtag);
+            }
         }
         e.target.value = '';
     }
 
     function removeHashtag (removeTag) { // 해시태그 삭제함수
-        const newInputHashtag = inputHashtag.split(', ').filter((el) => {
+        const romovedInputHashtag = inputHashtag.split(', ').filter((el) => {
             return el !== removeTag;
         }).join(', ');
-        setInputHashtag(newInputHashtag);
+        setInputHashtag(romovedInputHashtag);
     }
 
     function isShareCheck () {
@@ -125,12 +129,13 @@ function RecordPage() {
                         <div className="content-head">글 작성</div>
                         <ContentBox value={inputContent} onChange={(e) => contentFn(e)} placeholder="글을 작성해주세요."></ContentBox>
                         <HashtagBox value={inputHashtag} >
-                            {inputHashtag.split(', ').map((hashtag) => (
+                            {inputHashtag.length > 0 ? inputHashtag.split(', ').map((hashtag) => (
                                 <li className='hashtag' key={hashtag}>
                                     <span>{`#${hashtag}`}</span>
                                     <span className="close-button" onClick={() => removeHashtag(hashtag)}></span>
                                 </li>
-                            ))}
+                            ))
+                            : null}
                             {
                                 inputHashtag.length > 0 ? 
                                 <input className="input-tag" onKeyUp={(e) => e.key === "Enter" ? hashtagFn(e) : null}></input>

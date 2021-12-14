@@ -3,23 +3,23 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import close from '../../images/close_ic.png';
-import photo from '../../images/photo_ic.svg';
+// import photo from '../../images/photo_ic.svg';
 import axios from 'axios';
-
 // import { recordDataHandler } from '../../redux/actions/actions';
 
 function EditRecord({ curSlide }) {
 
     const history = useHistory();
     const selectedRecord = useSelector(state => state.getRecordDataReducer);
-    const [editImage, setEditImage] = useState(selectedRecord.getRecordData.record[curSlide].image);
+    const [editImage, setEditImage] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
     const [editContent, setEditContent] = useState(selectedRecord.getRecordData.record[curSlide].content);
     const [editHashtag, setEditHashtag] = useState(selectedRecord.getRecordData.record[curSlide].hashtag);
     const inputValue = useRef(null);
+    const initImage = selectedRecord.getRecordData.record[curSlide].image; // 초기 이미지 값
     console.log(selectedRecord.getRecordData.record,'!!')
     // const trimmedRecord = selectedRecord.getRecordData.record.slice();
-    
+    console.log()
     function inputFileHandler (inputValue) {
         const image = inputValue.current.files;
         setEditImage(image[0]);
@@ -41,7 +41,6 @@ function EditRecord({ curSlide }) {
     function removeHashtagFn (removeTag) {
         if (editHashtag.length === 0) return;
         let filtered = editHashtag.slice().split(', ').filter(el => el !== removeTag).join(', ');
-        console.log(filtered);
         // if (filtered.length === 0) return;
         setEditHashtag(filtered);
     }
@@ -52,7 +51,11 @@ function EditRecord({ curSlide }) {
         // else if (inputHashtag.length > 10) return;
         else {
             const trimmedHashtag = e.target.value.split('').filter(el => el !== '#').filter(el2 => el2 !== ' ').join('');
-            setEditHashtag(editHashtag+ ', ' + trimmedHashtag);
+            if (editHashtag.length > 0) {
+                setEditHashtag(editHashtag+ ', ' + trimmedHashtag);
+            } else {
+                setEditHashtag(trimmedHashtag);
+            }
         }
         e.target.value = '';
     }
@@ -80,26 +83,32 @@ function EditRecord({ curSlide }) {
         history.push('/mypage/diary');
     }
 
+    useEffect(() => {
+
+    }, [editHashtag, editImage, EidtContentBox]);
     return (
-        <EditForm>
-            <EditImageBox onSubmit={(e) => editComplete(e)}>
+        <EditForm onSubmit={(e) => editComplete(e)}>
+            <EditImageBox>
                 <InputImage ref={inputValue} onChange={(e) => inputFileHandler(inputValue)}></InputImage>
                 {
                     editImage ? 
                     <PreviewImage previewImage={previewImage} onClick={(e) => inputImageFn(e, inputValue)}></PreviewImage>
                     :
-                    <PreviewImage onClick={(e) => inputImageFn(e, inputValue)}>
-                        <PhotoLogo></PhotoLogo>
-                        <UploadDesc>클릭하여 이미지를 추가하세요.</UploadDesc>
+                    <PreviewImage previewImage={initImage} onClick={(e) => inputImageFn(e, inputValue)}>
+                        {/* <PhotoLogo></PhotoLogo>
+                        <UploadDesc>클릭하여 이미지를 추가하세요.</UploadDesc> */}
                     </PreviewImage>
                 }
             </EditImageBox>
             <EidtContentBox defaultValue={editContent} onChange={(e) => contentFn(e)}></EidtContentBox>
-            <EditHashtagBox>{editHashtag.split(', ').map((tag) => 
-                <SingleHashtag key={tag}>
-                    <span>{`#${tag}`}</span>
-                    <span className="close-button" onClick={() => removeHashtagFn(tag)}></span>
-                </SingleHashtag>)}
+            <EditHashtagBox value={editHashtag}>
+                {editHashtag.length > 0 ? 
+                    editHashtag.split(', ').map((tag) =>
+                    <SingleHashtag key={tag}>
+                        <span>{`#${tag}`}</span>
+                        <span className="close-button" onClick={() => removeHashtagFn(tag)}></span>
+                    </SingleHashtag>)
+                : null}
                 <InputHashtag onKeyUp={(e) => e.key === "Enter" ? inputHashtagFn(e) : null}></InputHashtag>
             </EditHashtagBox>
         </EditForm>
@@ -109,7 +118,6 @@ function EditRecord({ curSlide }) {
 export default EditRecord
 
 const EditForm = styled.form`
-    /* display: flex; */
 `
 const EditImageBox = styled.div`
     width: 47.8rem;
@@ -132,27 +140,27 @@ const PreviewImage = styled.div`
     background-repeat: no-repeat;
     background-position: center;
 `
-const PhotoLogo = styled.div`
-    width: 11em;
-    height: 10em;
-    margin: 0 auto;
-    top: 26%;
-    position: relative;
-    background-image: url(${photo});
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-`
-const UploadDesc = styled.div`
-    width: 100%;
-    font-family: NotoSansKR;
-    position: relative;
-    font-size: 1.3em;
-    font-weight: 500;
-    line-height: 16;
-    text-align: center;
-    color: #6b6d71;
-`
+// const PhotoLogo = styled.div`
+//     width: 11em;
+//     height: 10em;
+//     margin: 0 auto;
+//     top: 26%;
+//     position: relative;
+//     background-image: url(${photo});
+//     background-repeat: no-repeat;
+//     background-size: contain;
+//     background-position: center;
+// `
+// const UploadDesc = styled.div`
+//     width: 100%;
+//     font-family: NotoSansKR;
+//     position: relative;
+//     font-size: 1.3em;
+//     font-weight: 500;
+//     line-height: 16;
+//     text-align: center;
+//     color: #6b6d71;
+// `
 const EidtContentBox = styled.textarea`
     width: 47.0rem;
     height: 13rem;

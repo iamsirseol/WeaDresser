@@ -263,18 +263,8 @@ function DiaryPage() {
                 </RecordContainer>
                 <DotMenuBox onClick={(e) => showDotMenu(e)}><div className="dot-menu"></div>
                     <DotMenu isDotMenu={isDotMenu}>
-                        {
-                            isEdit ? 
-                            <>
-                                <DotMenuButton1>완료</DotMenuButton1>
-                                <DotMenuButton2>취소</DotMenuButton2>
-                            </>
-                            :
-                            <>
-                                <DotMenuButton1 isDotMenu={isDotMenu} onClick={(e) => editRecordButton(e)}>수정</DotMenuButton1>
-                                <DotMenuButton2 isDotMenu={isDotMenu} onClick={(e) => deleteRecordButton(e)}>삭제</DotMenuButton2>
-                            </>
-                        }
+                        <DotMenuButton1 isDotMenu={isDotMenu} onClick={(e) => editRecordButton(e)}>수정</DotMenuButton1>
+                        <DotMenuButton2 isDotMenu={isDotMenu} onClick={(e) => deleteRecordButton(e)}>삭제</DotMenuButton2>
                     </DotMenu>
                 </DotMenuBox>
             </TabBody>
