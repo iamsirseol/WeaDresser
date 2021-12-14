@@ -15,52 +15,88 @@ import { Container,
     DotMenuBox,
     DotMenu,
     SlideContainer,
-    Button,
-    Button2,
-    BOX
+    Button as PrecButton,
+    Button2 as NextButton,
+    BOX,
+    DotMenuButton1,
+    DotMenuButton2
 } from './DiaryPageStyle';
+import { recordDataHandler } from '../../redux/actions/actions';
+import EditRecord from '../../components/EditRecord/EditRecord';
 import DatePicker from '../../components/DatePicker/DatePicker';
 import sun from '../../images/sun.png';
 import cloud from '../../images/cloud.png';
 import moon from '../../images/moon.png';
 import rain from '../../images/rain.png';
 import snow from '../../images/snow.png';
-import 뽀시 from '../../images-mock(추후삭제)/뽀시.jpeg';
-import 군침이 from '../../images-mock(추후삭제)/군침이.jpeg';
-import 군침이2 from '../../images-mock(추후삭제)/군침이2.jpeg';
+import 뽀시 from '../../images-dummy(추후삭제)/뽀시.jpeg';
+import 군침이 from '../../images-dummy(추후삭제)/군침이.jpeg';
+import 군침이2 from '../../images-dummy(추후삭제)/군침이2.jpeg';
 
 function DiaryPage() {
 
-    const [fetchedDiary, setFetchedDiary] = useState([
-    {
-        id: 1,
-        image: 뽀시,
-        content: '군침이 싹도노',
-        hashtag: 'hello, world'
-    },
-    {
-        id: 2,
-        image: 군침이,
-        content: '아~ 피곤하다',
-        hashtag: 'good, job'
-    },
-    {
-        id: 3,
-        image: 군침이2,
-        content: '오늘날씨 비옴',
-        hashtag: '깡'
-    }
-]);
-    const [weatherIcon, setWeatherIcon] = useState(moon);
-    const [weatherDesc, setWeatherDesc] = useState('맑음'); // weatherDate (51번째 줄) 전체를 그냥 상태로 저장할지?
+    const dispatch = useDispatch();
+    const [fetchedDiary, setFetchedDiary] = useState({ // axios.get 해온 데이터가 들어갈 useState
+        record: [
+            {
+                id: 1,
+                image: 뽀시,
+                content: '군침이 싹도노',
+                hashtag: 'hello, world'
+            },
+            {
+                id: 2,
+                image: 군침이,
+                content: '아~ 피곤하다',
+                hashtag: 'good, job'
+            },
+            {
+                id: 3,
+                image: 군침이2,
+                content: '오늘날씨 비옴',
+                hashtag: '깡'
+            },
+        ],
+    });
+    const [weatherIcon, setWeatherIcon] = useState(moon); 
+    const [weatherDesc, setWeatherDesc] = useState('맑음');
     const [curSlide, setCurSlide] = useState(0);
     const [isDotMenu, setIsDotMenu] = useState(false);
+    const [isLeftEndPage, setIsLeftEndPage] = useState(false);
+    const [isRightEndPage, setIsRightEndPage] = useState(false);
+    const [isEdit, setIsEdit] = useState(false);
+    
     const imgSlideRef = useRef(null);
-    const contentSlideRef = useRef(null);
-    const hashtagSlideRef = useRef(null);
+    const imgEditRef = useRef(null);
+    // const selectedRecordData = useSelector(state => state.getRecordDataReducer);
+    // console.log(selectedRecordData.getRecordData);
+    // const dateData = useSelector(state => state.getDateDataReducer); //
+    // console.log(dateData, 'useselector')
 
-    // const [isEdit, setIsEdit] = useState(false);
-    // const dateData = useSelector(state => state.getDateDataReducer);
+    useEffect(() => {
+        dispatch(recordDataHandler({
+            record: [
+                {
+                    id: 1,
+                    image: 뽀시,
+                    content: '군침이 싹도노',
+                    hashtag: 'hello, world'
+                },
+                {
+                    id: 2,
+                    image: 군침이,
+                    content: '아~ 피곤하다',
+                    hashtag: 'good, job'
+                },
+                {
+                    id: 3,
+                    image: 군침이2,
+                    content: '오늘날씨 비옴',
+                    hashtag: '깡'
+                },
+            ],
+        }));
+    }, [])
 
 
     // const url = process.env.REACT_APP_SERVER_URL || 
@@ -72,7 +108,8 @@ function DiaryPage() {
             const body = {} // selectedData가 가야할듯 // 현재 날짜 기준을 바디로 보내서 서버에서 해당 날짜 조회된 데이터를 받아옴
             const fetchData = await axios.get(url, body, { withCredentials: true, });
             // fetchData 자체를 상태로 관리 // 상태 나눠서 관리하지 말고 하나의 상태로 관리!!!
-            setFetchedDiary(fetchData);
+            // setFetchedDiary(fetchData); // dispatch로 전달해주자
+            dispatch(recordDataHandler(fetchData));
             if (fetchData.weatherData.weather) {
                 if (fetchData.weatherData.weather[0].main === 'Clouds') {
                     setWeatherIcon(cloud);
@@ -95,7 +132,7 @@ function DiaryPage() {
         
     }, []);
 
-    const TOTAL_SLIDES = fetchedDiary.length - 1;
+    const TOTAL_SLIDES = fetchedDiary.record.length - 1;
     function nextButton () {
         if (curSlide >= TOTAL_SLIDES) {
             // setCurSlide(0);
@@ -113,61 +150,57 @@ function DiaryPage() {
         }
     }
 
-    // function leftClick () {
-    //     let slideIdx = curSlide + 1;
-    //     if (slideIdx === TOTAL_SLIDES + 1) { // 2
-    //         // return;
-    //         slideIdx = 0;
-    //         setCurSlide(0)
-    //     } else {
-    //         setCurSlide(slideIdx);
-    //     }
-    //     console.log(slideIdx, 'left')
-    //     imgSlideRef.current.style.transition = "all 0.5s ease-in-out";
-    //     imgSlideRef.current.style.transform = `translateX(-${slideIdx * 47.8}em)`;
-    //     console.log(imgSlideRef.current.style.transform, '!@#@!#')
-    // }
-    // function rightClick () {
-    //     let curPosition = imgSlideRef.current.style.transform.split
-    //     let slideIdx = curSlide - 1; // 2
-    //     if (slideIdx === TOTAL_SLIDES + 1) { // TOTAL_SLIDES 값은 2
-    //         slideIdx = 0;
-    //         setCurSlide(0)
-    //     }
-    //     console.log(slideIdx, 'right')
-    //     setCurSlide(slideIdx);
-    //     imgSlideRef.current.style.transition = "all 0.5s ease-in-out";
-    //     imgSlideRef.current.style.transform = `translateX(-${slideIdx * 47.8}em)`;
-    //     console.log(imgSlideRef.current.style.transform, '^&$#')
-
-    // }
-
     useEffect(() => {
         imgSlideRef.current.style.transition = "all 0.5s ease-in-out";
         imgSlideRef.current.style.transform = `translateX(-${curSlide}00%)`; 
     }, [curSlide]);
 
+    
     function showDotMenu (e) { // 외부 클릭해도 닫기 기능 구현?
         e.preventDefault();
         setIsDotMenu(!isDotMenu);
     }
+    
+    function editRecordButton (e) {
+        setIsEdit(true);
+        setIsLeftEndPage(true);
+        setIsRightEndPage(true);
+    }
+    
+    useEffect(() => {
+        if (curSlide === 0) {
+            setIsLeftEndPage(true);
+        } else {
+            setIsLeftEndPage(false);
+        }
 
-    function deleteRecord (e) { // index를 가져온다면 삭제?
-        // console.log('work?')
-        // console.log(scrollState);
-        // let copiedDiaryImage = diaryImage.slice();
-        // copiedDiaryImage = copiedDiaryImage.splice(scrollState, 1);
-        // setDiaryHashtag([...copiedDiaryImage]);
+        if (curSlide === TOTAL_SLIDES) {
+            setIsRightEndPage(true);
+        } else {
+            setIsRightEndPage(false);
+        }
 
-        // let copiedDiaryContent = diaryContent.slice();
-        // copiedDiaryContent = copiedDiaryContent.splice(scrollState, 1);
-        // setDiaryContent([...copiedDiaryContent]);
+    }, [curSlide, isLeftEndPage, isRightEndPage, fetchedDiary]);
 
-        // let copiedDiaryHashtag = diaryHashtag.slice();
-        // copiedDiaryHashtag = copiedDiaryHashtag.splice(scrollState, 1);
-        // setDiaryHashtag([...copiedDiaryHashtag]);
+    function deleteRecordButton (e) {
+        let copiedFetchedData = fetchedDiary.record.slice();
+        copiedFetchedData.splice(curSlide, 1);
+        // console.log([...copiedFetchedData], 'copycopy')
+        // console.log(fetchedDiary)
+        fetchedDiary.record = [...copiedFetchedData]
+        setFetchedDiary(fetchedDiary);
+        if (curSlide > 0 && curSlide === TOTAL_SLIDES) {
+            setCurSlide(curSlide - 1);
+        }
 
-        // let body = { diaryImage, diaryContent, diaryHashtag } // 날씨데이터도 넘겨줘야 하는가?
+        if (fetchedDiary.record.length === 0 || curSlide === 0) {
+            setIsLeftEndPage(true);
+            setIsRightEndPage(true);
+        }
+        if (curSlide > 0 && curSlide === TOTAL_SLIDES - 1) {
+            setIsRightEndPage(true);
+        }
+        // let body = fetchedDiary // 날씨데이터도 넘겨줘야 하는가?
         // axios.delete(url , body, {
         //     withCredentials: true,
         // })
@@ -178,7 +211,6 @@ function DiaryPage() {
         //         console.log(err);
         //     });
     }
-
 
     return (
         <Container>
@@ -209,26 +241,40 @@ function DiaryPage() {
                     </div>
                 </DateDataBar>
                 <RecordContainer>
-                    <SlideContainer ref={imgSlideRef}>
                     {
-                        fetchedDiary.map((el) => 
-                            <BOX key={el.id}>
-                                <ImageBox img={el.image} ></ImageBox>
-                                <ContentBox>{el.content}</ContentBox>
-                                <HashtagBox>{el.hashtag.split(', ').map((tag, idx) => 
-                                    <span key={idx * 10}>{`#${tag}`}</span>)}
-                                </HashtagBox>
-                            </BOX>
-                        )
+                        isEdit ? <EditRecord curSlide={curSlide} />
+                        :
+                        <SlideContainer ref={imgSlideRef}>
+                        {
+                            fetchedDiary.record.map((el) => 
+                                <BOX key={el.id}>
+                                    <ImageBox img={el.image} ></ImageBox>
+                                    <ContentBox>{el.content}</ContentBox>
+                                    <HashtagBox>{el.hashtag.split(', ').map((tag) => 
+                                        <span key={tag}>{`#${tag}`}</span>)}
+                                    </HashtagBox>
+                                </BOX>
+                            )
+                        }
+                        </SlideContainer>
                     }
-                    </SlideContainer>
-                    <Button onClick={prevButton}>prev</Button>
-                    <Button2 onClick={nextButton}>next</Button2>
+                    { isLeftEndPage || isEdit ? null : <PrecButton onClick={prevButton}>prev</PrecButton> }
+                    { isRightEndPage || isEdit ? null : <NextButton onClick={nextButton}>next</NextButton> }
                 </RecordContainer>
                 <DotMenuBox onClick={(e) => showDotMenu(e)}><div className="dot-menu"></div>
-                    <DotMenu isDotMenu={isDotMenu}> 
-                        <div className="edit-btn">수정</div>
-                        <div className="delete-btn" onClick={(e) => deleteRecord(e)}>삭제</div>
+                    <DotMenu isDotMenu={isDotMenu}>
+                        {
+                            isEdit ? 
+                            <>
+                                <DotMenuButton1>완료</DotMenuButton1>
+                                <DotMenuButton2>취소</DotMenuButton2>
+                            </>
+                            :
+                            <>
+                                <DotMenuButton1 isDotMenu={isDotMenu} onClick={(e) => editRecordButton(e)}>수정</DotMenuButton1>
+                                <DotMenuButton2 isDotMenu={isDotMenu} onClick={(e) => deleteRecordButton(e)}>삭제</DotMenuButton2>
+                            </>
+                        }
                     </DotMenu>
                 </DotMenuBox>
             </TabBody>

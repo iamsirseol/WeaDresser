@@ -33,7 +33,7 @@ function DatePicker() {
     
     const dispatch = useDispatch();
     const [curDate, setCurDate] = useState(new Date());
-    // console.log(curDate.getMonth()+1,'월', curDate.getDate()+1,'일')
+    // console.log(curDate.getMonth()+1,'월', curDate.getDate(),'일')
     useEffect(() => {
         dispatch(getDateData(curDate));
     }, [curDate]);
