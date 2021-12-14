@@ -9,8 +9,6 @@ import {
 import {SvgLogoSmall} from "../SvgIcon/SvgIcon"
 import { useEffect, useRef, useState } from 'react';
 import "../../styles/style.css"
-// import { useLogoutApi } from '../../utils/api/useLogoutApi'
-// import axios from 'axios';
 
 function NavBar({ logoutHandler }) {
   const curLocation = useLocation();
@@ -18,8 +16,6 @@ function NavBar({ logoutHandler }) {
   const { isLogin } = useSelector(state => state.isLoginReducer);
   const dispatch = useDispatch();
   const [winY, setWinY] = useState('');
-  // const { logoutHandler } = useLogoutApi();
-  // const history = useHistory();
   const scrollY = () => {
     setWinY(window.pageYOffset);
   };

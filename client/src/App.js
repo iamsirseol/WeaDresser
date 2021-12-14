@@ -20,7 +20,7 @@ import Modal from "./components/Modal/SignModal/Modal"
 import MyPage from './pages/MyPage/MyPage'
 import { loginSuccessHandler } from './redux/actions/actions';
 // import styled from 'styled-components';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, useHistory } from 'react-router-dom';
 import RecordPage from './pages/RecordPage/RecordPage';
 import DiaryPage from './pages/MyPage/DiaryPage';
 import Footer from './components/Footer/Footer'
@@ -33,21 +33,28 @@ function App() {
   const dispatch = useDispatch();
   const loginStateHandler = useCallback( bool =>
     dispatch(loginSuccessHandler(bool, accessToken)), [dispatch, accessToken] )
-  
+  const history = useHistory();
+
   useEffect( ()=> {
     if(sessionStorage.getItem('isLogin')) loginStateHandler(true)
   }, [loginStateHandler])
 
-  const logoutHandler = () => {
+
+  const logoutHandler = async () => {
     const SERVER = process.env.REACT_APP_SERVER_URL || "http://localhost:80"
-    axios.post(SERVER + "/users/signout")
+    await axios.post(SERVER + "/users/signout")
       .then( result => {
         dispatch(loginSuccessHandler(false, ""))
         sessionStorage.removeItem('isLogin')
+        history.push('/')
+        //! url 변경은 되나 컴포넌트가 ladning page로 가지 않음 ! 
+        window.location.assign('https://localhost:3000') // <- 강제 home 
       })
       .catch( err => {
         console.log(err) // err handler
       })
+    // history.push('/')
+    // 
   }
 
   return (
