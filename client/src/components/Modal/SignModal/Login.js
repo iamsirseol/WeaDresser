@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import Signup from "./Signup";
+import { useSpring } from 'react-spring'
+import { useForm } from "../../../utils/useForm";import Signup from "./Signup";
 import title from './title.svg'
-import { LoginContainer,LogoContainer,InputContainer,LoginError,LoginBtnContainer } 
-from './LoginStyle';
 import { CloseModalButton } from "./ModalStyle";
 import { useLoginApi} from '../../../utils/api/useLoginApi'
 import { isShowSignUpModalHandler} from '../../../redux/actions/actions'
-import { useSpring } from 'react-spring'
-import { useForm } from "../../../utils/useForm";
+import { LoginContainer,LogoContainer,InputContainer,LoginError,LoginBtnContainer } from './LoginStyle';
 require('dotenv').config();
 
 function Login({ closeModalByBtn }){
