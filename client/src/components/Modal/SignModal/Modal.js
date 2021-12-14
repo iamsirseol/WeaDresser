@@ -13,7 +13,6 @@ const Modal = ({ setGoHomeNow }) => {
   const dispatch = useDispatch();
   const  modalRef = useRef();
   const { 
-    socialDone, setSocialDone, 
     getKakaoAccToken, handleKakaoLoginApi, 
     getGoogleUserInfo, handleGoogleLoginApi,
   } = useLoginApi();
@@ -75,14 +74,11 @@ const Modal = ({ setGoHomeNow }) => {
     // window.location.assign(redirect) // ! cookie 사라짐
   }
 
-  const handleSocialDone = (bool) => {
-    setSocialDone(bool)
-  }
   // useEffect to call API for social login 
-  useEffect(()=>{ // only if authen by user from Oauth-website
+  useEffect(()=>{ 
+    // only if authen by user from Oauth-website
     let onlyOnce = true ;
     if(onlyOnce){
-      // To check redirect para from social user 
       const url = new URL(window.location.href)
       const googleAccToken = url.hash.split("=")[1]
       const kakaoCode = url.searchParams.get("code")
@@ -91,12 +87,12 @@ const Modal = ({ setGoHomeNow }) => {
       if(kakaoCode) kakaoTokenHandler(kakaoCode);
       
     }
-    return () => {//!clear effect => warning 존재
+    return () => {
+      //clear effect => warning, cant help it 
+      // sure that it's called one time on render 
       onlyOnce =false;
-      handleSocialDone(true)
-    }// dependency for not changing
-  },[socialDone]) 
-  // moved by App.js
+    }
+  },[]) 
 
   return (
     <>{ !isShowLoginModal ? null : 

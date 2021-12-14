@@ -15,7 +15,7 @@ import OotdListPage from "./pages/OotdPage/OotdListPage"
 import LandingPage from './pages/LandingPage/LandingPage';
 import SideBar from './components/SideBar/SideBar'
 import {SolidHeart} from "./components/SvgIcon/SvgIcon"
-import Modal from "./components/Modal/slideModal/Modal"
+import Modal from "./components/Modal/SignModal/Modal"
 // import RecordPage from './pages/RecordPage/RecordPage';
 import MyPage from './pages/MyPage/MyPage'
 import { loginSuccessHandler } from './redux/actions/actions';
@@ -24,17 +24,20 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import RecordPage from './pages/RecordPage/RecordPage';
 import DiaryPage from './pages/MyPage/DiaryPage';
 import Footer from './components/Footer/Footer'
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 require('dotenv').config();
 
 function App() {
   const { accessToken } = useSelector(state => state.isLoginReducer)
   const dispatch = useDispatch();
-  const loginHandler = bool => dispatch(loginSuccessHandler(bool, accessToken));
+  const loginStateHandler = useCallback( (bool) => { 
+    dispatch(loginSuccessHandler(bool, accessToken));
+  }, [dispatch, accessToken])
+  // const loginHandler = bool => dispatch(loginSuccessHandler(bool, accessToken));
   
   useEffect( ()=> {
-    if(sessionStorage.getItem('isLogin')) loginHandler(true)
-  }, [])
+    if(sessionStorage.getItem('isLogin')) loginStateHandler(true)
+  }, [loginStateHandler])
 
   return (
     <BrowserRouter>
