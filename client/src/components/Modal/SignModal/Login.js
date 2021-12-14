@@ -5,8 +5,6 @@ import title from './title.svg'
 import { LoginContainer,LogoContainer,InputContainer,LoginError,LoginBtnContainer } 
 from './LoginStyle';
 import { CloseModalButton } from "./ModalStyle";
-// import { getGoogleAccToken, getKakaoCode } 
-// from '../../../api/social'
 import { useLoginApi} from '../../../utils/api/useLoginApi'
 import { isShowSignUpModalHandler} from '../../../redux/actions/actions'
 import { useSpring } from 'react-spring'
@@ -14,15 +12,13 @@ import { useForm } from "../../../utils/useForm";
 require('dotenv').config();
 
 function Login({ closeModalByBtn }){
-  const [ loginInfo, setLoginInfo ] = useState({ email: "", password: "" });
-  // const [ errorMessage, setErrorMessage ] = useState("");
-  const { isShowLoginModal, isShowSignUpModal } = useSelector(state => state.isShowModalReducer)
   const dispatch = useDispatch(); 
-
   const [ active, setActive ] = useState("");
-  // const history= useHistory();
   const { pattern } = useForm();
+  const [ loginInfo, setLoginInfo ] = useState({ email: "", password: "" });
+  const { isShowLoginModal, isShowSignUpModal } = useSelector(state => state.isShowModalReducer)
   const { getGoogleAccToken, getKakaoCode, handleUserLoginApi, errorMessage, setErrorMessage } = useLoginApi();
+  // const history= useHistory();
 
   // Translate animation (Signin)
   const props = useSpring({
@@ -45,7 +41,6 @@ function Login({ closeModalByBtn }){
     if(e.key === 'Backspace') setActive("")
   };
   // validition : email=null, password=Null, email regx@ 
-  // !Todo  정규식 추가 
   const validCheckHandler = () => {
     const { email, password } = loginInfo
 
