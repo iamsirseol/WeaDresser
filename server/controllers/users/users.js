@@ -96,8 +96,12 @@ module.exports = {
   signout: (req, res) => {
     console.log("its comming now")
 
-    res.clearCookie('Bearer', { domain: "localhost" ,path: "/",});
     // res.clearCookie('Bearer', { domain: "localhost" });
+    res.clearCookie("Bearer", {
+      secure: true,
+      sameSite: "none",
+      httpOnly: true,
+    });
     return res.status(205).send('Logged out successfully') 
   },
 };

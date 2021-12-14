@@ -14,8 +14,8 @@ module.exports = {
       sameSite: "none",
       secure: true,
       // maxAge: 60 * 60 * 24 * 1000,
-      domain: "localhost",
-      path: "/",
+      // domain: "localhost",
+      // path: "/",
       // ovewrite: true,
       // signed : true
     });
