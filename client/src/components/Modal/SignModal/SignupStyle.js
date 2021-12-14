@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { FiArrowLeftCircle } from 'react-icons/fi'
 import { animated } from "@react-spring/web";
-
+import { RiErrorWarningLine } from 'react-icons/ri'
 
 export const SignupBackModal = styled.div`
   width: 100%;
@@ -19,8 +19,9 @@ export const SignupBackModal = styled.div`
 
 export const LogoContainer =styled.div`
   width: 25rem; 
-  height: 20rem;
+  height: 10rem;
   align-items: center;
+  border: 1px solid coral;
   margin-bottom: 2.5rem;
   > img{
     position: relative;
@@ -31,12 +32,12 @@ export const LogoContainer =styled.div`
   }
   @media screen and (max-width : 767px){
     width: 20rem; 
-    height: 16rem;
+    height: 8rem;
     margin-bottom: 2.0rem;
   }
   @media screen and (max-width : 424px){
     width:15rem; 
-    height: 12rem;
+    height: 6rem;
     margin-bottom: 1.5rem;
   }
 `;
@@ -98,12 +99,16 @@ export const InputContainer = styled(animated.div)`
 `;
 
 export const InputButton = styled.div`
-    width: 7em;
+    width: ${({width}) => width || "7em"};
+    height: ${({height}) => height };
+    line-height:${({height})=> height} ;
+
     padding: 0.6em 0.3em;
     margin-left:1.5em;
-    margin-top: 2em;
+    margin-top: ${({margin})=> margin || '2em'};
+
     color: #fff;
-    font-size: 1.3em;
+    font-size: 1.5em;
     display: inline-block;
     text-align: center;
     cursor:pointer;
@@ -143,12 +148,14 @@ export const InputContainer2 = styled(InputContainer)`
 `; 
 
 export const ErrPtag = styled.div`
+  /* border: 1px solid coral; */
   width: ${({width}) => width || '20em'};
   height: ${({height}) => height || '1em'};
   color: #fff;
   text-align: center;
   margin-top: ${({ margin }) => margin|| '1.8em'}; // responsive 
   font-size: ${({ size }) => size||'1.8em'};
+  animation: smoothAppear 0.5s;
   @media screen and (max-width : 767px){
     /* height: 1.8em; */
     width: ${({width}) => width || '18em'};
@@ -164,6 +171,16 @@ export const ErrPtag = styled.div`
     margin-top: ${({ margin }) => margin|| '0.5em'}; // responsive 
     font-size: 1.3rem;
   }
+  @keyframes smoothAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-5%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 `;
 
 export const BackButton = styled(FiArrowLeftCircle)`
@@ -259,6 +276,15 @@ export const RadioContainer =styled.div`
   }
 `;
 
+export const WarningIcon = styled(RiErrorWarningLine)`
+  margin: 0 auto;
+  margin-top : 2em; 
+  margin-bottom: 0.5em;
+  padding : 0 ;
+  font-size: 3em;
+  color: #fff;
+
+`;
 
 // export const BtnContainer = styled.div`
 //   width: 7.0rem;

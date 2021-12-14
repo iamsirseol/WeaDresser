@@ -4,7 +4,7 @@ import { useSpring } from 'react-spring'
 import { useDispatch } from 'react-redux';
 import { useForm }  from'../../../utils/useForm';
 import { isShowLoginModalHandler, isShowSignUpModalHandler,} from '../../../redux/actions/actions'
-import { LogoContainer,InputContainer,InputButton, BackButton, ErrPtag, BackContainer,} from './SignupStyle';
+import { LogoContainer,InputContainer,InputButton, BackButton, ErrPtag, BackContainer, WarningIcon} from './SignupStyle';
 import { CloseModalButton } from './ModalStyle';
 import { useEffect } from 'react';
 import { LoginContainer } from './LoginStyle';
@@ -61,7 +61,9 @@ function Signup({ closeModalByBtn, displaySignup }){
             value={values.email}
             />
         </InputContainer>
-        <InputButton onClick={emailValidation}>이메일 인증</InputButton>
+        <InputButton 
+          width={"22.5em"} height={'2em'} margin ={'0.5em'} 
+          onClick={emailValidation}>이메일 인증</InputButton>
       </>
       }
       { !isValid[0]|| (isValid[0]&& isValid[1]) ? null : 
@@ -80,7 +82,7 @@ function Signup({ closeModalByBtn, displaySignup }){
           <InputButton onClick={codeValidation}>코드 인증</InputButton>
       </>
       }
-      { errors.on && <ErrPtag>{errors.msg}</ErrPtag>}
+      { errors.on && <> <WarningIcon/><ErrPtag margin={'0.5em'}>{errors.msg}</ErrPtag></>}
       { codeMsg.on && 
         <ErrPtag 
           height = {'0.5em'} 
