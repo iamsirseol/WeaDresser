@@ -89,7 +89,7 @@ const Modal = ({ setGoHomeNow }) => {
     }
     return () => {
       //clear effect => warning, cant help it 
-      // sure that it's called one time on render 
+      // for sure that it's called once on render 
       onlyOnce =false;
     }
   },[]) 

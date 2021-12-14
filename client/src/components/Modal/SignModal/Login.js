@@ -19,12 +19,12 @@ function Login({ closeModalByBtn }){
   // const history= useHistory();
 
   // Translate animation (Signin)
-  const props = useSpring({
+  const displayLogin = useSpring({
     transform: isShowLoginModal ? 'translateY(0%)' : 'translateY(100%)',
     opacity : isShowLoginModal ? 1 : 0 
   });
   // Translate animation (Signup)
-  const props2 = useSpring({
+  const displaySignup = useSpring({
     transform: isShowSignUpModal ? 'translateX(0%)' : 'translateX(100%)', 
     opacity : isShowSignUpModal ? 1 : 0 
   })
@@ -74,11 +74,11 @@ function Login({ closeModalByBtn }){
   }
   return (
     <>{ isShowSignUpModal ? 
-      <LoginContainer style={props2}>
+      <LoginContainer style={displaySignup}>
         <Signup closeModalByBtn={closeModalByBtn}/> 
       </LoginContainer>
       :
-      <LoginContainer style={props}>
+      <LoginContainer style={displayLogin}>
         <LogoContainer><img alt="Weadresser" src={title}/></LogoContainer>
         <InputContainer>
           <input 

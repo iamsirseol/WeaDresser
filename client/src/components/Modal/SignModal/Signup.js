@@ -1,17 +1,15 @@
 import  SignForm  from './SignForm'
-import { useForm }  from'../../../utils/useForm';
-import { useState } from 'react';
-import { useSpring } from 'react-spring'
 import title from './title.svg'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSpring } from 'react-spring'
+import { useDispatch } from 'react-redux';
+import { useForm }  from'../../../utils/useForm';
 import { isShowLoginModalHandler, isShowSignUpModalHandler,} from '../../../redux/actions/actions'
 import { LogoContainer,InputContainer,InputButton, BackButton, ErrPtag, BackContainer,} from './SignupStyle';
 import { CloseModalButton } from './ModalStyle';
-import { useEffect } from 'react';
 
 function Signup({ closeModalByBtn }){
-  const { isShowLoginModal, isShowSignUpModal } = useSelector(state => state.isShowModalReducer)
-  const [ stopClxModal, setStopClxModal ] = useState(true);
+  // const { isShowLoginModal, isShowSignUpModal } = useSelector(state => state.isShowModalReducer)
+  // const [ stopClxModal, setStopClxModal ] = useState(true);
   const dispatch = useDispatch(); 
   const 
   { handleInputChange, 
@@ -36,22 +34,12 @@ function Signup({ closeModalByBtn }){
     dispatch(isShowLoginModalHandler(true));
     dispatch(isShowSignUpModalHandler(false));
   }
-  // Prohibit to clx by backdrop 
-  useEffect(()=> {
-    console.log(stopClxModal)
-    console.log(isShowLoginModal)
-    console.log(isShowSignUpModal)
-
-    if(stopClxModal){
-      dispatch(isShowSignUpModalHandler(true))
-    }
-  },[stopClxModal])
 
   return (
   <> { !isValid[0] && !isValid[1] ? <BackButton onClick={backModalHandler}/> : null}
     <CloseModalButton onClick={closeModalByBtn}/>
     { isValid[0] && isValid[1] ? null : 
-      <LogoContainer><img alter="" src={title}/></LogoContainer>
+      <LogoContainer><img alt="WEADRESSER" src={title}/></LogoContainer>
     }
       { isValid[0]  ? null : 
       <>
@@ -71,7 +59,7 @@ function Signup({ closeModalByBtn }){
         <InputButton onClick={emailValidation}>이메일 인증</InputButton>
       </>
       }
-      { !isValid[0]|| isValid[0]&& isValid[1] ? null :<>
+      { !isValid[0]|| (isValid[0]&& isValid[1]) ? null :<>
       <InputContainer style={displayOn} width = {'35em'}>
         <input 
           className="signup-input"
