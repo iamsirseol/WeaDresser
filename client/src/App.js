@@ -30,10 +30,8 @@ require('dotenv').config();
 function App() {
   const { accessToken } = useSelector(state => state.isLoginReducer)
   const dispatch = useDispatch();
-  const loginStateHandler = useCallback( (bool) => { 
-    dispatch(loginSuccessHandler(bool, accessToken));
-  }, [dispatch, accessToken])
-  // const loginHandler = bool => dispatch(loginSuccessHandler(bool, accessToken));
+  const loginStateHandler = useCallback( bool =>
+    dispatch(loginSuccessHandler(bool, accessToken)), [dispatch, accessToken] )
   
   useEffect( ()=> {
     if(sessionStorage.getItem('isLogin')) loginStateHandler(true)
