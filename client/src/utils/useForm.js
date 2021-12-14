@@ -93,7 +93,7 @@ export const useForm = () => {
   // Code validation - second Validation  
   const codeValidation = () => {
     const code = sessionStorage.getItem('code');
-    if(!values.code || values.code.length !== 6){
+    if(!values.code || values.code.length !== 6 || values.code.length < 6){
       setErrors({ on:true, msg :"6자리 인증 코드를 입력 하세요"});
     } 
     // * all validation done for the first view
