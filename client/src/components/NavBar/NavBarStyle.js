@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 export const NavContaier = styled.nav`
     width:100vw;
@@ -12,7 +11,7 @@ export const NavContaier = styled.nav`
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 9999999;
+    z-index: 9;
     flex-wrap: wrap;
     >div{display: flex; width: 33.333%}
     >div:first-child{justify-content: flex-start}

@@ -72,8 +72,10 @@ function SideBar({position, top, left, display}) {
     const dispatch = useDispatch()
     const sideBarSpreadHandler = (handle) => {dispatch(sideBarHandler(handle))}
     const isShowSideBar = useSelector(state => state.isShowSideBarReducer.isShowSideBar)
+    const { isLogin } = useSelector(state => state.isLoginReducer);
+
     const sideBarSpread = () => {
-        let SideBarContainer = document.querySelector('.side-bar-container')
+        // let SideBarContainer = document.querySelector('.side-bar-container')
         let sideBarBtn = document.querySelector('.side-bar-btn')
         let sideBarMenu = document.querySelector('.side-bar-menu');
 
@@ -99,6 +101,22 @@ function SideBar({position, top, left, display}) {
         }
     }
 
+    const loginHandler = () => {
+        dispatch(isShowLoginModalHandler(true));
+        let sideBarBtn = document.querySelector('.side-bar-btn')
+        let sideBarMenu = document.querySelector('.side-bar-menu');
+        if(isShowSideBar === true){
+            sideBarSpreadHandler(false)
+            sideBarBtn.children[0].style.transform="rotate(0)";
+            sideBarBtn.children[0].style.top="0px";
+            sideBarBtn.children[1].style.left="0px";
+            sideBarBtn.children[2].style.transform="rotate(0)";
+            sideBarBtn.children[2].style.top="calc(100% - 2px)"
+            sideBarMenu.style.transition = "all .3s";
+            sideBarMenu.style.height = "0px";
+        }
+    }
+
     return (
         <>
             <SideBarContainer position={position} top={top} left={left} display={display} className="side-bar-container">
@@ -109,10 +127,10 @@ function SideBar({position, top, left, display}) {
                 </span>
                 <div className="side-bar-menu">
                     <ul>
-                        <li><Link onClick = {() => sideBarSpread()} className="side-bar-link" to="/mypage">MyPage</Link></li>
+                        {isLogin ? <li><Link onClick = {() => sideBarSpread()} className="side-bar-link" to="/mypage">MyPage</Link></li> : <li><Link onClick = {() => loginHandler()} className="side-bar-link" to="">MyPage</Link></li>}
                         <li><Link onClick = {() => sideBarSpread()} to="ootd-list" className="side-bar-link" >관음증</Link></li>
-                        <li><Link onClick = {() => sideBarSpread()} className="side-bar-link" to="">Diary</Link></li>
-                        <li><Link onClick = {() => sideBarSpread()} className="side-bar-link" to="record">Record</Link></li>
+                        {isLogin ? <li><Link onClick = {() => sideBarSpread()} className="side-bar-link" to="">Diary</Link></li> : <li><Link onClick = {() => loginHandler()} className="side-bar-link" to="">Diary</Link></li>}
+                        {isLogin ? <li><Link onClick = {() => sideBarSpread()} className="side-bar-link" to="record">Record</Link></li> : <li><Link onClick = {() => loginHandler()} className="side-bar-link" to="">Record</Link></li>}
                     </ul>
                 </div>
             </SideBarContainer>
