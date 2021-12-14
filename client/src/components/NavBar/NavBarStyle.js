@@ -13,6 +13,11 @@ export const NavContaier = styled.nav`
     top: 0;
     left: 0;
     z-index: 9999999;
+    flex-wrap: wrap;
+    >div{display: flex; width: 33.333%}
+    >div:first-child{justify-content: flex-start}
+    >div:nth-child(2){justify-content: center;}
+    >div:nth-child(3){justify-content: flex-end}
 `;
 
 export const NavBtn = styled.button`
@@ -27,5 +32,9 @@ export const NavBtn = styled.button`
     &:hover {
         background: #fff;
         color: #000;
-  }
+    }
+    @media screen and (max-width:700px){
+        padding: 0.35em 1.3em;
+    }
+    @media
 `;

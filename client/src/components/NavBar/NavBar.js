@@ -6,6 +6,7 @@ import {
     NavContaier,
     NavBtn
 } from "./NavBarStyle"
+import SideBar from "../SideBar/SideBar"
 import {SvgLogoSmall} from "../SvgIcon/SvgIcon"
 import { useEffect, useRef, useState } from 'react';
 import "../../styles/style.css"
@@ -22,7 +23,6 @@ function NavBar() {
   };
 
   useEffect(() => {
-    console.log(winY)
     window.addEventListener("scroll", scrollY);
     return () => {
       window.removeEventListener("scroll", scrollY);
@@ -36,9 +36,10 @@ function NavBar() {
     dispatch(isShowLoginModalHandler(false));
   }
     return (
-        <NavContaier ref={navBar} className={ winY < 10 && curLocation.pathname === "/" ? "nav-home" : "nav-else"}>
-            <SvgLogoSmall to='/'></SvgLogoSmall>
-            {isLogin ? <NavBtn onClick={closeShowLoginModal}>로그아웃</NavBtn> : <NavBtn onClick={isShowLoginModal}>로그인</NavBtn >}
+        <NavContaier ref={navBar} className={ winY <= 10 && curLocation.pathname === "/" ? "nav-home" : winY > 10 && curLocation.pathname === "/" ? "nav-home-scroll" : "nav-else"}>
+            <div><SideBar /></div>
+            <div><SvgLogoSmall to='/'></SvgLogoSmall></div>
+            <div>{isLogin ? <NavBtn onClick={closeShowLoginModal}>로그아웃</NavBtn> : <NavBtn onClick={isShowLoginModal}>로그인</NavBtn >}</div>
             {/* svg아이콘은 아이콘 컴포넌트로 만드는게 나을거 같아서 일단 이렇게 했습니다. */}
         </NavContaier>
     );

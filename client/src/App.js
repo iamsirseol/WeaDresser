@@ -13,7 +13,6 @@ import OotdListPage from "./pages/OotdPage/OotdListPage"
 import Login from "./components/Modal/slideModal/Login"
 import Signup from "./components/Modal/slideModal/Signup"
 import LandingPage from './pages/LandingPage/LandingPage';
-import SideBar from './components/SideBar/SideBar'
 import {SolidHeart} from "./components/SvgIcon/SvgIcon"
 import Modal from "./components/Modal/slideModal/Modal"
 // import RecordPage from './pages/RecordPage/RecordPage';
@@ -36,7 +35,6 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <NavBar />
-        <SideBar />
         {/* <UserInfo/> */}
         <Switch>
           <Route exact path = '/'><LandingPage /></Route>
