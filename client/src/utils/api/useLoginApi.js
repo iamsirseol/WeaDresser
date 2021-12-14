@@ -2,21 +2,20 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { isShowLoginModalHandler, loginSuccessHandler } from '../../redux/actions/actions'
+import { useForm } from '../useForm';
 require('dotenv').config();
-//!Todo Client id, Secret key,숨기기
-// ! dot env 안될 수 있음 
+//!Todo Client id, Secret key,숨기기... dot env 안될 수 있음 
 
 export const useLoginApi = () => {
   const [ socialDone, setSocialDone ] = useState(false);
   const [ errorMessage, setErrorMessage ] = useState("");
+  const [ active, setActive ] = useState("");
+  const { pattern } = useForm();
   const dispatch = useDispatch();
-  // const { isShowLoginModal, isShowSignUpModal } = useSelector(state => state.isShowModalReducer)
-  // const  modalRef = useRef();
-  // const history = useHistory();
 
   // 구글 토큰 요청 
   // * doble check ok
-  // ! dot env 안될 수 있음 
+  // ! dot env check point 
   const getGoogleAccToken = () => {
     sessionStorage.setItem('redirect',window.location.href)
     console.log(window.location.href)
@@ -48,7 +47,7 @@ export const useLoginApi = () => {
     
   //구글 유저 로그인 요청 
   // * double check ok 
-  // ! dot env 안될 수 있음 
+  // ! dot env check point 
   const handleGoogleLoginApi = async (email, name ) => {
     const SERVER = process.env.REACT_APP_SERVER_URL || "http://localhost:80"
     axios.post(`${SERVER}/oauth/google`, 
@@ -67,7 +66,7 @@ export const useLoginApi = () => {
 
   // 카카오 코드 요청 
   // * double check ok 
-  // ! dot env 안될 수 있음 
+  // ! dot env check point 
   const getKakaoCode = () => {
     sessionStorage.setItem('redirect', window.location.href)
     const client_id = process.env.REACT_APP_KEY_KAKAO 
@@ -78,7 +77,7 @@ export const useLoginApi = () => {
 
   // 카카오 토큰 요청 (카카오 유저 정보 서버에서 다시 재요청 확인)
   // * double check ok
-  // ! dot env 안될 수 있음 
+  // ! dot env check point 
   const getKakaoAccToken = async (kakaoCode) => {
     const client_id = process.env.REACT_APP_KEY_KAKAO
     const client_secret = process.env.REACT_APP_KAKAO_SECRET
@@ -99,7 +98,7 @@ export const useLoginApi = () => {
   }
   // 카카오 유저 로그인 토큰 요청
   // * double check ok
-  // ! dot env 안될 수 있음 
+  // ! dot env check point 
   const handleKakaoLoginApi = async ({accessToken}) => {
     const SERVER = process.env.REACT_APP_SERVER_URL || "http://localhost:80"
     axios.post(
@@ -120,9 +119,9 @@ export const useLoginApi = () => {
   }
   // 일반 유저 로그인 토큰 요청 
   // * double check ok
-  // ! dot env 안될 수 있음 
+  // ! dot env check point 
   const handleUserLoginApi = async ({ email, password }) => {
-    const SERVER = process.env.REACT_APP_SERVER_URI || 'http://localhost:80'
+    const SERVER = process.env.REACT_APP_SERVER_URL || 'http://localhost:80'
     axios.post(
       SERVER + "/users/signin",
       // `${process.env.REACT_APP_SERVER_URL}/users/signin`,
@@ -150,11 +149,36 @@ export const useLoginApi = () => {
     })
   }
 
+  // validition : email=null, password=Null, email regx@ 
+  const validCheckHandler = (loginInfo) => {
+    const { email, password } = loginInfo
+
+    setActive("")
+    if(!email){
+      setErrorMessage('이메일를 입력해 주세요')
+    }
+    else if( !pattern.test(email) || !email.includes('@') || !email.includes('.') ){
+      setErrorMessage("이메일 형식을 확인해 주세요")
+    }
+    else if(!password){
+      setErrorMessage('비밀번호를 입력해 주세요')
+    }
+    //! 6자리 이상 으로 교체
+    else if(password.length < 3){
+      setErrorMessage('3자리 이상 비밀번호를 입력해 주세요')
+    }
+    else{
+      setActive("-active") // button active
+      // userLoginHandler() // * login ajax call
+      handleUserLoginApi({ email, password})
+    }
+  };
+
   return {
-    socialDone, setSocialDone, errorMessage, setErrorMessage,
-    getGoogleAccToken, getGoogleUserInfo, 
-    getKakaoCode, getKakaoAccToken, 
-    handleKakaoLoginApi, handleGoogleLoginApi, handleUserLoginApi
+    socialDone, setSocialDone, errorMessage, setErrorMessage, active, setActive,
+    getGoogleAccToken, getGoogleUserInfo, getKakaoCode, getKakaoAccToken, 
+    handleKakaoLoginApi, handleGoogleLoginApi, handleUserLoginApi,
+    validCheckHandler
   }
 }
 
