@@ -89,38 +89,40 @@ function EditRecord({ curSlide, formId }) {
 
     return (
         <EditForm onSubmit={handleSubmit(editComplete())}>
-            <EditImageBox>
-                <InputImage ref={inputValue} onChange={(e) => inputFileHandler(inputValue)}></InputImage>
-                {
-                    editImage ? 
-                    <PreviewImage previewImage={previewImage} onClick={(e) => inputImageFn(e, inputValue)}></PreviewImage>
-                    :
-                    <PreviewImage previewImage={initImage} onClick={(e) => inputImageFn(e, inputValue)}>
-                        {/* <PhotoLogo></PhotoLogo>
-                        <UploadDesc>클릭하여 이미지를 추가하세요.</UploadDesc> */}
-                    </PreviewImage>
-                }
-            </EditImageBox>
-            <EidtContentBox defaultValue={editContent} onChange={(e) => contentFn(e)}></EidtContentBox>
-            <EditHashtagBox>
-                {editHashtag.length > 0 ? 
-                    editHashtag.split(', ').map((tag) =>
-                    <SingleHashtag key={tag}>
-                        <span>{`#${tag}`}</span>
-                        <span className="close-button" onClick={() => removeHashtagFn(tag)}></span>
-                    </SingleHashtag>)
-                : null}
-                <InputHashtag onKeyUp={(e) => e.key === 'Enter' ? inputHashtagFn(e) : null} ></InputHashtag>
-            </EditHashtagBox>
-            <ShareBox>
-                {
-                    sharePost ? 
-                    <div className="share-check-true" onClick={isShareCheck}></div>
-                    :
-                    <div className="share-check-false" onClick={isShareCheck}></div>
-                }
-                <div className="share-desc">공유하기</div>
-            </ShareBox>
+            <EditContainer>
+                <EditImageBox>
+                    <InputImage ref={inputValue} onChange={(e) => inputFileHandler(inputValue)}></InputImage>
+                    {
+                        editImage ? 
+                        <PreviewImage previewImage={previewImage} onClick={(e) => inputImageFn(e, inputValue)}></PreviewImage>
+                        :
+                        <PreviewImage previewImage={initImage} onClick={(e) => inputImageFn(e, inputValue)}>
+                            {/* <PhotoLogo></PhotoLogo>
+                            <UploadDesc>클릭하여 이미지를 추가하세요.</UploadDesc> */}
+                        </PreviewImage>
+                    }
+                </EditImageBox>
+                <EidtContentBox defaultValue={editContent} onChange={(e) => contentFn(e)}></EidtContentBox>
+                <EditHashtagBox>
+                    {editHashtag.length > 0 ? 
+                        editHashtag.split(', ').map((tag) =>
+                        <SingleHashtag key={tag}>
+                            <span>{`#${tag}`}</span>
+                            <span className="close-button" onClick={() => removeHashtagFn(tag)}></span>
+                        </SingleHashtag>)
+                    : null}
+                    <InputHashtag onKeyUp={(e) => e.key === 'Enter' ? inputHashtagFn(e) : null} ></InputHashtag>
+                </EditHashtagBox>
+                <ShareBox>
+                    {
+                        sharePost ? 
+                        <div className="share-check-true" onClick={isShareCheck}></div>
+                        :
+                        <div className="share-check-false" onClick={isShareCheck}></div>
+                    }
+                    <div className="share-desc">공유하기</div>
+                </ShareBox>
+            </EditContainer>
         </EditForm>
     )
 }
@@ -132,6 +134,11 @@ const EditForm = styled.form.attrs(props => ({
 }))`
     width: 100%;
 `
+
+const EditContainer = styled.div`
+    width: 52.5%;
+    height: 53.9em;
+`
 const EditImageBox = styled.div`
     width: 47.8rem;
     height: 32.4em;
@@ -142,15 +149,18 @@ const InputImage = styled.input.attrs(props => ({
     id : "image"
 }))`
     display: none;
+    
 `
 const PreviewImage = styled.div`
-    width: 47.8rem;
+    width: 47.8em;
     height: 32.4em;
+    margin: 0 auto;
     cursor: pointer;
     background-image: url(${props => props.previewImage});
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    background-color: #dfdfe0;
 `
 const EidtContentBox = styled.textarea`
     width: 47.0rem;
@@ -163,15 +173,16 @@ const EidtContentBox = styled.textarea`
     color: #3b3c3c;
     border: none;
     resize: none;
-    background-color: #f9f9fb;
-
+    border-top: solid 1px #d3d3d3;
+    border-bottom: solid 1px #d3d3d3;
+    background-color: #fdfdfd;
 `
 const EditHashtagBox = styled.ul`
     width: 47.8rem;
-    height: 8rem;
+    height: 7.5rem;
     padding-top: 0.5em;
     position: relative;
-    background: wheat;
+    background-color: #fdfdfd;
     display: flex;
     flex-wrap: wrap;
 `
@@ -206,14 +217,14 @@ const SingleHashtag = styled.li`
 `
 const InputHashtag = styled.input`
         width: 47.8rem;
+        height: 2em;
         border: none;
         resize: none;
-        padding: 0.1em 0.2em 0.1em 0.5em;
-        background: wheat;
+        padding: 0em 0.2em 0em 0.5em;
         align-items: center;
         font-size: 1.4rem;
         letter-spacing: 2px;
-        color: #93969b;
+        background: #fdfdfd;
 `
 export const ShareBox = styled.div`
     width: 20rem;
