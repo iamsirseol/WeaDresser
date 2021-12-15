@@ -53,7 +53,7 @@ const WithDrawalModalBtn = styled.div`
 
 `
 
-function UpdateModal({setShowWithDrawal}) {
+function WithDrawalModal({setShowWithDrawal}) {
     const dispatch = useDispatch(); 
     const history = useHistory();
     const userData =  useSelector(state => state.isLoginReducer.accessToken)
@@ -93,4 +93,4 @@ function UpdateModal({setShowWithDrawal}) {
     )
 }
 
-export default UpdateModal
+export default WithDrawalModal
