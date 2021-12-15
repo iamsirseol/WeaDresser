@@ -1,4 +1,3 @@
-
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { isLoginHandler, isShowLoginModalHandler, isShowSignUpModalHandler, sideBarHandler} from '../../redux/actions/actions'
@@ -51,7 +50,6 @@ const SideBarContainer = styled.aside`
                 border-bottom: 1px solid #fff;
                 white-space: nowrap;
                 padding: 5px;
-
                 >.side-bar-link{
                     font-size: 1.8em;
                     color: #fff;

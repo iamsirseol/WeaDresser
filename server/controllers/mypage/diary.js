@@ -1,13 +1,14 @@
 const { Diarie, DiariesHashtag, Hashtag } = require("../../models");
-const { isAuthorized } = require("../tokenfunction/index");
+const { isAuthorized, isValid } = require("../tokenfunction/index");
 
 module.exports = {
   // * GET mypage/diary
   findOne: async (req, res) => {
     const createdAt = req.query;
     const accessToken = isAuthorized(req);
-    if (!accessToken) {
-      return res.status(401).send("not authorized");
+    const validUser = await isValid(accessToken.email, accessToken.id);
+    if(!validUser){
+      return res.status(401).json("not authorized!");
     }
     try {
       const create = await Diarie.findAll({
