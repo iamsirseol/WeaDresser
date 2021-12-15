@@ -9,10 +9,11 @@ export const WEATHER_DATA = "WEATHER_DATA";
 export const IS_SHOW_SIDE_BAR = "IS_SHOW_SIDE_BAR";
 export const IS_SHOW_DATE_PICKER = "IS_SHOW_DATE_PICKER";
 export const DATE_DATA = "DATE_DATA";
+export const TEMP_LOADING = "TEMP_LOADING";
 
 export function loginSuccessHandler(boolean, accessToken) {
     return (dispatch) => {
-        console.log(boolean, accessToken)
+        // console.log(boolean, accessToken)
         dispatch(isLoginHandler(boolean))
         dispatch(setAccessToken(accessToken))
     }
@@ -66,14 +67,35 @@ export function setAccessToken(accessToken) {
         }
     }
 };
-// export function getLocationData(lat, lot) {
-//     return (async dispatch => {
-//         const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lot}&appid=${process.env.REACT_APP_API_KEY}`)
-//             .catch(err => console.log('err', err));
-//         const { coord, main, name, sys, weather } = result.data;
-//         dispatch(getWeatherData({ coord, main, name, sys, weather }))
-//     })
-// };
+
+
+export function getLocationData(lat, lot) {
+    return (async dispatch => {
+        const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lot}&appid=${process.env.REACT_APP_API_KEY}`)
+            .catch(err => {
+                console.log('err', err)
+                dispatch(isLoadingHandler(false))
+                dispatch(tempLoadingHandler(false))
+            });
+        if(result){
+            const { coord, main, name, sys, weather } = result.data;
+            dispatch(getWeatherData({ coord, main, name, sys, weather }))
+            dispatch(tempLoadingHandler(true))
+        }
+    })
+};
+
+
+export function tempLoadingHandler(bool){
+    return {
+        type: TEMP_LOADING,
+        payload : {
+            tempLoading : bool 
+        }
+    }
+}
+
+
 export function getWeatherData(data) {
     return {
         type : WEATHER_DATA,
@@ -96,18 +118,15 @@ export function sideBarHandler(boolean){
 }
 
 export function createUserHandler(endpoint, reqBody){
-    // const SERVER = process.env.REACT_APP_SERVER || 'http://localhost:80'
-    const SERVER ='http://localhost:80/'
-    console.log("asdf====================================",SERVER+endpoint)
-    console.log("asdf====================================",reqBody)
+    const SERVER = process.env.REACT_APP_SERVER || 'http://localhost:80'
     return (dispatch) => {
         return axios.post(
-            'http://localhost:80/users/signup', 
+            SERVER + '/users/signup', 
             reqBody, 
             { withCredentials : true }
         )
         .then(result => {
-            console.log("then result ========", result);
+            // console.log("then result ========", result);
             dispatch(isShowLoginModalHandler(true));
             dispatch(isShowSignUpModalHandler(false));
         })
