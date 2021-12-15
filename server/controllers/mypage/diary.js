@@ -70,6 +70,8 @@ module.exports = {
       return res.status(500).send("Internal server error")
     }
   },
+
+  
   // * PATCH mypage/diary
   update: async (req, res) => {
     // token validation
