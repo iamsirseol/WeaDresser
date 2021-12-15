@@ -3,7 +3,7 @@ import styled from "styled-components";
 import socialAlert from '../../images/userinfo_social_alert.svg'
 
 const SocialCantContainer = styled.div`
-    position: fixed;
+    position: relative;
     top: 45%;
     left: 50%;
     z-index: 99;
@@ -19,6 +19,28 @@ const SocialCantContainer = styled.div`
         text-align: center;
         font-size: 1.3em;
     }
+    >span{
+        display: block;
+        top: 1.3em;
+        right: 1.5em;
+        cursor: pointer;
+        width: 1.8em;
+        height: 1.8em;
+        position: absolute;
+        >i{
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1.5px;
+            background: #000;
+            transition: all .3s;
+            transform: rotate(45deg);
+        }
+        >i:nth-child(2){
+            transform: rotate(-45deg);
+        }
+    }
 `
 const AlertImage = styled.div`
     width: 48px;
@@ -27,11 +49,20 @@ const AlertImage = styled.div`
     margin: 20px auto;
 `
 
-function SocialCant({setShowUpdateModal, showUpdateModal, sucUpdate}) {
+function SocialCant({setCloseSocial}) {
 
+    function closeCondition(e){
+        e.preventDefault();
+        setCloseSocial(false);
+    }
+    
     return(
         <>
             <SocialCantContainer>
+                <span className="social-close-btn" onClick = {(e) => closeCondition(e)}>
+                    <i></i>
+                    <i></i>
+                </span>
                 <AlertImage></AlertImage>
                 <p>소셜 로그인 한 사람은<br />회원정보 수정이 불가합니다.<br/>죄송합니다.</p>
             </SocialCantContainer>
