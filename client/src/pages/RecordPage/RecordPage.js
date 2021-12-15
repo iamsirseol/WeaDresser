@@ -19,15 +19,24 @@ import { Container,
 function RecordPage() {
     
     // const dispatch = useDispatch();
+    const weatherData = useSelector(state => state.getWeatherDataReducer);
     const history = useHistory();
     const inputValue = useRef(null);
     const [uploadImage, setUploadImage] = useState(null);
     const [inputContent, setInputContent] = useState('');
-    const [inputHashtag, setInputHashtag] = useState("구찌갱, 국밥문신충");
+    const [inputHashtag, setInputHashtag] = useState('');
     const [previewImage, setPreviewImage] = useState(null);
+    const [curWeather, setCurWeather] = useState(null);
+    const [curTempMin, setCurTempMin] = useState(null);
+    const [curTempMax, setCurTempMax] = useState(null);
     const [sharePost, setSharePost] = useState(true);
     const [canSubmit, setCanSubmit] = useState(false);
-    const weatherData = useSelector(state => state.getWeatherDataReducer);
+
+    useEffect(() => {
+        setCurWeather(weatherData.weather[0].main);
+        setCurTempMin(weatherData.main.temp_min);
+        setCurTempMax(weatherData.main.temp_max);
+    }, [curWeather, curTempMin, curTempMax]);
 
     function inputFileHandler (inputValue) {
         
@@ -84,15 +93,17 @@ function RecordPage() {
 
     const formData = new FormData(); // submitbutton이랑 cancelbutton이랑 둘다 활용
     function submitFn (e) { // 작성완료 버튼
-
-        formData.append('weatherData', weatherData);
+        e.preventDefault();
         formData.append('image', uploadImage);
         formData.append('content', inputContent);
         formData.append('hashtag', inputHashtag);
         formData.append('share', sharePost);
+        formData.append('weather', curWeather);
+        formData.append('tempMin', curTempMin);
+        formData.append('tempMax', curTempMax);
         
         // const url = process.env.REACT_APP_SERVER_URL || 
-        const url = 'http://localhost:80/diary' // server랑 확인할때 환경변수 x
+        const url = 'http://localhost:80/record' // server랑 확인할때 환경변수 x
         axios.post(url, formData, { 
             headers: {
                 'content-type': 'multipart/form-data'
@@ -103,17 +114,19 @@ function RecordPage() {
             .then(res => console.log('submit successfully')) // axios.post면 res를 보내 줄 필요가 없는지?
             .catch(err => console.log(err));
             // history -> diary페이지 -> 다시 get요청 (가장 최신 글)
-        history.push('/mypage/diary');
+        history.push('/mypage/record');
 
         // 마지막에 formData를 초기화 안해줘도 되는지?
     }
     function cancelFn (e) {
         // formData 초기화
-        formData.delete('weatherData');
         formData.delete('image');
         formData.delete('content');
         formData.delete('hashtag');
         formData.delete('share');
+        formData.delete('weather');
+        formData.delete('tempMin');
+        formData.delete('tempMax');
         history.push('/');
     }
     

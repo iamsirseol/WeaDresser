@@ -217,7 +217,7 @@ export const RecordContainer = styled.div`
     top: 7.5%;
     position: relative;
     background-color: #f9f9fb;
-    overflow: hidden;
+    overflow: ${props => props.isEdit ? "visible" : "hidden"};
 `
 export const SlideContainer = styled.div`
     width: auto;
@@ -338,7 +338,6 @@ export const DotMenu = styled.div`
     left: 2.5em;
 `
 export const DotMenuButton1 = styled.button`
-    display: ${props => props.isDotMenu ? 'block' : 'none'};
     width: 100%;
     height: 5rem;
     position: relative;
@@ -357,7 +356,6 @@ export const DotMenuButton1 = styled.button`
     }
 `
 export const DotMenuButton2 = styled.button`
-    display: ${props => props.isDotMenu ? 'block' : 'none'};
     width: 100%;
     height: 5rem;
     position: relative;
@@ -368,6 +366,28 @@ export const DotMenuButton2 = styled.button`
     line-height: 2.8;
     letter-spacing: normal;
     color: #ed3829;
+    border-bottom: solid 1px #d9d9d9;
+    cursor: pointer;
+
+    :hover {
+        background-color: #f2f2f4;
+    }
+`
+
+export const DotMenuButton3 = styled.button.attrs(props => ({
+    type: "submit",
+    form: "record",
+}))`
+    width: 100%;
+    height: 5rem;
+    position: relative;
+    font-family: NanumBarunGothicOTF;
+    font-size: 1.8em;
+    font-weight: bold;
+    text-align: center;
+    line-height: 3;
+    letter-spacing: normal;
+    color: #2862e5;
     border-bottom: solid 1px #d9d9d9;
     cursor: pointer;
 

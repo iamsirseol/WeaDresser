@@ -1,25 +1,25 @@
 import { useEffect, useState, useRef } from 'react'
+import { useForm } from "react-hook-form";
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import close from '../../images/close_ic.png';
-// import photo from '../../images/photo_ic.svg';
+import check from '../../images/check_ic_sel.svg';
 import axios from 'axios';
-// import { recordDataHandler } from '../../redux/actions/actions';
 
-function EditRecord({ curSlide }) {
+function EditRecord({ curSlide, formId }) {
 
+    const { handleSubmit } = useForm();
     const history = useHistory();
     const selectedRecord = useSelector(state => state.getRecordDataReducer);
     const [editImage, setEditImage] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
     const [editContent, setEditContent] = useState(selectedRecord.getRecordData.record[curSlide].content);
     const [editHashtag, setEditHashtag] = useState(selectedRecord.getRecordData.record[curSlide].hashtag);
+    const [sharePost, setSharePost] = useState(true);
     const inputValue = useRef(null);
     const initImage = selectedRecord.getRecordData.record[curSlide].image; // 초기 이미지 값
-    console.log(selectedRecord.getRecordData.record,'!!')
-    // const trimmedRecord = selectedRecord.getRecordData.record.slice();
-    console.log()
+
     function inputFileHandler (inputValue) {
         const image = inputValue.current.files;
         setEditImage(image[0]);
@@ -41,8 +41,8 @@ function EditRecord({ curSlide }) {
     function removeHashtagFn (removeTag) {
         if (editHashtag.length === 0) return;
         let filtered = editHashtag.slice().split(', ').filter(el => el !== removeTag).join(', ');
-        // if (filtered.length === 0) return;
         setEditHashtag(filtered);
+        // setInitHashtag(filtered);
     }
     
     function inputHashtagFn (e) {
@@ -60,13 +60,17 @@ function EditRecord({ curSlide }) {
         e.target.value = '';
     }
 
-    const formData = new FormData();
-    function editComplete (e) {
+    function isShareCheck () {
+        setSharePost(!sharePost)
+        console.log(sharePost)
+    }
 
+    const formData = new FormData();
+    function editComplete () {
         formData.append('image', editImage);
         formData.append('content', editContent);
         formData.append('hashtag', editHashtag);
-        formData.append('share'); // share 어디위치에 넣을지 잠시 고민..
+        formData.append('share', sharePost); 
 
         // const url = process.env.REACT_APP_SERVER_URL || 
         const url = 'http://localhost:80/diary' // server랑 확인할때 환경변수 x
@@ -83,11 +87,8 @@ function EditRecord({ curSlide }) {
         history.push('/mypage/diary');
     }
 
-    useEffect(() => {
-
-    }, [editHashtag, editImage, EidtContentBox]);
     return (
-        <EditForm onSubmit={(e) => editComplete(e)}>
+        <EditForm onSubmit={handleSubmit(editComplete())}>
             <EditImageBox>
                 <InputImage ref={inputValue} onChange={(e) => inputFileHandler(inputValue)}></InputImage>
                 {
@@ -101,7 +102,7 @@ function EditRecord({ curSlide }) {
                 }
             </EditImageBox>
             <EidtContentBox defaultValue={editContent} onChange={(e) => contentFn(e)}></EidtContentBox>
-            <EditHashtagBox value={editHashtag}>
+            <EditHashtagBox>
                 {editHashtag.length > 0 ? 
                     editHashtag.split(', ').map((tag) =>
                     <SingleHashtag key={tag}>
@@ -109,15 +110,27 @@ function EditRecord({ curSlide }) {
                         <span className="close-button" onClick={() => removeHashtagFn(tag)}></span>
                     </SingleHashtag>)
                 : null}
-                <InputHashtag onKeyUp={(e) => e.key === "Enter" ? inputHashtagFn(e) : null}></InputHashtag>
+                <InputHashtag onKeyUp={(e) => e.key === 'Enter' ? inputHashtagFn(e) : null} ></InputHashtag>
             </EditHashtagBox>
+            <ShareBox>
+                {
+                    sharePost ? 
+                    <div className="share-check-true" onClick={isShareCheck}></div>
+                    :
+                    <div className="share-check-false" onClick={isShareCheck}></div>
+                }
+                <div className="share-desc">공유하기</div>
+            </ShareBox>
         </EditForm>
     )
 }
 
 export default EditRecord
 
-const EditForm = styled.form`
+const EditForm = styled.form.attrs(props => ({
+    id: "record"
+}))`
+    width: 100%;
 `
 const EditImageBox = styled.div`
     width: 47.8rem;
@@ -133,34 +146,12 @@ const InputImage = styled.input.attrs(props => ({
 const PreviewImage = styled.div`
     width: 47.8rem;
     height: 32.4em;
-    /* display: block; */
     cursor: pointer;
     background-image: url(${props => props.previewImage});
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
 `
-// const PhotoLogo = styled.div`
-//     width: 11em;
-//     height: 10em;
-//     margin: 0 auto;
-//     top: 26%;
-//     position: relative;
-//     background-image: url(${photo});
-//     background-repeat: no-repeat;
-//     background-size: contain;
-//     background-position: center;
-// `
-// const UploadDesc = styled.div`
-//     width: 100%;
-//     font-family: NotoSansKR;
-//     position: relative;
-//     font-size: 1.3em;
-//     font-weight: 500;
-//     line-height: 16;
-//     text-align: center;
-//     color: #6b6d71;
-// `
 const EidtContentBox = styled.textarea`
     width: 47.0rem;
     height: 13rem;
@@ -189,7 +180,7 @@ const SingleHashtag = styled.li`
     height: 3rem;
     align-items: center;
     justify-content: center;
-    line-height: 2;
+    line-height: 2.3;
     color: #fff;
     padding: 0 8px;
     font-size: 1.4rem;
@@ -223,4 +214,47 @@ const InputHashtag = styled.input`
         font-size: 1.4rem;
         letter-spacing: 2px;
         color: #93969b;
+`
+export const ShareBox = styled.div`
+    width: 20rem;
+    height: 3rem;
+    margin: 0 auto;
+    position: absolute;
+    left: 50em;
+    bottom: 0em;
+    /* background-color: yellow; */
+    display: flex;
+    z-index: 10;
+    .share-check-true {
+        width: 2.7rem;
+        height: 2.7rem;
+        background-color: #4970ed;
+        background-image: url(${check});
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        border: solid 1px #4970ed;
+    }
+    .share-check-false {
+        width: 2.7rem;
+        height: 2.7rem;
+        background-color: #d0d0d0;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        border: solid 1px #f9f9fb;
+        /* border-color: #4970ed; */
+    }
+    .share-desc {
+        width: auto;
+        margin: 0.3rem 0 0 1.5rem;
+        height: 2.3rem;
+        font-family: NotoSansKR;
+        font-size: 16px;
+        font-weight: normal;
+        font-style: normal;
+        letter-spacing: normal;
+        color: #000;
+
+    }
 `
