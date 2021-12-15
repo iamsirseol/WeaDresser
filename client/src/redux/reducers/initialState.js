@@ -39,5 +39,8 @@ export const initialState = {
     },
     getDateData: {
         getDateData: null
+    },
+    getRecordData: {
+        getRecordData: null,
     }
 }
