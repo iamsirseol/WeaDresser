@@ -120,7 +120,7 @@ function LandingPage () {
                     <Scroll />
                 </LandingPageContainer>
             </Container>
-            {/* <LandingPageLower /> */}
+            <LandingPageLower />
         </>
     )
 }
