@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect } from 'react';
-import { getLocationData, tempLoadingHandler } from './redux/actions/actions'
-import { loginSuccessHandler } from './redux/actions/actions'
+import { getLocationData, tempLoadingHandler } from '../redux/actions/actions'
+import { loginSuccessHandler } from '../redux/actions/actions'
 import axios from 'axios';
 require('dotenv').config();
 

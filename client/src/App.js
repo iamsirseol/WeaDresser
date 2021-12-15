@@ -25,7 +25,7 @@ import Footer from './components/Footer/Footer'
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import { getWeatherData, getLocationData, tempLoadingHandler } from './redux/actions/actions'
-import { useLoading } from './useLoading'
+import { useLoading } from './utils/useLoading'
 import { LoginContainer } from './components/Modal/SignModal/LoginStyle';
 require('dotenv').config();
 
