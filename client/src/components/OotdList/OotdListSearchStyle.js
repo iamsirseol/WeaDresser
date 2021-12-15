@@ -1,8 +1,38 @@
 import styled from "styled-components";
 
 export const OotdListSearchContainer = styled.div`
-    width: 100%;
-    height: 3em;
-    border: 1px solid #000;
-    margin: 0 0 2em 0;
+    width: 40%;
+    min-width: 20em;
+    height: 2.8em;
+    border: 2px solid #6588db;
+    margin: 4em auto 2em;
+    box-sizing: border-box;
+    display: flex;
+    padding: 0 3px;
+    justify-content: space-between;
+    /* &:focus{
+        outline: none;
+        border: 2.65px solid #4588db;
+        box-shadow: 0 0 0 .65px #4588db;
+    } */
+`;
+
+export const OotdListSearchInput = styled.input.attrs(props => ({
+    type: "text",
+    placeholder: "Search"
+}))`
+    display: block;
+    width: 90%;
+    border: none;
+    box-sizing: border-box;
+    &:focus{
+        outline: none;
+    }
+`;
+export const OotdListSearchIcon = styled.span.attrs(props => {
+    
+})`
+    display: flex;
+    align-items: center;
+    cursor: pointer;
 `
