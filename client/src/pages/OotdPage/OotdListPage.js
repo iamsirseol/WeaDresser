@@ -7,17 +7,17 @@ import {
     OotdPageTitle,
     OotdListContainer,
 } from "./OotdListPageStyle"
-import OotdListSearch from "../../components/OotdList/OotdListSearch"
 import OdtdListBox from "../../components/OotdList/OotdListBox"
+import { useState } from 'react';
 
 function OotdListPage(){
+
 
     return (
         <OotdPageContainer>
             <OotdPageTitle>OOTD LIST</OotdPageTitle> {/* 이름 뭐로 바꿀지.. */}
-            <OotdListSearch /> {/* 민찬님 몫 ㅋㅋㅋ */}
             <OotdListContainer>
-                <OdtdListBox/>
+                <OdtdListBox />
             </OotdListContainer>
         </OotdPageContainer>
     )
