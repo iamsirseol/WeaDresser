@@ -10,7 +10,8 @@ import {
     IS_SHOW_SIDE_BAR,
     IS_SHOW_DATE_PICKER,
     DATE_DATA,
-    MYPAGE_RECORD_DATA
+    MYPAGE_RECORD_DATA,
+    SEARCH_OFFSET
 } from '../actions/actions';
 import { initialState } from './initialState';
 
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
     isShowSideBarReducer,
     isShowDatePickerReducer,
     getDateDataReducer,
-    getRecordDataReducer
+    getRecordDataReducer,
+    searchOffsetReducer,
 })
 
 function isLoginReducer(state = initialState.isLogin, action) {
@@ -114,6 +116,16 @@ function getRecordDataReducer(state = initialState.getRecordData, action) {
         getRecordData: action.payload.data
       });
     default: return state;
+  }
+}
+
+function searchOffsetReducer(state = initialState.searchOffset, action){
+  switch (action.type) {
+    case SEARCH_OFFSET:
+      return Object.assign({}, {
+        searchOffset: action.payload.searchOffset
+      });
+      default : return state;
   }
 }
 

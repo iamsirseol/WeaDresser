@@ -39,5 +39,8 @@ export const initialState = {
     },
     getRecordData: {
         getRecordData: null,
-    }
+    },
+    searchOffset:{
+        searchOffset: 0
+    },
 }

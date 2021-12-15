@@ -10,6 +10,7 @@ export const IS_SHOW_SIDE_BAR = "IS_SHOW_SIDE_BAR";
 export const IS_SHOW_DATE_PICKER = "IS_SHOW_DATE_PICKER";
 export const DATE_DATA = "DATE_DATA";
 export const MYPAGE_RECORD_DATA = "MYPAGE_RECORD_DATA";
+export const SEARCH_OFFSET = "SEARCH_OFFSET"
 
 export function loginSuccessHandler(boolean, accessToken) {
     return (dispatch) => {
@@ -142,6 +143,15 @@ export function recordDataHandler(data) {
         type: MYPAGE_RECORD_DATA,
         payload: {
             data
+        }
+    }
+}
+
+export function setSearchOffsetHandler(data) {
+    return{
+        type: SEARCH_OFFSET,
+        payload: {
+            searchOffset: data
         }
     }
 }

@@ -1,6 +1,6 @@
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { isLoginHandler, isShowLoginModalHandler, isShowSignUpModalHandler, isShowOotdImageModalHandler } from '../../redux/actions/actions'
+import { isShowOotdImageModalHandler, setSearchOffsetHandler } from '../../redux/actions/actions'
 import axios from 'axios'; // 필요 없을거 같긴 한데 로그아웃에서 쓸 수도
 import {
     OotdListBoxContainer,
@@ -29,16 +29,19 @@ function OotdListBox(){
     const dispatch = useDispatch()
     const [modalImage, setModalImage] = useState('');
     const [listOffset, setListOffset] = useState(0);
-    const [searchOffset, setSearchOffset] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const imageModalHandler = (handle) => {dispatch(isShowOotdImageModalHandler(handle))};
+    const setSearchOffset = (handle) => {dispatch(setSearchOffsetHandler(handle))};
+    const searchOffset = useSelector(state => state.searchOffsetReducer.searchOffset);
     const isShowImageModal = useSelector(state => state.isShowModalReducer.isShowOotdImageModal);
     const curTemp = useSelector(state => state.getWeatherDataReducer.main);
     const [ootdListArray, setOotdListArray] = useState([]);
     const [searchHash, setSearchHash] = useState('')
     const [isMoreData, setIsMoreData] = useState(true);
     const [isSearch, setIsSearch] = useState(false);
-    const [searchListArray, setSearchListArray] = useState([])
+    const [searchListArray, setSearchListArray] = useState([]);
+    const [reSearch, setReSearch] = useState(false);
+    const [scrollOffset, setScrollOffset] = useState(5);
 
     let listLimit = 5;
 
@@ -62,7 +65,6 @@ function OotdListBox(){
     const getOotdList = () => { // 이건 날씨를 고려한 ootdlist 검색 X
         let tempMax = (parseInt((curTemp.temp_max - 273.15) * 10)) / 10
         let tempMin = (parseInt((curTemp.temp_min - 273.15) * 10)) / 10
-        
         axios.get(
             `http://localhost:80/ootd?tempMax=${tempMax}&tempMin=${tempMin}&offset=${listOffset}&limit=${listLimit}`,
             { withCredentials: true }
@@ -71,7 +73,6 @@ function OotdListBox(){
                 let curOffset = listOffset
                 setListOffset(curOffset + listLimit)
                 if(result.data[0].length === 0){
-                    console.log("더이상 받을 데이터가 없습니다.")
                     return setIsMoreData(false)
                 }else{
                     setIsMoreData(true) // 로직이 이게 맞나
@@ -85,20 +86,49 @@ function OotdListBox(){
             })
     }
 
-    const getOotdListSearch = () => { // 이건 날씨를 고려한 ootdlist 검색 X
-        
+    const getOotdListSearchSc = () => {
+        console.log(scrollOffset)
+        axios.get(
+            `http://localhost:80/ootd?hashtag=${searchHash}&offset=${scrollOffset}&limit=${listLimit}`,
+            { withCredentials: true }
+            )
+            .then(result => {
+                setScrollOffset(scrollOffset + 5);
+                if(result.data[0].length === 0){
+                    return setIsMoreData(false)
+                }else{
+                    setIsMoreData(true)
+                }
+                setSearchListArray(searchListArray => [...searchListArray, ...result.data[0]])
+            }).then(() => {
+                
+            })
+            .catch(err =>{
+                console.log(err)
+                console.log('ootd list get request is fail')
+            })
+    }
+    const getOotdListSearch = () => {
+        // if(reSearch){
+        //     setSearchOffset(0);
+        //     // setSearchOffset(searchOffset + listLimit)
+        //     setReSearch(false);
+        // }
+        console.log(searchOffset)
+        setScrollOffset(5);
         axios.get(
             `http://localhost:80/ootd?hashtag=${searchHash}&offset=${searchOffset}&limit=${listLimit}`,
             { withCredentials: true }
             )
             .then(result => {
-                let curOffset = searchOffset
-                setSearchOffset(curOffset + listLimit)
+                // if(!reSearch){
+                //     setSearchOffset(searchOffset + listLimit)
+                // }
+                // let searchOffseted = setSearchOffset
                 if(result.data[0].length === 0){
-                    console.log("더이상 받을 데이터가 없습니다.")
                     return setIsMoreData(false)
                 }else{
-                    setIsMoreData(true) // 로직이 이게 맞나
+                    setIsMoreData(true)
                 }
                 setSearchListArray(searchListArray => [...searchListArray, ...result.data[0]])
             }).then(() => {
@@ -119,7 +149,7 @@ function OotdListBox(){
         if (scrollTop + clientHeight >= scrollHeight && !isSearch) {
           getOotdList()
         }else if(scrollTop + clientHeight >= scrollHeight && isSearch){
-            getOotdListSearch()
+            getOotdListSearchSc()
         }
       };
 
@@ -231,7 +261,7 @@ function OotdListBox(){
 
     return (
         <>
-        <OotdListSearch setIsSearch={setIsSearch} setSearchHash={setSearchHash} searchHash={searchHash} getOotdListSearch={getOotdListSearch}/> {/* 민찬님 몫 ㅋㅋㅋ */}
+        <OotdListSearch setSearchListArray={setSearchListArray} setIsSearch={setIsSearch} setSearchHash={setSearchHash} searchHash={searchHash} getOotdListSearch={getOotdListSearch} setReSearch={setReSearch} reSearch={reSearch} setSearchOffset={setSearchOffset}/> {/* 민찬님 몫 ㅋㅋㅋ */}
         <OotdListBoxContainer ref={ootdListContainer} className="ootd-list">
             {!isSearch ?
                 ootdListArray.map((val, idx) => {
