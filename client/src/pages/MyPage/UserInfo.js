@@ -38,9 +38,9 @@ function UserInfo(){
     const [showWithDrawal, setShowWithDrawal] = useState(Boolean);
     const [validPw, setValidPw] = useState(false); // 유효성(문자, 숫자, 특수문자 각 하나씩)
     const [samePw, setSamePw] = useState(false); // 비번 확인용
-
+    const [isSocial, setIsSocial] = useState(false);
+    const [closeSocial, setCloseSocial] = useState(true);
     const userData =  useSelector(state => state.isLoginReducer.accessToken)
-    let social
 
     useEffect(() => {
         console.log("useEffect get request")
@@ -49,8 +49,9 @@ function UserInfo(){
         // console.log(userData)
         axios.get('http://localhost:80/mypage/users', {withCredentials: true})
             .then(res => {
-                social = res.data.social
+                setIsSocial(res.data.data.social);
                 setCurUserNickname(res.data.data.userName)
+                console.log(isSocial)
             })
             .catch(err => {
 
@@ -165,7 +166,7 @@ function UserInfo(){
             </UserInfoContainer>
             {showUpdateModal ? <InfoUpdateModal setShowUpdateModal={setShowUpdateModal} showUpdateModal={showUpdateModal} sucUpdate={sucUpdate} /> : null}
             {showWithDrawal ? <WithDrawalModal setShowWithDrawal={setShowWithDrawal} /> : null}
-            {social ? <SocialCant /> : null}
+            {isSocial && closeSocial ? <SocialCant setCloseSocial={setCloseSocial} /> : null}
         </>
     )
 
