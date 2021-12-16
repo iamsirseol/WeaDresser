@@ -72,11 +72,11 @@ function DiaryPage() {
     // const dateData = useSelector(state => state.getDateDataReducer); // props로 전달해서상태 없데이트
 
     useEffect(() => { // 더미 데이터 확인용
-        dispatch(recordDataHandler(fetchedDiary))
+        dispatch(recordDataHandler(fetchedDiary));
     }, []);
     
     // const url = process.env.REACT_APP_SERVER_URL || 
-    const url = 'http://localhost:80/mypage/record' // develop환경때는 환경변수 x
+    const url = 'http://localhost:80/mypage/diary' // develop환경때는 환경변수 x
 
     useEffect(() => {
 
@@ -137,6 +137,7 @@ function DiaryPage() {
     }
     
     function editRecordButton (e) {
+        e.preventDefault();
         setIsEdit(!isEdit);
         setIsDotMenu(false);
         setIsLeftEndPage(true);
@@ -230,22 +231,22 @@ function DiaryPage() {
                 }
                 { isLeftEndPage || isEdit ? null : <PrecButton onClick={prevButton}></PrecButton> }
                 { isRightEndPage || isEdit ? null : <NextButton onClick={nextButton}></NextButton> }
+
+
+                    {/* <DotMenuBox type="button" onClick={(e) => showDotMenu(e)}>
+                        <DotMenu isDotMenu={true}>
+                            <DotMenuButton3>완료</DotMenuButton3>
+                            <DotMenuButton2 type="button" onClick={(e) => editRecordButton(e)}>취소</DotMenuButton2>
+                        </DotMenu>
+                    </DotMenuBox> */}
+                    <DotMenuBox onClick={(e) => showDotMenu(e)}>
+                        <DotMenu isDotMenu={isDotMenu}>
+                            <DotMenuButton1 type="button" isDotMenu={isDotMenu} onClick={(e) => editRecordButton(e)}>수정</DotMenuButton1>
+                            <DotMenuButton2 isDotMenu={isDotMenu} onClick={(e) => setShowDeleteModal(e)}>삭제</DotMenuButton2>
+                        </DotMenu>
+                    </DotMenuBox>
+
             </RecordContainer>
-            {
-                isEdit ? 
-                <DotMenuBox onClick={(e) => showDotMenu(e)}>
-                    <DotMenu isDotMenu={true}>
-                        <DotMenuButton3>완료</DotMenuButton3>
-                        <DotMenuButton2 onClick={(e) => editRecordButton(e)}>취소</DotMenuButton2>
-                    </DotMenu>
-                </DotMenuBox>
-                : <DotMenuBox onClick={(e) => showDotMenu(e)}>
-                    <DotMenu isDotMenu={isDotMenu}>
-                        <DotMenuButton1 isDotMenu={isDotMenu} onClick={(e) => editRecordButton(e)}>수정</DotMenuButton1>
-                        <DotMenuButton2 isDotMenu={isDotMenu} onClick={(e) => setShowDeleteModal(e)}>삭제</DotMenuButton2>
-                    </DotMenu>
-                </DotMenuBox>
-            }
             {showDeleteModal ? <DeleteDiaryModal deleteRecordButton={deleteRecordButton} setShowDeleteModal={setShowDeleteModal} /> : null}
         </TabBody>
     )

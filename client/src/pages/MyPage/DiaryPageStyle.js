@@ -312,16 +312,18 @@ export const Button2 = styled.div`
 `
 
 export const DotMenuBox = styled.div`
-    bottom: 73.5%;
-    left: 75%;
-    position: relative;
-    padding: 0 1em 0 1em;
     width: 0.6em;
     height: 3.4em;
+    top: 0.5em;
+    right: 0.2em;
+    position: absolute;
+    padding: 0 1em 0 1em;
     background-image: url(${menuicon});
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    z-index: 5;
+    /* opacity: 0.5; */
     cursor: pointer;
     
     :hover {
@@ -338,7 +340,8 @@ export const DotMenu = styled.div`
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
     border: solid 1px #d9d9d9;
     background-color: #fff;
-    left: 2.5em;
+    top: -0.2em;
+    right: 10.5em;
 `
 export const DotMenuButton1 = styled.button`
     width: 100%;

@@ -1,26 +1,25 @@
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-function DeleteDiaryModal({ setShowDeleteModal, deleteRecordButton }) {
+function CancelModal({ setShowCancel, cancelFn }) {
 
-    function cancelDelete (e) {
-        e.preventDefault();
-        setShowDeleteModal(false);
+    function clickCancle () {
+        setShowCancel(false);
     }
-    
     return (
         <BackgroundContainer>
             <DeleteModalBox>
-                <p>삭제된 글은 복구가 불가능합니다. <br /> 삭제 하시겠습니까?</p>
+                <p>취소된 글은 저장이 되지 않습니다. <br /> 삭제 하시겠습니까?</p>
                 <div>
-                    <button className="yes-button" onClick={(e) => deleteRecordButton(e)}>네</button>
-                    <button className="no-button" onClick={(e) => cancelDelete(e)}>아니오</button>
+                    <button className="yes-button" onClick={cancelFn}>네</button>
+                    <button className="no-button" onClick={() => clickCancle()} >아니오</button>
                 </div>
             </DeleteModalBox>
         </BackgroundContainer>
     )
 }
 
-export default DeleteDiaryModal
+export default CancelModal
 
 const BackgroundContainer = styled.div`
     width: 100%;
@@ -77,12 +76,14 @@ const DeleteModalBox = styled.div`
                 background-color: #42495a;
             }
         }
-        
+
         .no-button {
             border-radius: 4px;
             box-shadow: 0 6px 4px 0 rgba(0, 0, 0, 0.1);
             border: solid 1px #cbcbcb;
             background-color: #2862e5;
+            /* active: 0.5; */
+
             :hover {
                 background-color: #16409f;
             }
