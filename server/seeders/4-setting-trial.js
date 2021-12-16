@@ -53,20 +53,35 @@ module.exports = {
       tempMax : 7.1,
     }
     
+    const t =  await sequelize.transaction() 
+    try {
+      await Hashtag.create( { name : "wfadfaefadf" }, { transaction : t }) 
+      const findD = await Diarie.findByPk(11, { 
+        include : { 
+          model : Hashtag, 
+          through : { attributes:[] }
+        },
+        transaction : t,
+        nest : true
+      }) 
 
-
-    const diary = await Diarie.findAll({ 
-      where : { userId : 2}, 
-      include : { 
-        model : Hashtag, 
-        through : DiariesHashtag 
-      },
-      limit:3,
-      order : [['createdAt', 'DESC']], 
-      raw: true, 
-      nest : true 
-    })
-    console.log(diary)
+    }
+    catch(err){
+      await t.commit()
+      t.rollback();
+    }
+    // const diary = await Diarie.findAll({ 
+    //   where : { userId : 2}, 
+    //   include : { 
+    //     model : Hashtag, 
+    //     through : DiariesHashtag 
+    //   },
+    //   limit:3,
+    //   order : [['createdAt', 'DESC']], 
+    //   raw: true, 
+    //   nest : true 
+    // })
+    // console.log(diary)
 
     // return sequelize.transaction( (t) => { 
     //   return Hashtag.bulkCreate( hashtags, 
@@ -96,75 +111,3 @@ module.exports = {
 
   }
 };
-// [
-//   {
-//     id: 1,
-//     name: 'jean',
-//     DiariesHashtag: { DiarieId: 148, HashtagId: 1 }
-//   },
-//   {
-//     id: 2,
-//     name: 'thick',
-//     DiariesHashtag: { DiarieId: 148, HashtagId: 2 }
-//   },
-//   {
-//     id: 5,
-//     name: 'jumper',
-//     DiariesHashtag: { DiarieId: 148, HashtagId: 5 }
-//   },
-//   {
-//     id: 6,
-//     name: 'sweater',
-//     DiariesHashtag: { DiarieId: 148, HashtagId: 6 }
-//   },
-//   {
-//     id: 11,
-//     name: 'cold',
-//     DiariesHashtag: { DiarieId: 148, HashtagId: 11 }
-//   },
-//   {
-//     id: 12,
-//     name: 'humid',
-//     DiariesHashtag: { DiarieId: 148, HashtagId: 12 }
-//   },
-//   {
-//     id: 21,
-//     name: 'jogger',
-//     DiariesHashtag: { DiarieId: 148, HashtagId: 21 }
-//   },
-//   {
-//     id: 22,
-//     name: 'pants',
-//     DiariesHashtag: { DiarieId: 148, HashtagId: 22 }
-//   },
-//   {
-//     id: 28,
-//     name: 'ruined',
-//     DiariesHashtag: { DiarieId: 148, HashtagId: 28 }
-//   },
-//   {
-//     id: 29,
-//     name: 'hoody',
-//     DiariesHashtag: { DiarieId: 148, HashtagId: 29 }
-//   },
-//   {
-//     id: 30,
-//     name: 'fleece',
-//     DiariesHashtag: { DiarieId: 148, HashtagId: 30 }
-//   },
-//   {
-//     id: 32,
-//     name: 'leather',
-//     DiariesHashtag: { DiarieId: 148, HashtagId: 32 }
-//   },
-//   {
-//     id: 33,
-//     name: 'rainbow',
-//     DiariesHashtag: { DiarieId: 148, HashtagId: 33 }
-//   },
-//   {
-//     id: 35,
-//     name: 'nba',
-//     DiariesHashtag: { DiarieId: 148, HashtagId: 35 }
-//   }
-// ]
