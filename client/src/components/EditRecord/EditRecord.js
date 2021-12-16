@@ -88,7 +88,7 @@ function EditRecord({ curSlide, formId }) {
     }
 
     return (
-        <EditForm onSubmit={handleSubmit(editComplete())}>
+        <EditForm onSubmit={handleSubmit(editComplete)}>
             <EditImageBox>
                 <InputImage ref={inputValue} onChange={(e) => inputFileHandler(inputValue)}></InputImage>
                 {

@@ -32,6 +32,16 @@ require('dotenv').config();
 function App() {
   const { tempLoading, logoutHandler } = useLoading();
   // console.log("App rendering with ", tempLoading )
+  useEffect(()=> {
+    if(tempLoading && sessionStorage.getItem('isLogin')){
+      console.log("now ajax call")
+      axios.post("http://localhost:80/diary",
+      { withCredentials: true }
+      ).then( resu => console.log(resu))
+      .catch(err=> { return console.log(err)})
+
+    }
+  }, [])
 
   return (
     <BrowserRouter>
