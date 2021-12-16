@@ -50,9 +50,9 @@ function App() {
         {/* <UserInfo/> */}
         <Switch>
           <Route exact path = '/'><LandingPage /></Route>
-          <Route path = '/mypage'><MyPage /></Route>
+          <Route path = '/mypage'>{tempLoading ? <MyPage /> : <LoadingIndicator/>}</Route>
           <Route path = '/ootd-list'>{tempLoading ? <OotdListPage/> : <LoadingIndicator/>}</Route>
-          <Route path = '/record'><RecordPage /></Route>
+          <Route path = '/record'>{tempLoading ? <RecordPage /> : <LoadingIndicator/>}</Route>
         </Switch>
         <Modal/>
       </div>

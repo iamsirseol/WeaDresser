@@ -3,25 +3,28 @@ const { Diarie, Hashtag, DiariesHashtag, sequelize } = require('../models')
 module.exports = {
   // * POST  /diary 
   create : async (req, res) => {
-    // token validation
-    const result = isAuthorized(req); 
-    if(!result) return res.status(401).send("Unauthorized");
+    // // token validation
+    // const result = isAuthorized(req); 
+    // if(!result) return res.status(401).send("Unauthorized");
 
-    // user validation 
-    const foundUser = await isValid(result.email, result.id);
-    if(!foundUser) return res.status(401).send("Unauthorized");
+    // // user validation 
+    // const foundUser = await isValid(result.email, result.id);
+    // if(!foundUser) return res.status(401).send("Unauthorized");
 
     // req.body validation 
-    const{ userId, content, weather, image, tempMin, tempMax, temp, hashtag , share } = req.body;
-    if( !userId || !content || !weather || !image || 
+
+    const{ content, weather, image, tempMin, tempMax, temp, hashtag , share } = req.body;
+    console.log({ content, weather, image, tempMin, tempMax, temp, hashtag , share }, 'body@@@')
+    if( !content || !weather || 
       !tempMin|| !tempMax || !temp ||  
       share === undefined || share === null || share === ''){
         return res.status(404).send("Bad request")
     }
     // Make hashtag array with name properties 
     let hashArr = hashtag || [] ;
-    const tagData = hashArr.map( ele => { return { name : ele } })
-    const data = req.body; 
+    const tagData = hashArr.split(', ').map( ele => { return { name : ele } })
+    req.body.userId = 1
+    const data = req.body;
     delete data.hashtag 
 
     // transaction start 

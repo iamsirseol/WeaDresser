@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 // import { FileUploader } from "react-drag-drop-files";
 import axios from 'axios';
+import CancelModal from '../../components/Modal/CancelModal';
 import { Container, 
     PageHeader,
     RecordIcon,
@@ -26,17 +27,15 @@ function RecordPage() {
     const [inputContent, setInputContent] = useState('');
     const [inputHashtag, setInputHashtag] = useState('');
     const [previewImage, setPreviewImage] = useState(null);
-    const [curWeather, setCurWeather] = useState(null);
-    const [curTempMin, setCurTempMin] = useState(null);
-    const [curTempMax, setCurTempMax] = useState(null);
+    const [curWeather, setCurWeather] = useState(weatherData.weather[0].main);
+    const [curTempMin, setCurTempMin] = useState(weatherData.main.temp_min);
+    const [curTempMax, setCurTempMax] = useState(weatherData.main.temp_max);
+    const [curTemp, setCurTemp] = useState(weatherData.main.temp);
     const [sharePost, setSharePost] = useState(true);
     const [canSubmit, setCanSubmit] = useState(false);
+    const [showCancel, setShowCancel] = useState(false);
 
-    useEffect(() => {
-        setCurWeather(weatherData.weather[0].main);
-        setCurTempMin(weatherData.main.temp_min);
-        setCurTempMax(weatherData.main.temp_max);
-    }, [curWeather, curTempMin, curTempMax]);
+    console.log('record', weatherData);
 
     function inputFileHandler (inputValue) {
         
@@ -49,21 +48,18 @@ function RecordPage() {
         } else {
             setCanSubmit(false);
         }
-        // window.URL.revokeObjectURL(previewImage); // 해당작업을 주석하여도 url이 변경되는 현상이 일어나지 않음
+        window.URL.revokeObjectURL(previewImage); // 해당작업을 주석하여도 url이 변경되는 현상이 일어나지 않음
     }
-
     function inputBtn(e, inputValue) {
-        e.preventDefault();
+        // e.preventDefault();
         inputValue.current.click();
     }
-
-    
     function contentFn (e) { // 내용 입력함수
-        e.preventDefault();
+        // e.preventDefault();
         setInputContent(e.target.value);
     }
-
     function hashtagFn (e) { // 해시태그 입력함수
+        // e.preventDefault();
         if (e.target.value === '') return;
         else if (inputHashtag.split(', ').includes(e.target.value)) return;
         // else if (inputHashtag.length > 10) return;
@@ -77,23 +73,25 @@ function RecordPage() {
         }
         e.target.value = '';
     }
-
     function removeHashtag (removeTag) { // 해시태그 삭제함수
         const romovedInputHashtag = inputHashtag.split(', ').filter((el) => {
             return el !== removeTag;
         }).join(', ');
         setInputHashtag(romovedInputHashtag);
     }
-
-    function isShareCheck () {
+    function isShareCheck (e) {
+        // e.preventDefault();
         setSharePost(!sharePost);
     }
-
-    // console.log({weatherData, uploadImage, inputContent, inputHashtag, sharePost},  'formData@@@')
+    function showCancelModalFn (e) {
+        // e.preventDefault();
+        setShowCancel(true);
+    }
 
     const formData = new FormData(); // submitbutton이랑 cancelbutton이랑 둘다 활용
     function submitFn (e) { // 작성완료 버튼
         e.preventDefault();
+        console.log('work???')
         formData.append('image', uploadImage);
         formData.append('content', inputContent);
         formData.append('hashtag', inputHashtag);
@@ -101,25 +99,33 @@ function RecordPage() {
         formData.append('weather', curWeather);
         formData.append('tempMin', curTempMin);
         formData.append('tempMax', curTempMax);
-        
+        formData.append('tmep', curTemp);
+        // const payload = {
+        //     image: 'hello world',
+        //     content: inputContent,
+        //     hashtag: inputHashtag,
+        //     share: sharePost,
+        //     weather: curWeather,
+        //     tempMin: curTempMin,
+        //     tempMax: curTempMax,
+        //     temp: curTemp
+        // }
         // const url = process.env.REACT_APP_SERVER_URL || 
-        const url = 'http://localhost:80/record' // server랑 확인할때 환경변수 x
-        axios.post(url, formData, { 
+        const url = 'http://localhost:80/diary' // server랑 확인할때 환경변수 x
+        axios.post('http://localhost:80/diary', formData, { 
             headers: {
                 'content-type': 'multipart/form-data'
-            }},
-            { 
-                withCredential: true,
-        })
-            .then(res => console.log('submit successfully')) // axios.post면 res를 보내 줄 필요가 없는지?
-            .catch(err => console.log(err));
-            // history -> diary페이지 -> 다시 get요청 (가장 최신 글)
-        history.push('/mypage/record');
+            }
+        },
+            { withCredential: true, })
+            .then(res => console.log('submit successfully'))
+            .catch(err => console.log('error!!', err));
 
-        // 마지막에 formData를 초기화 안해줘도 되는지?
+        //     history -> diary페이지 -> 다시 get요청 (가장 최신 글)
+        // history.push('/mypage/diary');
     }
-    function cancelFn (e) {
-        // formData 초기화
+    function cancelFn (e) { // formData 초기화
+        e.preventDefault();
         formData.delete('image');
         formData.delete('content');
         formData.delete('hashtag');
@@ -158,7 +164,7 @@ function RecordPage() {
                         <ShareBox>
                             {
                                 sharePost ? 
-                                <div className="share-check-true" onClick={isShareCheck}></div>
+                                <div className="share-check-true" onClick={(e) => isShareCheck(e)}></div>
                                 :
                                 <div className="share-check-false" onClick={isShareCheck}></div>
                             }
@@ -189,11 +195,12 @@ function RecordPage() {
                                 </div>
                             }
                         </ImageUploadBox>
-                        <UploadButton canSubmit={canSubmit} disabled={!canSubmit}>작성완료</UploadButton>
-                        <CancelButton onClick={cancelFn}>작성취소</CancelButton>
+                        <UploadButton type="submit" canSubmit={canSubmit} disabled={!canSubmit}>작성완료</UploadButton>
+                        <CancelButton type="button" onClick={(e) => showCancelModalFn(e)}>작성취소</CancelButton>
                     </div>
                 </RecordForm>
             </RecordContainer>
+            { showCancel ? <CancelModal setShowCancel={setShowCancel} cancelFn={cancelFn} /> : null } 
         </Container>
     )
 }

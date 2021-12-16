@@ -34,7 +34,7 @@ module.exports = {
   isAuthorized: (req) => {
 
     const cookieToken = req.cookies.Bearer;
-    console.log("asdfasdf", req.cookies)
+    console.log(req.cookies.Bearer, '쿠키 왔냐?')
     if (!cookieToken) return null;
     try {
       return verify(cookieToken, process.env.ACCESS_SECRET);
