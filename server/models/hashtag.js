@@ -2,24 +2,28 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Hashtag extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+
     static associate(models) {
-      // define association here
+      // Hashtag.belongsToMany(models.Diarie, { through : 'DiariesHashtags', as :'hashtag-diary' });
     }
   }
   Hashtag.init(
     {
-      name: DataTypes.STRING,
+      name: {
+        type: DataTypes.STRING,
+      },
     },
     {
+      // freezeTableName : true,
       timestamps: false,
       sequelize,
       modelName: "Hashtag",
+      indexes: [{
+        unique: true,
+        fields: ['name'] // you can use multiple columns as well here
+      }]
     }
   );
+
   return Hashtag;
 };

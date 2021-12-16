@@ -4,13 +4,9 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Diarie extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      // User.belongsToMany(Diarie, { through : 'Likes', as :'LD'},);
+      // Diarie.belongsToMany(models.Hashtag, { through : 'DiariesHashtags', as :'hashtag-diary' });
     }
   };
   Diarie.init({
@@ -18,7 +14,13 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull :false
     },
-    content: DataTypes.STRING,
+    content: { 
+      type : DataTypes.STRING
+    },
+    // userId : {
+      // type : DataTypes.INTEGER,
+      // allowNull: false,
+    // },
     weather: {
       type: DataTypes.STRING,
       allowNull :false
@@ -35,14 +37,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull :false
     },
-    userId:{ // !!! 
-      type: DataTypes.INTEGER,
-      allowNull :false,
-      // references: {
-      //   model: User,
-      //   key: 'id'
-      // }
-    },
     likeCounts:{
       type: DataTypes.INTEGER,
       allowNull :false,
@@ -53,6 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false,
     }, 
   }, {
+    // freezeTableName: true,
     updatedAt:false, // !* query check   
     sequelize,
     modelName: 'Diarie',

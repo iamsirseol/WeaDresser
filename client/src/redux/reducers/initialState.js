@@ -20,13 +20,16 @@ export const initialState = {
     // accessToken: {
     //     accessToken: ''
     // },
+    tempLoading :{
+        tempLoading : false
+    },
     weatherData: 
     {
         coord: null,
         main: null, 
         name: null, 
         sys: null,
-        weather: null
+        weather: null,
     },
     isShowSideBar: {
         isShowSideBar: false

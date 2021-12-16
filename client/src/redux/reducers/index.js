@@ -7,6 +7,7 @@ import {
     IS_SHOW_OOTD_IMAGE_MODAL,
     ACCESS_TOKEN,
     WEATHER_DATA,
+    TEMP_LOADING,
     IS_SHOW_SIDE_BAR,
     IS_SHOW_DATE_PICKER,
     DATE_DATA,
@@ -24,7 +25,7 @@ const rootReducer = combineReducers({
     isShowSideBarReducer,
     isShowDatePickerReducer,
     getDateDataReducer,
-    getRecordDataReducer,
+    tempLoadingReducer,
     searchOffsetReducer,
 })
 
@@ -68,6 +69,20 @@ function accessTokenReducer(state = initialState.accessToken, action){
       })
   }
 }
+
+function tempLoadingReducer(state = initialState.tempLoading, action){
+  // console.log("asdfasdf",state)
+  switch (action.type) {
+    case TEMP_LOADING:
+      const newState = Object.assign({}, state, action.payload);
+      // console.log("newStateatatat", newState)
+      return newState
+    default: return state;
+    
+  }
+
+}
+
 
 function getWeatherDataReducer(state = initialState.weatherData, action){
   switch (action.type) {
