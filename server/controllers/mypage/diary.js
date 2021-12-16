@@ -25,8 +25,12 @@ module.exports = {
         nest : true , raw: true
       })
       // hash tag array (if cli wants string => join() )
-      const hasharr = diary.map(ele => ele.Hashtags.name)
-      diary[0].hashtag = hasharr
+      const hasharr = diary.map(ele => {
+        const name = ele.Hashtags.name;
+        delete ele.Hashtags
+        return name 
+      })
+      diary[0].hashtag = hasharr.join()
       return res.json(diary[0])
     }
     catch(err){
