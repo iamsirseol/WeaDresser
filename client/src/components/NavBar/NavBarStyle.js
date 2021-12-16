@@ -35,5 +35,4 @@ export const NavBtn = styled.button`
     @media screen and (max-width:700px){
         padding: 0.35em 1.3em;
     }
-    @media
-`;
+`
