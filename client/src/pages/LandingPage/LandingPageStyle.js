@@ -221,6 +221,7 @@ export const Scroll = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     animation: motion 0.4s linear 0s infinite alternate;
+    cursor: pointer;
     /* margin-top: 0; */
 
     @keyframes motion {

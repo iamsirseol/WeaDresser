@@ -219,15 +219,22 @@ export const RecordContainer = styled.div`
     position: relative;
     background-color: #fdfdfd;
     border: solid 1px #d3d3d3;
-    overflow: ${props => props.isEdit ? "visible" : "hidden"};
+    /* overflow: ${props => props.isEdit ? "visible" : "hidden"}; */
 `
 export const SlideContainer = styled.div`
     width: auto;
     height: 53.9em;
     margin: 0 auto;
+    /* display: flex; */
+    overflow: ${props => props.isEdit ? "visible" : "hidden"};
+
+`
+export const OutBox = styled.div`
+    margin: 0 auto;
+    height: 50.9em;
     display: flex;
 `
-export const BOX = styled.div`
+export const InnerBox = styled.div`
     margin: 0 auto;
     height: 50.9em;
 `
@@ -312,6 +319,7 @@ export const Button2 = styled.div`
 `
 
 export const DotMenuBox = styled.div`
+    display: ${props => props.isEdit ? 'none' : 'block'};
     width: 0.6em;
     height: 3.4em;
     top: 0.5em;
@@ -329,19 +337,18 @@ export const DotMenuBox = styled.div`
     :hover {
         background-image: url(${menuiconHover});
     }
-    `
+`
 
 export const DotMenu = styled.div`
     display: ${props => props.isDotMenu ? 'block' : 'none'};
     width: 9.4em;
     height: 10em;
+    left: 4em;
+    top: -0.6em;
     position: relative;
     border-radius: 8px;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
-    border: solid 1px #d9d9d9;
     background-color: #fff;
-    top: -0.2em;
-    right: 10.5em;
 `
 export const DotMenuButton1 = styled.button`
     width: 100%;
@@ -380,24 +387,24 @@ export const DotMenuButton2 = styled.button`
     }
 `
 
-export const DotMenuButton3 = styled.button.attrs(props => ({
-    type: "submit",
-    form: "record",
-}))`
-    width: 100%;
-    height: 5rem;
-    position: relative;
-    font-family: NanumBarunGothicOTF;
-    font-size: 1.8em;
-    font-weight: bold;
-    text-align: center;
-    line-height: 3;
-    letter-spacing: normal;
-    color: #2862e5;
-    border-bottom: solid 1px #d9d9d9;
-    cursor: pointer;
+// export const DotMenuButton3 = styled.button.attrs(props => ({
+//     type: "submit",
+//     form: "record",
+// }))`
+//     width: 100%;
+//     height: 5rem;
+//     position: relative;
+//     font-family: NanumBarunGothicOTF;
+//     font-size: 1.8em;
+//     font-weight: bold;
+//     text-align: center;
+//     line-height: 3;
+//     letter-spacing: normal;
+//     color: #2862e5;
+//     border-bottom: solid 1px #d9d9d9;
+//     cursor: pointer;
 
-    :hover {
-        background-color: #f2f2f4;
-    }
-`
+//     :hover {
+//         background-color: #f2f2f4;
+//     }
+// `
