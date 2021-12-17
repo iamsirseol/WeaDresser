@@ -97,6 +97,7 @@ module.exports = {
     if (!validUser) {
       return res.status(401).json({ message: "unauthorized" });
     }
+    console.log(validUser.dataValues.id);
     if(like === true){
       await Like.create({
         userId: validUser.dataValues.id,
