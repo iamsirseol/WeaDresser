@@ -4,26 +4,31 @@ module.exports = {
   // * POST  /diary 
   create : async (req, res) => {
     // // token validation
-    // const result = isAuthorized(req); 
-    // if(!result) return res.status(401).send("Unauthorized");
+    const result = isAuthorized(req); 
+    if(!result) return res.status(401).send("Unauthorized");
 
     // // user validation 
-    // const foundUser = await isValid(result.email, result.id);
-    // if(!foundUser) return res.status(401).send("Unauthorized");
+    const foundUser = await isValid(result.email, result.id);
+    if(!foundUser) return res.status(401).send("Unauthorized");
+    console.log('------------------------')
+    console.log(result)
+    console.log('------------------------')
 
     // req.body validation 
 
-    const{ content, weather, image, tempMin, tempMax, temp, hashtag , share } = req.body;
-    console.log({ content, weather, image, tempMin, tempMax, temp, hashtag , share }, 'body@@@')
+    const{ content,image, weather, tempMin, tempMax, temp, hashtag , share } = req.body;
+    console.log(req.file.location)
+    console.log({ content, weather, tempMin, tempMax, temp, hashtag , share }, 'body@@@')
     if( !content || !weather || 
-      !tempMin|| !tempMax || !temp ||  
+      !tempMin|| !tempMax ||
       share === undefined || share === null || share === ''){
-        return res.status(404).send("Bad request")
+        return res.status(400).send("Bad request")
     }
     // Make hashtag array with name properties 
     let hashArr = hashtag || [] ;
     const tagData = hashArr.split(', ').map( ele => { return { name : ele } })
-    req.body.userId = 1
+    req.body.userId = foundUser.id;
+    req.body.image = req.file.location
     const data = req.body;
     delete data.hashtag 
 
