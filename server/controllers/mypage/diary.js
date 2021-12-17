@@ -1,5 +1,6 @@
 const { Diarie, DiariesHashtag, Hashtag, sequelize } = require("../../models");
 const { isAuthorized, isValid } = require("../tokenfunction/index");
+const { Op } = require('sequelize')
 
 module.exports = {
   // * GET mypage/diary
@@ -11,27 +12,47 @@ module.exports = {
     const foundUser = await isValid(token.email, token.id);
     if(!foundUser) return res.status(401).send("Unauthorized");
 
+    if(!req.query.date) return res.status(400).send("Bad request")
+    const curDate = `%${req.query.date}%`
+    
+    console.log(curDate)
     try{
     // find diary with all hashtags 
       const diary = await Diarie.findAll({ 
-        where : { userId : foundUser.id}, 
-        include : { 
-          model : Hashtag, 
-          through : {attributes :[]},
-          attributes : ['name'],
-          raw:true
-        },
-        limit:1, order : [['createdAt', 'DESC']], 
-        nest : true , raw: true
-      })
-      // hash tag array (if cli wants string => join() )
-      const hasharr = diary.map(ele => {
-        const name = ele.Hashtags.name;
-        delete ele.Hashtags
-        return name 
-      })
-      diary[0].hashtag = hasharr.join()
-      return res.json(diary[0])
+        where : { 
+        userId : foundUser.id,
+        createdAt : { [Op.like] : curDate } 
+      }, 
+      include : { 
+        model : Hashtag, 
+        through : {attributes :[]},
+        attributes : ['name'],
+        raw:true
+      },
+      order : [['createdAt', 'DESC']], 
+      raw: true, nest : true
+    })
+    
+    // console.log(diary)
+    let diaryArrCheck = { id : 0 , data : [] }
+    for(let i = 0 ; i < diary.length ; i++){
+      const hashVal = diary[i].Hashtags.name 
+      delete diary[i].Hashtags
+      if( diaryArrCheck.id !== diary[i].id ){
+        diaryArrCheck.id = diary[i].id
+        diary[i].hashtag = hashVal ? [ hashVal ] : []
+        diaryArrCheck.data.push(diary[i])
+      }
+      else{
+        hashVal 
+        ? diaryArrCheck.data[diaryArrCheck.data.length -1 ].hashtag.push( hashVal )
+        : null
+        // diary[i-1].hashtag.push(!diary[i].Hashtags.name ? "" : diary[i].Hashtags.name)
+      }
+    }
+
+    console.log(diaryArrCheck.data)
+      return res.json(diaryArrCheck.data)
     }
     catch(err){
       return res.status(500).send("Internal server error")
@@ -79,20 +100,22 @@ module.exports = {
   // * PATCH mypage/diary
   update: async (req, res) => {
     // token validation
-    console.log("======================================");
-    console.log(req.cookies);
-    console.log("======================================");
     const token = isAuthorized(req); 
     if(!token) return res.status(401).send("Unauthorized");
+
     // user validation 
     const foundUser = await isValid(token.email, token.id);
     if(!foundUser) return res.status(401).send("Unauthorized");
 
     //! req.body validation 협의 
-    const { diaryId, content, image, share, hashtag } = req.body;
+    req.body.image = req.file.location
+    const hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
+    const { diaryId, content, image, share, } = req.body;
+    // console.log(hashtag,'hahahaha')
     if(!diaryId || !content || !image) return res.status(400).send("Bad request")
     if( share === null  || share === undefined ) return res.status(400).send("Bad request")
     
+    console.log(req.body, '@@@@@@@@@@@@@@@@@@@')
     // transaction start
     try{ // find diary => 
       await sequelize.transaction( async t => { 
@@ -134,9 +157,9 @@ module.exports = {
     if(!foundUser) return res.status(401).send("Unauthorized");
 
     // req.body validation 
-    const { diaryId } = req.body;
+    const { diaryId } = req.query;
     if(!diaryId) return res.status(400).send("Bad request")
-    console.log(req.body)
+    // console.log(req.body)
 
     // transaction start here
     try{ // find Diary => find all hashtags  => delete the association => delete the diary   

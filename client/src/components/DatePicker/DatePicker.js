@@ -1,13 +1,9 @@
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-// import { datePickerHandler } from '../../redux/actions/actions';
 import DatePickerBox, { registerLocale} from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ko from 'date-fns/locale/ko';
 import styled from 'styled-components';
 import calendar from '../../images/calendar_ic.svg';
 import calendarHover from '../../images/calendar_ic_hover.svg';
-import { getDateData } from '../../redux/actions/actions';
 registerLocale('ko', ko);
 
 function DatePicker({ curDate, setCurDate }) {

@@ -7,18 +7,20 @@ import close from '../../images/close_ic.png';
 import check from '../../images/check_ic_sel.svg';
 import axios from 'axios';
 
-function EditRecord({ curSlide, setIsEdit }) {
+function EditRecord({ curSlide, setIsEdit, fetchedDiary }) {
 
     const { handleSubmit } = useForm();
     const history = useHistory();
-    const selectedRecord = useSelector(state => state.getRecordDataReducer);
+    // const selectedRecord = useSelector(state => state.getRecordDataReducer);
     const [editImage, setEditImage] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
-    const [editContent, setEditContent] = useState(selectedRecord.getRecordData.record[curSlide].content);
-    const [editHashtag, setEditHashtag] = useState(selectedRecord.getRecordData.record[curSlide].hashtag);
+    const [editContent, setEditContent] = useState(fetchedDiary[curSlide].content);
+    const [editHashtag, setEditHashtag] = useState(fetchedDiary[curSlide].hashtag);
     const [sharePost, setSharePost] = useState(true);
     const inputValue = useRef(null);
-    const initImage = selectedRecord.getRecordData.record[curSlide].image; // 초기 이미지 값
+    const initImage = fetchedDiary[curSlide].image; // 초기 이미지 값
+    // console.log(editHashtag, 'hahahaha')
+    // console.log(fetchedDiary[curSlide].hashtag.length, 'popopopopo')
 
     function inputFileHandler (inputValue) {
         const image = inputValue.current.files;
@@ -38,20 +40,21 @@ function EditRecord({ curSlide, setIsEdit }) {
 
     function removeHashtagFn (removeTag) {
         if (editHashtag.length === 0) return;
-        let filtered = editHashtag.slice().split(', ').filter(el => el !== removeTag).join(', ');
-        setEditHashtag(filtered);
+        let filtered = editHashtag.slice().filter(el => el !== removeTag)
+        setEditHashtag([...filtered]);
     }
     
     function inputHashtagFn (e) {
         e.preventDefault(); ////////////// !!!!!!!
         if (e.target.value === '') return;
-        else if (editHashtag.split(', ').includes(e.target.value)) return;
+        else if (editHashtag.includes(e.target.value)) return;
         else {
             const trimmedHashtag = e.target.value.split('').filter(el => el !== '#').filter(el2 => el2 !== ' ').join('');
+            console.log(trimmedHashtag, '@@@')
             if (editHashtag.length > 0) {
-                setEditHashtag(editHashtag+ ', ' + trimmedHashtag);
+                setEditHashtag([...editHashtag, trimmedHashtag]);
             } else {
-                setEditHashtag(trimmedHashtag);
+                setEditHashtag([trimmedHashtag]);
             }
         }
         e.target.value = '';
@@ -59,22 +62,20 @@ function EditRecord({ curSlide, setIsEdit }) {
 
     function isShareCheck (e) {
         setSharePost(!sharePost)
-        console.log(sharePost)
     }
 
     const formData = new FormData();
     function editComplete (e) {
         // e.preventDefault();
-        console.log(selectedRecord.getRecordData.record[curSlide].image,'1@@')
-        console.log(editImage,'2@@')
-
+        // console.log('hashtag', editHashtag)
+        let diaryId = fetchedDiary[0].id
         formData.append('image', editImage);
         formData.append('content', editContent);
         formData.append('hashtag', editHashtag);
         formData.append('share', sharePost); 
-
+        formData.append('diaryId', diaryId);
         // const url = process.env.REACT_APP_SERVER_URL || 
-        const url = 'http://localhost:80/mypage/diary' // server랑 확인할때 환경변수 x
+        const url = `http://localhost:80/mypage/diary` // server랑 확인할때 환경변수 x
         axios.patch(url, formData, { withCredentials: true})
             .then(res => console.log('edit successfully'))
             .catch(err => console.log(err))
@@ -103,8 +104,8 @@ function EditRecord({ curSlide, setIsEdit }) {
                 </EditImageBox>
                 <EidtContentBox defaultValue={editContent} onChange={(e) => contentFn(e)}></EidtContentBox>
                 <EditHashtagBox>
-                    {editHashtag.length > 0 ? 
-                        editHashtag.split(', ').map((tag) =>
+                    { editHashtag && editHashtag.length > 0 ? 
+                        editHashtag.map((tag) =>
                         <SingleHashtag key={tag}>
                             <span>{`#${tag}`}</span>
                             <span className="close-button" onClick={() => removeHashtagFn(tag)}></span>
@@ -154,7 +155,10 @@ const InputImage = styled.input.attrs(props => ({
     display: none;
     
 `
-const PreviewImage = styled.div`
+const PreviewImage = styled.div.attrs(props => ({
+    name: "image",
+
+}))`
     width: 47.8em;
     height: 32.4em;
     margin: 0 auto;

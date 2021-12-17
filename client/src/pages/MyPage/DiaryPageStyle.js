@@ -1,126 +1,10 @@
 import styled from "styled-components";
-import usericon from '../../images/userinfo_ic.svg';
 import menuicon from '../../images/menu_ic_nor.svg';
 import menuiconHover from '../../images/menu_ic_press.svg';
-import close from '../../images/close_ic.png';
 import prevIcon from '../../images/arrow-left.png';
 import nextIcon from '../../images/arrow-right.png';
+import empty_ic from '../../images/empty_ic.svg';
 
-// export const Container = styled.div` 
-//     width: 100%; 
-//     height: 100vh; 
-//     background-color: #eceaf5;
-// `
-
-// export const PageHeader = styled.div`
-//     margin: 0 auto;
-//     width: 100em;
-//     height: 10em;
-//     position: relative;
-//     top: 11%;
-//     display: flex;
-
-//     &:after {
-//         position: absolute;
-//         width: 100em;
-//         margin-top: 6em;
-//         content: "";
-//         border-bottom: 0.1em solid #717171;
-//     }
-    
-//     > h1 {
-//         margin-left: 1rem;
-//         font-family: NotoSansKR;
-//         font-size: 3.0em;
-//         font-style: normal;
-//         letter-spacing: normal;
-//         color: #17191d;    
-//     }
-// `
-
-// export const UserIcon = styled.div`
-//     width: 6em;
-//     height: 6em;
-//     position: relative;
-//     margin-bottom: 20em;
-//     background-image: url(${usericon});
-//     bottom: 10%;
-
-// `
-
-// export const MyPageTabBox = styled.div`
-//     width: 100em;
-//     height: 7.9em;
-//     position: relative;
-//     top: 10%;
-//     margin: 0 auto;
-//     display: flex;
-//     align-items: left;
-
-//     .diary-tab {
-//         width: 30rem;
-//         height: 7.9rem;
-//         text-align: center;
-//         font-family: NotoSansKRKR;
-//         font-size: 2.2em;
-//         font-weight: 500;
-//         font-style: normal;
-//         line-height: 3.5;
-//         letter-spacing: normal;
-//         color: #2862e5;
-//         border: solid 1px #ddd;
-//         border-radius: 4px;
-//         background-color: #fff;
-//         cursor: pointer;
-
-//         &:after {
-//             position: absolute;
-//             width: 30.15rem;
-//             height: 7.5rem;
-//             left: 0;
-//             content: "";
-//             border-bottom: 0.4rem solid #2862e5;
-//         }
-//     }
-
-//     .userinfo-tab {
-//         width: 30rem;
-//         height: 7.9rem;
-//         text-align: center;
-//         font-family: NotoSansKRKR;
-//         margin-left: 1rem;
-//         font-size: 2.2em;
-//         font-weight: 500;
-//         font-style: normal;
-//         line-height: 3.5;
-//         letter-spacing: normal;
-//         color: #767677;
-//         border: solid 1px #ddd;
-//         border-radius: 4px;
-//         background-color: #f4f4f8;
-//         cursor: pointer;
-
-//         :hover {
-//             background-color: #fff;
-//             color: #2862e5;
-//             &:after {
-//                 position: absolute;
-//                 width: 30.15rem;
-//                 height: 7.5rem;
-//                 left: 0;
-//                 content: "";
-//                 border-bottom: 0.4rem solid #2862e5;
-//             }
-//         }
-//     }
-// `
-
-// export const MyPageTab = styled.div`
-//     position: relative;
-//     border: solid 1px #ddd;
-//     display: flex;
-//     /* border-bottom: solid 1px #ddd; */
-// `
 
 export const TabBody = styled.div`
     width: 52%;
@@ -133,13 +17,14 @@ export const TabBody = styled.div`
 `
 
 export const DateDataBar = styled.div`
-    width: 54em;
+    width: auto;
     height: 4em;
     position: relative;
     margin: 0 auto;
     top: 3em;
     display: flex;
     color: #fff;
+    justify-content: center;
     
     > div {
         width: auto;
@@ -182,7 +67,7 @@ export const DateDataBar = styled.div`
 
     .temp-max {
         font-family: NotoSansKRKR;
-        font-size: 2.4em;
+        font-size: 2.3em;
         font-weight: bold;
         line-height: 1.9;
         letter-spacing: normal;
@@ -192,7 +77,7 @@ export const DateDataBar = styled.div`
 
     .temp-min {
         font-family: NotoSansKRKR;
-        font-size: 2.4em;
+        font-size: 2.3em;
         font-weight: bold;
         line-height: 1.9;
         letter-spacing: normal;
@@ -320,10 +205,10 @@ export const Button2 = styled.div`
 
 export const DotMenuBox = styled.div`
     display: ${props => props.isEdit ? 'none' : 'block'};
-    width: 0.6em;
-    height: 3.4em;
+    width: 0.5em;
+    height: 3em;
     top: 0.5em;
-    right: 0.2em;
+    right: 0em;
     position: absolute;
     padding: 0 1em 0 1em;
     background-image: url(${menuicon});
@@ -386,25 +271,34 @@ export const DotMenuButton2 = styled.button`
         background-color: #f2f2f4;
     }
 `
-
-// export const DotMenuButton3 = styled.button.attrs(props => ({
-//     type: "submit",
-//     form: "record",
-// }))`
-//     width: 100%;
-//     height: 5rem;
-//     position: relative;
-//     font-family: NanumBarunGothicOTF;
-//     font-size: 1.8em;
-//     font-weight: bold;
-//     text-align: center;
-//     line-height: 3;
-//     letter-spacing: normal;
-//     color: #2862e5;
-//     border-bottom: solid 1px #d9d9d9;
-//     cursor: pointer;
-
-//     :hover {
-//         background-color: #f2f2f4;
-//     }
-// `
+export const EmptyContainer = styled.div`
+    width: 47.8em;
+    /* width: 55.5%; */
+    height: 53.9em;
+    margin: 0 auto;
+    top: 7.5%;
+    position: relative;
+    background-color: #fdfdfd;
+    border: solid 1px #d3d3d3;
+`
+export const EmptyIcon = styled.div`
+    width: 11em;    
+    height: 10em;
+    margin: 0 auto;
+    margin-top: 16em;
+    background-image: url(${empty_ic});
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+`
+export const EmptyMesaage = styled.div`
+    width: 100%;
+    height: 3rem;
+    margin-top: 1.5em;
+    font-family: NotoSansKR;
+    font-size: 1.3em;
+    font-weight: 500;
+    line-height: 2;
+    text-align: center;
+    color: #777a80;
+`
