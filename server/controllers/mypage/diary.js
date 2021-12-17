@@ -79,9 +79,11 @@ module.exports = {
   // * PATCH mypage/diary
   update: async (req, res) => {
     // token validation
+    console.log("======================================");
+    console.log(req.cookies);
+    console.log("======================================");
     const token = isAuthorized(req); 
     if(!token) return res.status(401).send("Unauthorized");
-
     // user validation 
     const foundUser = await isValid(token.email, token.id);
     if(!foundUser) return res.status(401).send("Unauthorized");
