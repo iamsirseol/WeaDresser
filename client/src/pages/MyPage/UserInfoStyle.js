@@ -6,14 +6,15 @@ export const UserInfoBackground = styled.div`
     height: 100vh;
 `
 export const UserInfoContainer = styled.div`
-    position: absolute;
-    top: 16em;
+    position: relative;
+    top: 22.5em;
     left: 50%;
     transform: translateX(-50%);
-    width: 55%;
-    height:56%;
+    width: 52%;
+    height: 56%;
     background: #fff;
     box-sizing: border-box;
+    border: solid 1px #ddd;
     padding: 0 8em;
     @media screen and (max-width:1080px){
         width: 65%;
@@ -130,6 +131,7 @@ export const UserInfoChkPassword = styled.input.attrs(props => ({
 export const UserInfoSubmitBtn = styled.button.attrs(props => ({
     type: "submit",
 }))`
+    /* margin: 0 auto; */
     width: 200px;
     border: none; 
     padding: 10px 5px;

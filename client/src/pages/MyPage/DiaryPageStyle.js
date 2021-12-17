@@ -3,130 +3,130 @@ import usericon from '../../images/userinfo_ic.svg';
 import menuicon from '../../images/menu_ic_nor.svg';
 import menuiconHover from '../../images/menu_ic_press.svg';
 import close from '../../images/close_ic.png';
-import lefticon from '../../images/arrow-left.png';
-import righticon from '../../images/arrow-right.png';
+import prevIcon from '../../images/arrow-left.png';
+import nextIcon from '../../images/arrow-right.png';
 
-export const Container = styled.div` 
-    width: 100%; 
-    height: 100vh; 
-    background-color: #eceaf5;
-`
+// export const Container = styled.div` 
+//     width: 100%; 
+//     height: 100vh; 
+//     background-color: #eceaf5;
+// `
 
-export const PageHeader = styled.div`
-    margin: 0 auto;
-    width: 100em;
-    height: 10em;
-    position: relative;
-    top: 11%;
-    display: flex;
+// export const PageHeader = styled.div`
+//     margin: 0 auto;
+//     width: 100em;
+//     height: 10em;
+//     position: relative;
+//     top: 11%;
+//     display: flex;
 
-    &:after {
-        position: absolute;
-        width: 100em;
-        margin-top: 6em;
-        content: "";
-        border-bottom: 0.1em solid #717171;
-    }
+//     &:after {
+//         position: absolute;
+//         width: 100em;
+//         margin-top: 6em;
+//         content: "";
+//         border-bottom: 0.1em solid #717171;
+//     }
     
-    > h1 {
-        margin-left: 1rem;
-        font-family: NotoSansKR;
-        font-size: 3.0em;
-        font-style: normal;
-        letter-spacing: normal;
-        color: #17191d;    
-    }
-`
+//     > h1 {
+//         margin-left: 1rem;
+//         font-family: NotoSansKR;
+//         font-size: 3.0em;
+//         font-style: normal;
+//         letter-spacing: normal;
+//         color: #17191d;    
+//     }
+// `
 
-export const UserIcon = styled.div`
-    width: 6em;
-    height: 6em;
-    position: relative;
-    margin-bottom: 20em;
-    background-image: url(${usericon});
-    bottom: 10%;
+// export const UserIcon = styled.div`
+//     width: 6em;
+//     height: 6em;
+//     position: relative;
+//     margin-bottom: 20em;
+//     background-image: url(${usericon});
+//     bottom: 10%;
 
-`
+// `
 
-export const MyPageTabBox = styled.div`
-    width: 100em;
-    height: 7.9em;
-    position: relative;
-    top: 10%;
-    margin: 0 auto;
-    display: flex;
-    align-items: left;
+// export const MyPageTabBox = styled.div`
+//     width: 100em;
+//     height: 7.9em;
+//     position: relative;
+//     top: 10%;
+//     margin: 0 auto;
+//     display: flex;
+//     align-items: left;
 
-    .diary-tab {
-        width: 30rem;
-        height: 7.9rem;
-        text-align: center;
-        font-family: NotoSansKRKR;
-        font-size: 2.2em;
-        font-weight: 500;
-        font-style: normal;
-        line-height: 3.5;
-        letter-spacing: normal;
-        color: #2862e5;
-        border: solid 1px #ddd;
-        border-radius: 4px;
-        background-color: #fff;
-        cursor: pointer;
+//     .diary-tab {
+//         width: 30rem;
+//         height: 7.9rem;
+//         text-align: center;
+//         font-family: NotoSansKRKR;
+//         font-size: 2.2em;
+//         font-weight: 500;
+//         font-style: normal;
+//         line-height: 3.5;
+//         letter-spacing: normal;
+//         color: #2862e5;
+//         border: solid 1px #ddd;
+//         border-radius: 4px;
+//         background-color: #fff;
+//         cursor: pointer;
 
-        &:after {
-            position: absolute;
-            width: 30.15rem;
-            height: 7.5rem;
-            left: 0;
-            content: "";
-            border-bottom: 0.4rem solid #2862e5;
-        }
-    }
+//         &:after {
+//             position: absolute;
+//             width: 30.15rem;
+//             height: 7.5rem;
+//             left: 0;
+//             content: "";
+//             border-bottom: 0.4rem solid #2862e5;
+//         }
+//     }
 
-    .userinfo-tab {
-        width: 30rem;
-        height: 7.9rem;
-        text-align: center;
-        font-family: NotoSansKRKR;
-        margin-left: 1rem;
-        font-size: 2.2em;
-        font-weight: 500;
-        font-style: normal;
-        line-height: 3.5;
-        letter-spacing: normal;
-        color: #767677;
-        border: solid 1px #ddd;
-        border-radius: 4px;
-        background-color: #f4f4f8;
-        cursor: pointer;
+//     .userinfo-tab {
+//         width: 30rem;
+//         height: 7.9rem;
+//         text-align: center;
+//         font-family: NotoSansKRKR;
+//         margin-left: 1rem;
+//         font-size: 2.2em;
+//         font-weight: 500;
+//         font-style: normal;
+//         line-height: 3.5;
+//         letter-spacing: normal;
+//         color: #767677;
+//         border: solid 1px #ddd;
+//         border-radius: 4px;
+//         background-color: #f4f4f8;
+//         cursor: pointer;
 
-        :hover {
-            background-color: #fff;
-            color: #2862e5;
-            &:after {
-                position: absolute;
-                width: 30.15rem;
-                height: 7.5rem;
-                left: 0;
-                content: "";
-                border-bottom: 0.4rem solid #2862e5;
-            }
-        }
-    }
-`
+//         :hover {
+//             background-color: #fff;
+//             color: #2862e5;
+//             &:after {
+//                 position: absolute;
+//                 width: 30.15rem;
+//                 height: 7.5rem;
+//                 left: 0;
+//                 content: "";
+//                 border-bottom: 0.4rem solid #2862e5;
+//             }
+//         }
+//     }
+// `
 
-export const MyPageTab = styled.div`
-    position: relative;
-    border: solid 1px #ddd;
-    display: flex;
-    /* border-bottom: solid 1px #ddd; */
-`
+// export const MyPageTab = styled.div`
+//     position: relative;
+//     border: solid 1px #ddd;
+//     display: flex;
+//     /* border-bottom: solid 1px #ddd; */
+// `
 
 export const TabBody = styled.div`
-    width: 100em;
-    height: 66.5em;
+    width: 52%;
+    height: 56%;
     position: relative;
-    top: 10%;
+    top: 22.5em;
     background-color: #fff;
     border: solid 1px #ddd;
     margin: 0 auto;
@@ -212,27 +212,37 @@ export const WeatherIcon = styled.span`
 
 export const RecordContainer = styled.div`
     width: 47.8em;
+    /* width: 55.5%; */
     height: 53.9em;
     margin: 0 auto;
     top: 7.5%;
     position: relative;
-    background-color: #f9f9fb;
-    overflow: ${props => props.isEdit ? "visible" : "hidden"};
+    background-color: #fdfdfd;
+    border: solid 1px #d3d3d3;
+    /* overflow: ${props => props.isEdit ? "visible" : "hidden"}; */
 `
 export const SlideContainer = styled.div`
     width: auto;
     height: 53.9em;
     margin: 0 auto;
+    /* display: flex; */
+    overflow: ${props => props.isEdit ? "visible" : "hidden"};
+
+`
+export const OutBox = styled.div`
+    margin: 0 auto;
+    height: 50.9em;
     display: flex;
 `
-export const BOX = styled.div`
+export const InnerBox = styled.div`
     margin: 0 auto;
     height: 50.9em;
 `
 export const ImageBox = styled.div`
     width: 47.8rem;
     height: 32.4em;
-    background: aliceblue;
+    border-bottom: solid 1px #d3d3d3;
+    background-color: #dfdfe0;
     background-size: contain;
     background-image: url(${props => props.img});
     background-repeat: no-repeat;
@@ -247,17 +257,17 @@ export const ContentBox = styled.div`
     line-height: 2.5;
     letter-spacing: normal;
     margin-left: 0.5em;
-    background-color: #f9f9fb;
+    background-color: #fdfdfd;
 `
 export const HashtagBox = styled.ul`
     width: 47.8rem;
     height: 8.5em;
     padding-top: 0.5em;
     position: relative;
-    background: wheat;
+    background: #fdfdfd;
     display: flex;
     flex-wrap: wrap;
-
+    border-top: solid 1px #d3d3d3;
 
     > span {
         width: auto;
@@ -283,14 +293,14 @@ export const Button = styled.div`
     left: -1em; 
     padding: 1em 2em;
     margin: 2em 2em;
-    border-radius: 10px;
-    border: 1px solid salmon;
+    background-size: contain;
+    background-image: url(${prevIcon});
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.6;
     z-index: 99;
     position: absolute;
-    &:hover {
-        background-color: salmon;
-        color: #fff;
-    }
+    cursor: pointer;
 `
 export const Button2 = styled.div`
     /* all: unset; */
@@ -298,44 +308,47 @@ export const Button2 = styled.div`
     right: -1em;
     padding: 1em 2em;
     margin: 2em 2em;
-    border-radius: 10px;
-    border: 1px solid salmon;
+    background-size: contain;
+    background-image: url(${nextIcon});
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.6;    
     z-index: 99;
     position: absolute;
-    &:hover {
-        background-color: salmon;
-        color: #fff;
-    }
+    cursor: pointer;
 `
 
 export const DotMenuBox = styled.div`
-    bottom: 73.5%;
-    left: 75%;
-    position: relative;
-    padding: 0 1em 0 1em;
+    display: ${props => props.isEdit ? 'none' : 'block'};
     width: 0.6em;
     height: 3.4em;
+    top: 0.5em;
+    right: 0.2em;
+    position: absolute;
+    padding: 0 1em 0 1em;
     background-image: url(${menuicon});
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    z-index: 5;
+    /* opacity: 0.5; */
     cursor: pointer;
     
     :hover {
         background-image: url(${menuiconHover});
     }
-    `
+`
 
 export const DotMenu = styled.div`
     display: ${props => props.isDotMenu ? 'block' : 'none'};
     width: 9.4em;
     height: 10em;
+    left: 4em;
+    top: -0.6em;
     position: relative;
     border-radius: 8px;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
-    border: solid 1px #d9d9d9;
     background-color: #fff;
-    left: 2.5em;
 `
 export const DotMenuButton1 = styled.button`
     width: 100%;
@@ -374,24 +387,24 @@ export const DotMenuButton2 = styled.button`
     }
 `
 
-export const DotMenuButton3 = styled.button.attrs(props => ({
-    type: "submit",
-    form: "record",
-}))`
-    width: 100%;
-    height: 5rem;
-    position: relative;
-    font-family: NanumBarunGothicOTF;
-    font-size: 1.8em;
-    font-weight: bold;
-    text-align: center;
-    line-height: 3;
-    letter-spacing: normal;
-    color: #2862e5;
-    border-bottom: solid 1px #d9d9d9;
-    cursor: pointer;
+// export const DotMenuButton3 = styled.button.attrs(props => ({
+//     type: "submit",
+//     form: "record",
+// }))`
+//     width: 100%;
+//     height: 5rem;
+//     position: relative;
+//     font-family: NanumBarunGothicOTF;
+//     font-size: 1.8em;
+//     font-weight: bold;
+//     text-align: center;
+//     line-height: 3;
+//     letter-spacing: normal;
+//     color: #2862e5;
+//     border-bottom: solid 1px #d9d9d9;
+//     cursor: pointer;
 
-    :hover {
-        background-color: #f2f2f4;
-    }
-`
+//     :hover {
+//         background-color: #f2f2f4;
+//     }
+// `

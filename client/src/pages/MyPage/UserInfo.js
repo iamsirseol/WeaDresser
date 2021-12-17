@@ -126,7 +126,7 @@ function UserInfo(){
     }
 
     return(
-        <UserInfoBackground>
+        <>
             <UserInfoContainer>
                 <UserInfoHeader>
                     <h2><span className="user-info-name">{curUserNickname}</span>님</h2>
@@ -167,7 +167,7 @@ function UserInfo(){
             {showUpdateModal ? <InfoUpdateModal setShowUpdateModal={setShowUpdateModal} showUpdateModal={showUpdateModal} sucUpdate={sucUpdate} /> : null}
             {showWithDrawal ? <WithDrawalModal setShowWithDrawal={setShowWithDrawal} /> : null}
             {isSocial && closeSocial ? <SocialCant setCloseSocial={setCloseSocial} /> : null}
-        </UserInfoBackground>
+        </>
     )
 
 }

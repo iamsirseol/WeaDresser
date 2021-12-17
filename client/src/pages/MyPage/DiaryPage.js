@@ -1,11 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import { Container,
-    PageHeader,
-    UserIcon,
-    MyPageTabBox,
-    TabBody,
+import { TabBody,
     DateDataBar,
     WeatherIcon,
     RecordContainer,
@@ -17,11 +13,13 @@ import { Container,
     SlideContainer,
     Button as PrecButton,
     Button2 as NextButton,
-    BOX,
+    OutBox,
+    InnerBox,
     DotMenuButton1,
     DotMenuButton2,
-    DotMenuButton3,
+    // DotMenuButton3,
 } from './DiaryPageStyle';
+import DeleteDiaryModal from '../../components/Modal/DeleteDiaryModal';
 import { recordDataHandler } from '../../redux/actions/actions';
 import EditRecord from '../../components/EditRecord/EditRecord';
 import DatePicker from '../../components/DatePicker/DatePicker';
@@ -33,7 +31,6 @@ import snow from '../../images/snow.png';
 import 뽀시 from '../../images-dummy(추후삭제)/뽀시.jpeg';
 import 군침이 from '../../images-dummy(추후삭제)/군침이.jpeg';
 import 군침이2 from '../../images-dummy(추후삭제)/군침이2.jpeg';
-import { useForm } from "react-hook-form";
 
 
 function DiaryPage() {
@@ -69,18 +66,18 @@ function DiaryPage() {
     const [isRightEndPage, setIsRightEndPage] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [curDate, setCurDate] = useState(new Date());
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const imgSlideRef = useRef(null);
     // const selectedRecordData = useSelector(state => state.getRecordDataReducer);
     // console.log(selectedRecordData.getRecordData);
     // const dateData = useSelector(state => state.getDateDataReducer); // props로 전달해서상태 없데이트
 
     useEffect(() => { // 더미 데이터 확인용
-        dispatch(recordDataHandler(fetchedDiary))
+        dispatch(recordDataHandler(fetchedDiary));
     }, []);
     
     // const url = process.env.REACT_APP_SERVER_URL || 
-    const url = 'http://localhost:80/mypage/record' // develop환경때는 환경변수 x
-    console.log(curDate)
+    const url = 'http://localhost:80/mypage/diary' // develop환경때는 환경변수 x
 
     useEffect(() => {
 
@@ -88,7 +85,7 @@ function DiaryPage() {
             const body = {} // selectedData가 가야할듯 // 현재 날짜 기준을 바디로 보내서 서버에서 해당 날짜 조회된 데이터를 받아옴
             const fetchData = await axios.get(url, body, { withCredentials: true, });
             // fetchData 자체를 상태로 관리 // 상태 나눠서 관리하지 말고 하나의 상태로 관리!!!
-            
+
             // setFetchedDiary(fetchData); // dispatch로 전달해주자
             // dispatch(recordDataHandler(fetchData));
             if (fetchData.weatherData.weather) {
@@ -141,7 +138,9 @@ function DiaryPage() {
     }
     
     function editRecordButton (e) {
+        e.preventDefault();
         setIsEdit(!isEdit);
+        setIsDotMenu(false);
         setIsLeftEndPage(true);
         setIsRightEndPage(true);
     }
@@ -161,6 +160,11 @@ function DiaryPage() {
 
     }, [curSlide, isLeftEndPage, isRightEndPage, fetchedDiary]);
 
+    function isDeleteModal () {
+        console.log('ccc')
+        setShowDeleteModal(true);
+    }
+
     function deleteRecordButton (e) {
         let copiedFetchedData = fetchedDiary.record.slice();
         copiedFetchedData.splice(curSlide, 1);
@@ -176,7 +180,7 @@ function DiaryPage() {
         if (curSlide > 0 && curSlide === TOTAL_SLIDES - 1) {
             setIsRightEndPage(true);
         }
-
+        setShowDeleteModal(false);
         // let body = fetchedDiary // 날씨데이터도 넘겨줘야 하는가?
         // axios.delete(url , body, {
         //     withCredentials: true,
@@ -190,71 +194,64 @@ function DiaryPage() {
     }
 
     return (
-        <Container>
-            <PageHeader>
-                <UserIcon></UserIcon>
-                <h1>MY PAGE</h1>
-            </PageHeader>
-            <MyPageTabBox>
-                <div className="diary-tab">유저 다이어리</div>
-                <div className="userinfo-tab">개인 정보 수정</div>
-            </MyPageTabBox>
-            <TabBody>
-                <DateDataBar>
-                    <div>
-                        <DatePicker curDate={curDate} setCurDate={setCurDate} />
-                    </div>
-                    <div>
-                        <WeatherIcon icon={weatherIcon}></WeatherIcon>
-                        <span className="weather-desc">{weatherDesc}</span>
-                    </div>
-                    <div>
-                        <span className="temp-desc">최고기온</span>
-                        <span className="temp-max">12°C</span>
-                    </div>
-                    <div>
-                        <span className="temp-desc">최저기온</span>
-                        <span className="temp-min">12°C</span>
-                    </div>
-                </DateDataBar>
-                <RecordContainer isEdit={isEdit}>
+        <TabBody>
+            <DateDataBar>
+                <div>
+                    <DatePicker curDate={curDate} setCurDate={setCurDate} />
+                </div>
+                <div>
+                    <WeatherIcon icon={weatherIcon}></WeatherIcon>
+                    <span className="weather-desc">{weatherDesc}</span>
+                </div>
+                <div>
+                    <span className="temp-desc">최고기온</span>
+                    <span className="temp-max">12°C</span>
+                </div>
+                <div>
+                    <span className="temp-desc">최저기온</span>
+                    <span className="temp-min">12°C</span>
+                </div>
+            </DateDataBar>
+            <RecordContainer isEdit={isEdit}>
+                {
+                    isEdit ? <EditRecord formId={"record"} curSlide={curSlide} setIsEdit={setIsEdit} />
+                    :
+                    <SlideContainer >
+                        <OutBox ref={imgSlideRef}>
                     {
-                        isEdit ? <EditRecord formId={"record"} curSlide={curSlide} />
-                        :
-                        <SlideContainer ref={imgSlideRef}>
-                        {
-                            fetchedDiary.record.map((el) => 
-                                <BOX key={el.id}>
+                        fetchedDiary.record.map((el) => 
+                                <InnerBox key={el.id}>
                                     <ImageBox img={el.image} ></ImageBox>
                                     <ContentBox>{el.content}</ContentBox>
                                     <HashtagBox>{el.hashtag.split(', ').map((tag) => 
                                         <span key={tag}>{`#${tag}`}</span>)}
                                     </HashtagBox>
-                                </BOX>
-                            )
-                        }
-                        </SlideContainer>
+                                </InnerBox>
+                        )
                     }
-                    { isLeftEndPage || isEdit ? null : <PrecButton onClick={prevButton}>prev</PrecButton> }
-                    { isRightEndPage || isEdit ? null : <NextButton onClick={nextButton}>next</NextButton> }
-                </RecordContainer>
-                {
-                    isEdit ? 
-                    <DotMenuBox onClick={(e) => showDotMenu(e)}>
+                        </OutBox>
+                    </SlideContainer>
+                }
+                { isLeftEndPage || isEdit ? null : <PrecButton onClick={prevButton}></PrecButton> }
+                { isRightEndPage || isEdit ? null : <NextButton onClick={nextButton}></NextButton> }
+
+
+                    {/* <DotMenuBox type="button" onClick={(e) => showDotMenu(e)}>
                         <DotMenu isDotMenu={true}>
                             <DotMenuButton3>완료</DotMenuButton3>
-                            <DotMenuButton2 onClick={(e) => editRecordButton(e)}>취소</DotMenuButton2>
+                            <DotMenuButton2 type="button" onClick={(e) => editRecordButton(e)}>취소</DotMenuButton2>
                         </DotMenu>
-                    </DotMenuBox>
-                    : <DotMenuBox onClick={(e) => showDotMenu(e)}>
+                    </DotMenuBox> */}
+
+                    <DotMenuBox isEdit={isEdit} onClick={(e) => showDotMenu(e)}>
                         <DotMenu isDotMenu={isDotMenu}>
-                            <DotMenuButton1 isDotMenu={isDotMenu} onClick={(e) => editRecordButton(e)}>수정</DotMenuButton1>
-                            <DotMenuButton2 isDotMenu={isDotMenu} onClick={(e) => deleteRecordButton(e)}>삭제</DotMenuButton2>
+                            <DotMenuButton1 type="button" onClick={(e) => editRecordButton(e)}>수정</DotMenuButton1>
+                            <DotMenuButton2 onClick={(e) => setShowDeleteModal(e)}>삭제</DotMenuButton2>
                         </DotMenu>
                     </DotMenuBox>
-                }
-            </TabBody>
-        </Container>
+            </RecordContainer>
+            {showDeleteModal ? <DeleteDiaryModal deleteRecordButton={deleteRecordButton} setShowDeleteModal={setShowDeleteModal} /> : null}
+        </TabBody>
     )
 }
 

@@ -27,6 +27,7 @@ const rootReducer = combineReducers({
     getDateDataReducer,
     tempLoadingReducer,
     searchOffsetReducer,
+    getRecordDataReducer
 })
 
 function isLoginReducer(state = initialState.isLogin, action) {
