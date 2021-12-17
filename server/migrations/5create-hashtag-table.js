@@ -8,11 +8,10 @@ module.exports = {
         primaryKey: true,
         type: DataTypes.INTEGER
       },
-      name:{
-        type: DataTypes.STRING,
+      name :{
+        type : DataTypes.STRING,
         unique : true
       }
-
     })
   },
   down: async (queryInterface, DataTypes) => {

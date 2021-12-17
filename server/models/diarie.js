@@ -5,8 +5,12 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Diarie extends Model {
     static associate(models) {
-      // User.belongsToMany(Diarie, { through : 'Likes', as :'LD'},);
-      // Diarie.belongsToMany(models.Hashtag, { through : 'DiariesHashtags', as :'hashtag-diary' });
+      // this.belongsTo(models.User, {
+      //   foreignKey: 'userId',
+      //   onDelete: 'CASCADE',
+      //   onUpdate: 'CASCADE',
+      // });
+
     }
   };
   Diarie.init({
@@ -17,10 +21,10 @@ module.exports = (sequelize, DataTypes) => {
     content: { 
       type : DataTypes.STRING
     },
-    // userId : {
-      // type : DataTypes.INTEGER,
+    userId : {
+      type : DataTypes.INTEGER,
       // allowNull: false,
-    // },
+    },
     weather: {
       type: DataTypes.STRING,
       allowNull :false

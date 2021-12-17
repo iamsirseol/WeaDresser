@@ -1,5 +1,3 @@
-
-   
 // import React, { useEffect, useState } from "react";
 import './styles/reset.css';
 // import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -40,9 +38,9 @@ function App() {
         {/* <UserInfo/> */}
         <Switch>
           <Route exact path = '/'><LandingPage /></Route>
-          <Route path = '/mypage'>{tempLoading ? <MyPage /> : <LoadingIndicator/>}</Route>
+          <Route path = '/mypage'><MyPage /></Route>
           <Route path = '/ootd-list'>{tempLoading ? <OotdListPage/> : <LoadingIndicator/>}</Route>
-          <Route path = '/record'>{tempLoading ? <RecordPage /> : <LoadingIndicator/>}</Route>
+          <Route path = '/record'><RecordPage /></Route>
         </Switch>
         <Modal/>
       </div>

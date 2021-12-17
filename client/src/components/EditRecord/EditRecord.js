@@ -273,7 +273,6 @@ export const ShareBox = styled.div`
         font-style: normal;
         letter-spacing: normal;
         color: #000;
-
     }
 `
 const DotMenu = styled.div`
@@ -301,7 +300,6 @@ const DotMenuButton1 = styled.button`
     color: #ed3829;
     border-bottom: solid 1px #d9d9d9;
     cursor: pointer;
-
     :hover {
         background-color: #f2f2f4;
     }
@@ -322,7 +320,6 @@ const DotMenuButton2 = styled.button.attrs(props => ({
     color: #2862e5;
     border-bottom: solid 1px #d9d9d9;
     cursor: pointer;
-
     :hover {
         background-color: #f2f2f4;
     }

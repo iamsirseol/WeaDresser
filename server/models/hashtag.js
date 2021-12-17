@@ -4,24 +4,26 @@ module.exports = (sequelize, DataTypes) => {
   class Hashtag extends Model {
 
     static associate(models) {
-      // Hashtag.belongsToMany(models.Diarie, { through : 'DiariesHashtags', as :'hashtag-diary' });
     }
   }
   Hashtag.init(
     {
-      name: {
-        type: DataTypes.STRING,
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER
       },
+      name : {
+        type: DataTypes.STRING,
+        unique : true
+      }
     },
     {
       // freezeTableName : true,
       timestamps: false,
       sequelize,
       modelName: "Hashtag",
-      indexes: [{
-        unique: true,
-        fields: ['name'] // you can use multiple columns as well here
-      }]
     }
   );
 
