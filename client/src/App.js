@@ -27,6 +27,7 @@ import axios from 'axios';
 import { getWeatherData, getLocationData, tempLoadingHandler } from './redux/actions/actions'
 import { useLoading } from './utils/useLoading'
 import { LoginContainer } from './components/Modal/SignModal/LoginStyle';
+import  PageForm  from './Mypage2.js'
 require('dotenv').config();
 
 function App() {
@@ -50,7 +51,8 @@ function App() {
         {/* <UserInfo/> */}
         <Switch>
           <Route exact path = '/'><LandingPage /></Route>
-          <Route path = '/mypage'>{tempLoading ? <MyPage /> : <LoadingIndicator/>}</Route>
+          <Route path = '/mypage2'>{tempLoading ? <PageForm /> : <LoadingIndicator/>}</Route>
+          {/* <Route path = '/mypage'>{tempLoading ? <MyPage /> : <LoadingIndicator/>}</Route> */}
           <Route path = '/ootd-list'>{tempLoading ? <OotdListPage/> : <LoadingIndicator/>}</Route>
           <Route path = '/record'>{tempLoading ? <RecordPage /> : <LoadingIndicator/>}</Route>
         </Switch>
