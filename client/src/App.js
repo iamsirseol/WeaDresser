@@ -1,5 +1,3 @@
-
-   
 // import React, { useEffect, useState } from "react";
 import './styles/reset.css';
 // import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -27,22 +25,11 @@ import axios from 'axios';
 import { getWeatherData, getLocationData, tempLoadingHandler } from './redux/actions/actions'
 import { useLoading } from './utils/useLoading'
 import { LoginContainer } from './components/Modal/SignModal/LoginStyle';
-import  PageForm  from './Mypage2.js'
 require('dotenv').config();
 
 function App() {
   const { tempLoading, logoutHandler } = useLoading();
   // console.log("App rendering with ", tempLoading )
-  useEffect(()=> {
-    if(tempLoading && sessionStorage.getItem('isLogin')){
-      console.log("now ajax call")
-      axios.post("http://localhost:80/diary",
-      { withCredentials: true }
-      ).then( resu => console.log(resu))
-      .catch(err=> { return console.log(err)})
-
-    }
-  }, [])
 
   return (
     <BrowserRouter>
@@ -51,10 +38,9 @@ function App() {
         {/* <UserInfo/> */}
         <Switch>
           <Route exact path = '/'><LandingPage /></Route>
-          <Route path = '/mypage2'>{tempLoading ? <PageForm /> : <LoadingIndicator/>}</Route>
-          {/* <Route path = '/mypage'>{tempLoading ? <MyPage /> : <LoadingIndicator/>}</Route> */}
+          <Route path = '/mypage'><MyPage /></Route>
           <Route path = '/ootd-list'>{tempLoading ? <OotdListPage/> : <LoadingIndicator/>}</Route>
-          <Route path = '/record'>{tempLoading ? <RecordPage /> : <LoadingIndicator/>}</Route>
+          <Route path = '/record'><RecordPage /></Route>
         </Switch>
         <Modal/>
       </div>
