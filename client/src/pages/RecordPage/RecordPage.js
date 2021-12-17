@@ -90,6 +90,7 @@ function RecordPage() {
 
     const formData = new FormData(); // submitbutton이랑 cancelbutton이랑 둘다 활용
     function submitFn (e) { // 작성완료 버튼
+        console.log(curTemp)
         e.preventDefault();
         console.log('work???')
         formData.append('image', uploadImage);
@@ -99,7 +100,7 @@ function RecordPage() {
         formData.append('weather', curWeather);
         formData.append('tempMin', curTempMin);
         formData.append('tempMax', curTempMax);
-        formData.append('tmep', curTemp);
+        formData.append('temp', curTemp);
         // const payload = {
         //     image: 'hello world',
         //     content: inputContent,
@@ -112,17 +113,12 @@ function RecordPage() {
         // }
         // const url = process.env.REACT_APP_SERVER_URL || 
         const url = 'http://localhost:80/diary' // server랑 확인할때 환경변수 x
-        axios.post('http://localhost:80/diary', formData, { 
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
-        },
-            { withCredential: true, })
+        axios.post('http://localhost:80/diary', formData, { withCredentials: true})
             .then(res => console.log('submit successfully'))
             .catch(err => console.log('error!!', err));
 
         //     history -> diary페이지 -> 다시 get요청 (가장 최신 글)
-        // history.push('/mypage/diary');
+        history.push('/mypage');
     }
     function cancelFn (e) { // formData 초기화
         e.preventDefault();
