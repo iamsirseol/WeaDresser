@@ -1,5 +1,4 @@
 'use strict';
-const { like } = require('sequelize/dist/lib/operators');
 const { Diarie, sequelize, User, Like, Hashtag, DiariesHashtag  } = require('../models')
 module.exports = {
   up: async (queryInterface, Sequelize) => {

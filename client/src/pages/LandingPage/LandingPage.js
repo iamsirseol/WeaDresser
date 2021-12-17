@@ -25,7 +25,6 @@ function LandingPage () {
     // const [dayNight, setDayNight] = useState('day');
     const dispatch = useDispatch();
     const weatherData = useSelector(state => state.getWeatherDataReducer); // redux-thunk 다시 보기
-    console.log('날씨!',weatherData);
 
     function askForCoords() {
         const options = {
