@@ -1,5 +1,5 @@
 'use strict';
-const { Diarie, sequelize, User, Like  } = require('../models')
+const { Diarie, sequelize, User, Like  } = require('../server/models')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     // * When user delete likes on diary-post
