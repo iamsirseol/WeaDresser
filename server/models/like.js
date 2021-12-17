@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
   class Like extends Model {
 
     static associate(models) {
-
+      // models.User.belongsToMany(models.Diarie, { through : Like, foreignKey : 'userId', });
+      // models.Diarie.belongsToMany(models.User, { through : Like, foreignKey : 'diarieId', });
     }
   }
 
@@ -16,9 +17,22 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER
       },
+      userId : {
+        // allowNull: false,
+        type: DataTypes.INTEGER,
+      },
+      diarieId : {
+        // allowNull: false,
+        type: DataTypes.INTEGER,
+      },
+
     },
     {
       // freezeTableName : true,
+      indexes: [{
+        unique: true,
+        fields: ['userId', 'diarieId']
+      }],
       timestamps: false,
       sequelize,
       modelName: "Like",

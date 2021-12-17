@@ -4,38 +4,32 @@ module.exports = (sequelize, DataTypes) => {
   class DiariesHashtag extends Model {
 
     static associate(models) {
-      models.Diarie.belongsToMany(models.Hashtag, { through : DiariesHashtag , onDelete: 'CASCADE', })
-      models.Hashtag.belongsToMany(models.Diarie, { through : DiariesHashtag,  onDelete: 'CASCADE', })
+      // models.User.belongsToMany(models.Diarie, { through : DiariesHashtag, foreignKey : 'userId', });
+      // models.Diarie.belongsToMany(models.User, { through : DiariesHashtag, foreignKey : 'diarieId', });
     }
   }
 
   DiariesHashtag.init(
     {
-      DiarieId: {
+      diarieId : {
         type: DataTypes.INTEGER,
-        references:{
-          model : 'Diarie',
-          key : 'id',
-        }
       },
-      HashtagId :{
+      hashtagId : {
         type: DataTypes.INTEGER,
-        references:{
-          model : 'Hashtag',
-          key : 'id',
-        }
-      },
-      // granted : { 
-      //   type : DataTypes.BOOLEAN,
-      //   defaultValue : true,
-      // }
+      }
     },
     {
       // freezeTableName : true,
+      indexes: [{
+        unique: true,
+        fields: ['diarieId', 'hashtagId']
+      }],
       timestamps: false,
       sequelize,
       modelName: "DiariesHashtag",
     }
   );
+
+
   return DiariesHashtag;
 };

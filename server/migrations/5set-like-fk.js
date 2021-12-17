@@ -33,5 +33,7 @@ module.exports = {
   down: async (queryInterface, DataTypes) => {
     await queryInterface.removeConstraint('Likes', 'userId');
     await queryInterface.removeConstraint('Likes', 'diarieId');
+    await queryInterface.removeColumn('Likes', 'like-userId');
+    await queryInterface.removeColumn('Likes', 'like-diarieId');
   }
 };

@@ -32,28 +32,19 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
-// const { Diarie,  User, Like, Hashtags } = sequelize.models;
-// User.hasMany(Diarie, { as : 'diaries', foreignKey : 'userId' } );
-// Diarie.belongsTo(User, { as :'users', foreignKey : 'userId' });
+const { Diarie,  User, Like, Hashtag, DiariesHashtag } = sequelize.models;
+User.hasMany(Diarie, { foreignKey : 'userId', } );
+User.hasMany(Like, { foreignKey : 'userId', });
 
-// User.hasMany(Like, { as : 'like-user', foreignKey : 'userId' });
-// Like.belongsTo(User, {as : 'user-like', foreignKey : 'userId' })
+Diarie.belongsTo(User, { foreignKey : 'userId', });
+Diarie.hasMany(Like, { foreignKey : 'diarieId', });
 
-// Diarie.hasMany(Like, { as : 'like-diary', foreignKey : 'diarieId' });
-// Like.belongsTo(Diarie, { as : 'diary-like', foreignKey : 'diarieId' });
+Like.belongsTo(User, {  foreignKey : 'userId', });
+Like.belongsTo(Diarie, { foreignKey : 'diarieId', });
 
-// // User.belongsToMany(Diarie, { through : 'Likes', as :'LD'},);
-// Diarie.belongsToMany(Hashtag, { 
-//     through : 'DiariesHashtags', as :'hashtag-diary', 
-//     uniqueKey : false, 
-// });
+Diarie.belongsToMany(Hashtag, { through : DiariesHashtag });
+Hashtag.belongsToMany(Diarie, { through : DiariesHashtag });
 
-// Hashtag.belongsToMany(Diarie, { 
-//   through : 'DiariesHashtags', as :'diary-hashtag', 
-//   uniqueKey : false, 
-//  });
-
-// foreignKey : 'diariesId' 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

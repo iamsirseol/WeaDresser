@@ -5,8 +5,12 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Diarie extends Model {
     static associate(models) {
-      // User.belongsToMany(Diarie, { through : 'Likes', as :'LD'},);
-      // Diarie.belongsToMany(models.Hashtag, { through : 'DiariesHashtags', as :'hashtag-diary' });
+      // this.belongsTo(models.User, {
+      //   foreignKey: 'userId',
+      //   onDelete: 'CASCADE',
+      //   onUpdate: 'CASCADE',
+      // });
+
     }
   };
   Diarie.init({
