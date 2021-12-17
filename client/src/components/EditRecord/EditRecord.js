@@ -7,7 +7,7 @@ import close from '../../images/close_ic.png';
 import check from '../../images/check_ic_sel.svg';
 import axios from 'axios';
 
-function EditRecord({ curSlide }) {
+function EditRecord({ curSlide, setIsEdit }) {
 
     const { handleSubmit } = useForm();
     const history = useHistory();
@@ -43,8 +43,7 @@ function EditRecord({ curSlide }) {
     }
     
     function inputHashtagFn (e) {
-        e.preventDefault();
-        e.stopPropagation(); ////////////// !!!!!!!
+        e.preventDefault(); ////////////// !!!!!!!
         if (e.target.value === '') return;
         else if (editHashtag.split(', ').includes(e.target.value)) return;
         else {
@@ -65,34 +64,34 @@ function EditRecord({ curSlide }) {
 
     const formData = new FormData();
     function editComplete (e) {
-        e.preventDefault();
-        e.stopPropagation(); ////////////// !!!!!!!
+        // e.preventDefault();
+        console.log(selectedRecord.getRecordData.record[curSlide].image,'1@@')
+        console.log(editImage,'2@@')
 
-        console.log('editComplete')
         formData.append('image', editImage);
         formData.append('content', editContent);
         formData.append('hashtag', editHashtag);
         formData.append('share', sharePost); 
 
-        // if(editImage && editContent && editHashtag && sharePost){
         // const url = process.env.REACT_APP_SERVER_URL || 
-            const url = 'http://localhost:80/diary' // server랑 확인할때 환경변수 x
-            axios.patch(url, formData, {
-                headers: {
-                    'content-type': 'multipart/form-data'
-                }},
-                { 
-                    withCredential: true,
-            })
-                .then(res => console.log('edit successfully'))
-                .catch(err => console.log(err))
+        const url = 'http://localhost:80/diary' // server랑 확인할때 환경변수 x
+        axios.patch(url, formData, {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }},
+            { withCredential: true, })
+            .then(res => console.log('edit successfully'))
+            .catch(err => console.log(err))
 
-            history.push('/mypage/diary');
-        // }
-
+        history.push('/mypage/diary');
     }
+
+    function cancelEdit (e) {
+        setIsEdit(false);
+    }
+
     return (
-        <EditForm mathod = "patch" onSubmit={e => editComplete(e)} >
+        <EditForm onSubmit={handleSubmit(editComplete)}>
             <EditContainer>
                 <EditImageBox>
                     <InputImage ref={inputValue} onChange={(e) => inputFileHandler(inputValue)}></InputImage>
@@ -115,9 +114,7 @@ function EditRecord({ curSlide }) {
                             <span className="close-button" onClick={() => removeHashtagFn(tag)}></span>
                         </SingleHashtag>)
                     : null}
-                    {/* <InputHashtag displaynone={"none"}></InputHashtag> */}
-                    {/* <input type="text" name="hashtag" onKeyUp={(e) => e.key === 'Enter' ? inputHashtagFn(e) : null}></input> */}
-                    <InputHashtag type="text" name="hashtag" onKeyUp={(e) => e.key === 'Enter' ? inputHashtagFn(e) : null} ></InputHashtag>
+                    <InputHashtag type="text" onKeyPress={(e) => e.key === 'Enter' ? inputHashtagFn(e) : null} ></InputHashtag>
                 </EditHashtagBox>
                 <ShareBox>
                     {
@@ -130,9 +127,9 @@ function EditRecord({ curSlide }) {
                 </ShareBox>
             </EditContainer>
             <DotMenu>
-                <DotMenuButton3>완료</DotMenuButton3>
-                <DotMenuButton2 type="button">취소</DotMenuButton2>
-            </DotMenu>  
+                <DotMenuButton2>완료</DotMenuButton2>
+                <DotMenuButton1 type="button" onClick={(e) => cancelEdit(e)}>취소</DotMenuButton1>
+            </DotMenu>
         </EditForm>
     )
 }
@@ -235,7 +232,6 @@ const InputHashtag = styled.input`
     font-size: 1.4rem;
     letter-spacing: 2px;
     background: #fdfdfd;
-    display:${ ({displaynone}) => displaynone || 'block'}
 `
 export const ShareBox = styled.div`
     width: 20rem;
@@ -277,22 +273,21 @@ export const ShareBox = styled.div`
         font-style: normal;
         letter-spacing: normal;
         color: #000;
-
     }
 `
 const DotMenu = styled.div`
     /* display: ${props => props.isDotMenu ? 'block' : 'none'}; */
     width: 9.4em;
     height: 10em;
-    position: relative;
+    position: absolute;
+    left: 50em;
     border-radius: 8px;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
-    border: solid 1px #d9d9d9;
     background-color: #fff;
-    top: -0.2em;
+    top: -0.1em;
     right: 10.5em;
 `
-const DotMenuButton2 = styled.button`
+const DotMenuButton1 = styled.button`
     width: 100%;
     height: 5rem;
     position: relative;
@@ -305,13 +300,11 @@ const DotMenuButton2 = styled.button`
     color: #ed3829;
     border-bottom: solid 1px #d9d9d9;
     cursor: pointer;
-
     :hover {
         background-color: #f2f2f4;
     }
 `
-
-const DotMenuButton3 = styled.button.attrs(props => ({
+const DotMenuButton2 = styled.button.attrs(props => ({
     type: "submit",
     form: "record",
 }))`
@@ -327,7 +320,6 @@ const DotMenuButton3 = styled.button.attrs(props => ({
     color: #2862e5;
     border-bottom: solid 1px #d9d9d9;
     cursor: pointer;
-
     :hover {
         background-color: #f2f2f4;
     }

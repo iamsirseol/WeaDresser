@@ -13,10 +13,11 @@ import { TabBody,
     SlideContainer,
     Button as PrecButton,
     Button2 as NextButton,
-    BOX,
+    OutBox,
+    InnerBox,
     DotMenuButton1,
     DotMenuButton2,
-    DotMenuButton3,
+    // DotMenuButton3,
 } from './DiaryPageStyle';
 import DeleteDiaryModal from '../../components/Modal/DeleteDiaryModal';
 import { recordDataHandler } from '../../redux/actions/actions';
@@ -213,20 +214,22 @@ function DiaryPage() {
             </DateDataBar>
             <RecordContainer isEdit={isEdit}>
                 {
-                    isEdit ? <EditRecord formId={"record"} curSlide={curSlide} />
+                    isEdit ? <EditRecord formId={"record"} curSlide={curSlide} setIsEdit={setIsEdit} />
                     :
-                    <SlideContainer ref={imgSlideRef}>
+                    <SlideContainer >
+                        <OutBox ref={imgSlideRef}>
                     {
                         fetchedDiary.record.map((el) => 
-                            <BOX key={el.id}>
-                                <ImageBox img={el.image} ></ImageBox>
-                                <ContentBox>{el.content}</ContentBox>
-                                <HashtagBox>{el.hashtag.split(', ').map((tag) => 
-                                    <span key={tag}>{`#${tag}`}</span>)}
-                                </HashtagBox>
-                            </BOX>
+                                <InnerBox key={el.id}>
+                                    <ImageBox img={el.image} ></ImageBox>
+                                    <ContentBox>{el.content}</ContentBox>
+                                    <HashtagBox>{el.hashtag.split(', ').map((tag) => 
+                                        <span key={tag}>{`#${tag}`}</span>)}
+                                    </HashtagBox>
+                                </InnerBox>
                         )
                     }
+                        </OutBox>
                     </SlideContainer>
                 }
                 { isLeftEndPage || isEdit ? null : <PrecButton onClick={prevButton}></PrecButton> }
@@ -239,13 +242,13 @@ function DiaryPage() {
                             <DotMenuButton2 type="button" onClick={(e) => editRecordButton(e)}>취소</DotMenuButton2>
                         </DotMenu>
                     </DotMenuBox> */}
-                    <DotMenuBox onClick={(e) => showDotMenu(e)}>
+
+                    <DotMenuBox isEdit={isEdit} onClick={(e) => showDotMenu(e)}>
                         <DotMenu isDotMenu={isDotMenu}>
-                            <DotMenuButton1 type="button" isDotMenu={isDotMenu} onClick={(e) => editRecordButton(e)}>수정</DotMenuButton1>
-                            <DotMenuButton2 isDotMenu={isDotMenu} onClick={(e) => setShowDeleteModal(e)}>삭제</DotMenuButton2>
+                            <DotMenuButton1 type="button" onClick={(e) => editRecordButton(e)}>수정</DotMenuButton1>
+                            <DotMenuButton2 onClick={(e) => setShowDeleteModal(e)}>삭제</DotMenuButton2>
                         </DotMenu>
                     </DotMenuBox>
-
             </RecordContainer>
             {showDeleteModal ? <DeleteDiaryModal deleteRecordButton={deleteRecordButton} setShowDeleteModal={setShowDeleteModal} /> : null}
         </TabBody>
