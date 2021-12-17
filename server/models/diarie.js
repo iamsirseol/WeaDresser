@@ -17,10 +17,10 @@ module.exports = (sequelize, DataTypes) => {
     content: { 
       type : DataTypes.STRING
     },
-    // userId : {
-      // type : DataTypes.INTEGER,
+    userId : {
+      type : DataTypes.INTEGER,
       // allowNull: false,
-    // },
+    },
     weather: {
       type: DataTypes.STRING,
       allowNull :false

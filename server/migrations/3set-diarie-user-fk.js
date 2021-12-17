@@ -3,7 +3,6 @@
 module.exports = {
   up: async (queryInterface, DataTypes) => {
     // field 추가
-    await queryInterface.addColumn('Diaries', 'userId', DataTypes.INTEGER);
 
     // foreign key 연결
     await queryInterface.addConstraint('Diaries', {
@@ -11,8 +10,8 @@ module.exports = {
       type: 'foreign key',
       name: 'diary-userId',
       references: {
-        table: 'users',
-        field: 'id'
+        model: 'users',
+        key: 'id'
       },
       onDelete: 'SET NULL',
       onUpdate: 'CASCADE'
@@ -22,6 +21,5 @@ module.exports = {
 
   down: async (queryInterface, DataTypes) => {
     await queryInterface.removeConstraint('Diaries', 'diary-userId');
-    await queryInterface.removeColumn('Diaries', 'userId');
   }
 };

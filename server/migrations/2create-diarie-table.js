@@ -15,10 +15,10 @@ module.exports = {
       content: {
         type: DataTypes.STRING,
       },
-      // userId : {
-      //   allowNull: false,
-      //   type: DataTypes.INTEGER,
-      // },
+      userId : {
+        // allowNull: false,
+        type: DataTypes.INTEGER,
+      },
       weather: {
         allowNull: false,
         type: DataTypes.STRING,
