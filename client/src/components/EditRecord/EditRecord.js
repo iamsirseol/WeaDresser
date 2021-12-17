@@ -74,12 +74,8 @@ function EditRecord({ curSlide, setIsEdit }) {
         formData.append('share', sharePost); 
 
         // const url = process.env.REACT_APP_SERVER_URL || 
-        const url = 'http://localhost:80/diary' // server랑 확인할때 환경변수 x
-        axios.patch(url, formData, {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }},
-            { withCredential: true, })
+        const url = 'http://localhost:80/mypage/diary' // server랑 확인할때 환경변수 x
+        axios.patch(url, formData, { withCredentials: true})
             .then(res => console.log('edit successfully'))
             .catch(err => console.log(err))
 

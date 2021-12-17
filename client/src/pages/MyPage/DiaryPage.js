@@ -83,7 +83,7 @@ function DiaryPage() {
 
         async function fetchFn () {
             const body = {} // selectedData가 가야할듯 // 현재 날짜 기준을 바디로 보내서 서버에서 해당 날짜 조회된 데이터를 받아옴
-            const fetchData = await axios.get(url, body, { withCredentials: true, });
+            const fetchData = await axios.get(url, body, { withCredentials: true});
             // fetchData 자체를 상태로 관리 // 상태 나눠서 관리하지 말고 하나의 상태로 관리!!!
 
             // setFetchedDiary(fetchData); // dispatch로 전달해주자
