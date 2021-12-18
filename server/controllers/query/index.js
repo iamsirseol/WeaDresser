@@ -18,7 +18,7 @@ module.exports = {
     AS NEWtable
     LEFT JOIN Users B 
     ON NEWtable.diaryUserId = B.Id
-    WHERE diaryUserId = ${userId} AND Newtable.share = 0
+    WHERE diaryUserId = ${userId} AND Newtable.share = 1
     ORDER BY diaryCreated
     LIMIT 1;`
     ;
@@ -41,7 +41,7 @@ module.exports = {
       AS N 
       LEFT JOIN Users B 
       ON N.diaryUserId = B.Id
-      AND N.share = 0
+      AND N.share = 1
       ORDER BY N.likeCounts DESC
       Limit 1;
       `;

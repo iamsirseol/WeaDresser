@@ -14,7 +14,6 @@ module.exports = {
         // random one found OK
         if(randomFound[0].length > 0){
           const topOne = await sequelize.query( topQuery, { raw : true })
-          console.log(randomFound[0][0], topOne[0][0])
           return topOne[0].length > 0 // most like found OK
             ? res.status(200).json([ randomFound[0][0], topOne[0][0] ])
             : res.status(201).json([ randomFound[0][0], null ]) 
