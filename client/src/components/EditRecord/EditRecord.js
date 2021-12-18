@@ -31,9 +31,8 @@ function EditRecord({ curSlide, setCurSlide, setIsEdit, fetchedDiary, }) {
         inputValue.current.click();
     }
 
-    function contentFn (e) {
+    function inputContentFn (e) {
         setEditContent(e.target.value);
-        
     }
 
     function removeHashtagFn (removeTag) {
@@ -80,7 +79,6 @@ function EditRecord({ curSlide, setCurSlide, setIsEdit, fetchedDiary, }) {
             .then(res => console.log('edit successfully'))
             .catch(err => console.log(err))
 
-        // history.push('/mypage/diary');
         window.location.reload();
     }
 
@@ -105,7 +103,7 @@ function EditRecord({ curSlide, setCurSlide, setIsEdit, fetchedDiary, }) {
                         </PreviewImage>
                     }
                 </EditImageBox>
-                <EidtContentBox defaultValue={editContent} onChange={(e) => contentFn(e)}></EidtContentBox>
+                <EidtContentBox defaultValue={editContent} onChange={(e) => inputContentFn(e)}></EidtContentBox>
                 <EditHashtagBox>
                     { editHashtag && editHashtag.length > 0 ? 
                         editHashtag.map((tag) =>
@@ -283,10 +281,11 @@ const DotMenu = styled.div`
     width: 9.4em;
     height: 10em;
     position: absolute;
-    left: 50em;
+    left: 50.3em;
     border-radius: 8px;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
     background-color: #fff;
+    border: solid 1px #d9d9d9;
     top: -0.1em;
     right: 10.5em;
 `
@@ -301,7 +300,7 @@ const DotMenuButton1 = styled.button`
     line-height: 2.8;
     letter-spacing: normal;
     color: #ed3829;
-    border-bottom: solid 1px #d9d9d9;
+    /* border-bottom: solid 1px #d9d9d9; */
     cursor: pointer;
     :hover {
         background-color: #f2f2f4;
