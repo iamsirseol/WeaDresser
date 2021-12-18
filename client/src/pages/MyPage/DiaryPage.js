@@ -50,11 +50,6 @@ function DiaryPage() {
     const imgSlideRef = useRef(null);
     // const selectedRecordData = useSelector(state => state.getRecordDataReducer);
     // console.log(selectedRecordData.getRecordData);
-
-
-    useEffect(() => { // 더미 데이터 확인용
-        dispatch(recordDataHandler(fetchedDiary));
-    }, []);
     
     useEffect(() => {
         
@@ -62,10 +57,11 @@ function DiaryPage() {
             
             // const url = process.env.REACT_APP_SERVER_URL || 
             const today = `${curDate.getFullYear()}-${curDate.getMonth() + 1}-${curDate.getDate()}`;
-            const url = `http://localhost:80/mypage/diary?date=${today}`;
-            axios.get(url, { withCredentials: true})
+            const url = `${process.env.REACT_APP_SERVER_URL}/mypage/diary?date=${today}`;
+            axios.get(url, { withCredentials: true })
                 .then(data => {
-                    setFetchedDiary(data.data); // dispatch로 전달해주자
+                    console.log(data.data, '요청완료')
+                    setFetchedDiary(fetchedDiary.concat(data.data)); // dispatch로 전달해주자
                     dispatch(recordDataHandler(data)); // EditRecord로 상태 전달하기 위함
                     if (data.data[0].weather === 'Clouds') {
                         setWeatherIcon(cloud);
@@ -158,7 +154,7 @@ function DiaryPage() {
 
         setShowDeleteModal(false);
         let diaryId = fetchedDiary[curSlide].id
-        let url = `http://localhost:80/mypage/diary?diaryId=${diaryId}` // 날씨데이터도 넘겨줘야 하는가?
+        let url = `${process.env.REACT_APP_SERVER_URL}/mypage/diary?diaryId=${diaryId}` // 날씨데이터도 넘겨줘야 하는가?
         axios.delete(url, { withCredentials: true })
             .then(res => {console.log('delete successfully');})
             .catch(err => {console.log(err);})

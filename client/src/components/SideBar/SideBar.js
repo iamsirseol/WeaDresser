@@ -1,8 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import { isLoginHandler, isShowLoginModalHandler, isShowSignUpModalHandler, sideBarHandler} from '../../redux/actions/actions'
+import { Link } from 'react-router-dom';
+import { isShowLoginModalHandler, sideBarHandler} from '../../redux/actions/actions'
 import styled from 'styled-components';
-import { useEffect, useRef, useState } from 'react';
    
 const SideBarContainer = styled.aside`
     width: 3em;
