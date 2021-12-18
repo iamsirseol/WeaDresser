@@ -1,4 +1,3 @@
-import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { isShowOotdImageModalHandler, setSearchOffsetHandler } from '../../redux/actions/actions'
 import axios from 'axios'; // 필요 없을거 같긴 한데 로그아웃에서 쓸 수도
@@ -17,7 +16,6 @@ import OotdLikeCont from "./OotdLikeCont"
 import OotdListSearch from "./OotdListSearch"
 import { useCallback, useEffect, useRef, useState } from 'react';
 import imagesLoaded from 'imagesloaded'
-import { useOnLoadImages } from "../../isImagesOnload";
 import LoadingIndicator from "../Loading/LoadingIndicator";
 
 
@@ -43,7 +41,7 @@ function OotdListBox(){
     const [reSearch, setReSearch] = useState(false);
     const [scrollOffset, setScrollOffset] = useState(5);
 
-    let listLimit = 5;
+    let listLimit = 30;
 
     const ootdListGrid = useCallback((column, width) => {
         let images = document.querySelectorAll(".ootd-image-box");
@@ -66,7 +64,7 @@ function OotdListBox(){
         let tempMax = (parseInt((curTemp.temp_max - 273.15) * 10)) / 10
         let tempMin = (parseInt((curTemp.temp_min - 273.15) * 10)) / 10
         axios.get(
-            `http://localhost:80/ootd?tempMax=${tempMax}&tempMin=${tempMin}&offset=${listOffset}&limit=${listLimit}`,
+            `${process.env.REACT_APP_SERVER_URL}/ootd?tempMax=${tempMax}&tempMin=${tempMin}&offset=${listOffset}&limit=${listLimit}`,
             { withCredentials: true }
             )
             .then(result => {
@@ -89,11 +87,11 @@ function OotdListBox(){
     const getOotdListSearchSc = () => {
         console.log(scrollOffset)
         axios.get(
-            `http://localhost:80/ootd?hashtag=${searchHash}&offset=${scrollOffset}&limit=${listLimit}`,
+            `${process.env.REACT_APP_SERVER_URL}/ootd?hashtag=${searchHash}&offset=${scrollOffset}&limit=${listLimit}`,
             { withCredentials: true }
             )
             .then(result => {
-                setScrollOffset(scrollOffset + 5);
+                setScrollOffset(scrollOffset + listLimit);
                 if(result.data[0].length === 0){
                     return setIsMoreData(false)
                 }else{
@@ -117,7 +115,7 @@ function OotdListBox(){
         console.log(searchOffset)
         setScrollOffset(5);
         axios.get(
-            `http://localhost:80/ootd?hashtag=${searchHash}&offset=${searchOffset}&limit=${listLimit}`,
+            `${process.env.REACT_APP_SERVER_URL}/ootd?hashtag=${searchHash}&offset=${searchOffset}&limit=${listLimit}`,
             { withCredentials: true }
             )
             .then(result => {

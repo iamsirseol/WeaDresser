@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from "styled-components";
 import axios from "axios";
@@ -49,14 +49,10 @@ const WithDrawalModalContainer = styled.div`
         }
     }
 `
-const WithDrawalModalBtn = styled.div`
-
-`
 
 function WithDrawalModal({setShowWithDrawal}) {
     const dispatch = useDispatch(); 
     const history = useHistory();
-    const userData =  useSelector(state => state.isLoginReducer.accessToken)
 
     function closeCondition(e){
         e.preventDefault();
@@ -64,14 +60,14 @@ function WithDrawalModal({setShowWithDrawal}) {
     }
     function withDrawalRequest(e){
         e.preventDefault();
-        axios.delete('http://localhost:80/mypage/users', { withCredentials : true})
+        axios.delete(`${process.env.REACT_APP_SERVER_URL}/mypage/users`, { withCredentials : true})
         .then(res => {
             dispatch(loginSuccessHandler(false, ''));
             history.push('/')
             window.sessionStorage.removeItem('isLogin');
          })
          .catch(err => {
-            //  안됐을때 창 띄우기 귀찮음
+            //  안됐을때 창 띄우기
         })
     }
 

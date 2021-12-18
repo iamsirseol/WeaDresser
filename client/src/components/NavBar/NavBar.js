@@ -1,7 +1,6 @@
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { isShowLoginModalHandler, loginSuccessHandler } from '../../redux/actions/actions'
-// import axios from 'axios'; // 필요 없을거 같긴 한데 로그아웃에서 쓸 수도
+import { isShowLoginModalHandler } from '../../redux/actions/actions'
 import {
     NavContaier,
     NavBtn

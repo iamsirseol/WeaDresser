@@ -1,10 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
 import axios from "axios";
-import styled from "styled-components";
 import {
-    UserInfoBackground,
     UserInfoContainer,
     UserInfoHeader,
     UserInfoUpdate,
@@ -18,7 +14,6 @@ import {
     UserInfoBox,
     UserInfoLabel,
 } from "./UserInfoStyle"
-import CheckMsg from "../../components/utils/checkMsg"
 import {conditionPassword} from "../../utils/validator"
 import CheckSignMsg from '../../components/utils/checkMsg';
 import InfoUpdateModal from '../../components/Modal/InfoUpdateModal'
@@ -40,14 +35,13 @@ function UserInfo(){
     const [samePw, setSamePw] = useState(false); // 비번 확인용
     const [isSocial, setIsSocial] = useState(false);
     const [closeSocial, setCloseSocial] = useState(true);
-    const userData =  useSelector(state => state.isLoginReducer.accessToken)
 
     useEffect(() => {
         console.log("useEffect get request")
         /*const curUser = window.sessionStorage.getItem('email');*/
         // 로딩 넣으면 좋을듯
         // console.log(userData)
-        axios.get('http://localhost:80/mypage/users', {withCredentials: true})
+        axios.get(`${process.env.REACT_APP_SERVER_URL}/mypage/users`, {withCredentials: true})
             .then(res => {
                 setIsSocial(res.data.data.social);
                 setCurUserNickname(res.data.data.userName)
@@ -57,7 +51,7 @@ function UserInfo(){
 
             })
 
-    }, [])
+    }, [isSocial])
 
     useEffect(() => {
         if(!conditionPassword(updatePw)){
@@ -107,7 +101,7 @@ function UserInfo(){
         e.preventDefault()
         const userData2 = {userName: fixUserName, editPassword: updatePw, password: curUserPw}
 
-        axios.patch('http://localhost:80/mypage/users',userData2,{withCredentials : true})
+        axios.patch(`${process.env.REACT_APP_SERVER_URL}/mypage/users`,userData2,{withCredentials : true})
             .then(res => {
                 console.log(res)
                 setSucUpdate(true)

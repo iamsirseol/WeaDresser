@@ -109,3 +109,10 @@ export const OotdListBtn = styled(Link)`
 export const RecordBtn = styled(Link)`
     
 `
+export const NoDataImage = styled.div`
+    font-size: 1.2em;
+    text-align: center;
+    height: 300px;
+    line-height: 300px;
+    letter-spacing: .3px;
+`

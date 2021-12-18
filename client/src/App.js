@@ -44,7 +44,7 @@ function App() {
         </Switch>
         <Modal/>
       </div>
-      {/* <Footer/> */}
+      <Footer/>
     </BrowserRouter>
   );
 }

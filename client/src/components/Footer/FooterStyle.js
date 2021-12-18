@@ -1,35 +1,42 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 export const FooterContainer = styled.footer`
     width: 100%;
-    height: 23em;
+    height: 56px;
     position: relative;
     bottom: 0;
-    background: #051120;
-    border-top: 1em solid #123962;
+    background: #d6d6dd;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 `
-export const FooterLeft = styled.div`
-    width: 33.3%;
-    background: #fff;
-    height: 20em;
-
-`
 export const FooterMiddle = styled.div`
-    width: 33.3%;
-    background: yellow;
-    height: 20em;
-`
-export const FooterRight = styled.div`
-    width: 33.3%;
-    background: green;
-    height: 20em;
+    width: 100%;
+    >ul{
+        display: flex;
+        width: 50%;
+        margin: 10px auto;
+        justify-content: space-between;
+        text-align: center;
+        >li{
+            width: 33.33%;
+            >a{
+                letter-spacing: 1.8px;
+                font-size: 1.3em;
+                color: #000;
+            }
+        }
+    }
 `
 export const FooterBottom = styled.div`
     width: 100%;
-    background: olivedrab;
-    height: 2.5em;
+    text-align: center;
+    >a{
+        letter-spacing: 1.5px;
+        font-size: 1.3em;
+        color: #000;
+        &:hover{
+            color: #000;
+        }
+    }
 `

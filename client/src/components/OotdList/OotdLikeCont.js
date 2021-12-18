@@ -1,9 +1,8 @@
 import styled from "styled-components";
-import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { isLoginHandler, isShowLoginModalHandler, isShowSignUpModalHandler } from '../../redux/actions/actions'
+import { isShowLoginModalHandler } from '../../redux/actions/actions'
 import axios from 'axios';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IconContext } from "react-icons";
 import {AiOutlineHeart, AiFillHeart} from "react-icons/ai";
 
@@ -53,11 +52,11 @@ function OotdLikeCont({likeCounts, likeWhether, diariesId, likeClass}){
         }
         setIsLike(true); 
         setLikeCount(likeCount + 1)
-        axios.post('http://localhost:80/ootd/like', {diariesId, like: true}, {withCredentials: true})
+        axios.post(`${process.env.REACT_APP_SERVER_URL}/ootd/like`, {diariesId, like: true}, {withCredentials: true})
         .catch(err => {
             console.log(err)
         })
-        axios.put('http://localhost:80/ootd/like', {diariesId, like: true}, {withCredentials: true})
+        axios.put(`${process.env.REACT_APP_SERVER_URL}/ootd/like`, {diariesId, like: true}, {withCredentials: true})
     }
 
     function unLikeThis(e, diariesId){ // 좋아요 요청 취소
@@ -67,11 +66,11 @@ function OotdLikeCont({likeCounts, likeWhether, diariesId, likeClass}){
         }
         setIsLike(false); 
         setLikeCount(likeCount - 1)
-        axios.post('http://localhost:80/ootd/like', {diariesId, like: false}, {withCredentials: true}) // 해당 게시물 id를 보내야 댐 내 id는 accessToken 까면 되고
+        axios.post(`${process.env.REACT_APP_SERVER_URL}/ootd/like`, {diariesId, like: false}, {withCredentials: true}) // 해당 게시물 id를 보내야 댐 내 id는 accessToken 까면 되고
         .catch(err => {
             console.log(err)
         })
-        axios.put('http://localhost:80/ootd/like', {diariesId, like: false}, {withCredentials: true})
+        axios.put(`${process.env.REACT_APP_SERVER_URL}/ootd/like`, {diariesId, like: false}, {withCredentials: true})
     }
 
     return (
