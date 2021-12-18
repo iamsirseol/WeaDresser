@@ -113,7 +113,6 @@ function RecordPage() {
             .catch(err => console.log('error!!', err));
 
         //     history -> diary페이지 -> 다시 get요청 (가장 최신 글)
-        history.push('/mypage');
     }
     function cancelFn (e) { // formData 초기화 // 어쩌면 초기화 해줄 필요가 없을지도? 입력된게 없을테니까?
         e.preventDefault();

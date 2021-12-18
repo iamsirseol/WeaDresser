@@ -43,12 +43,9 @@ const SideBarContainer = styled.aside`
         height: 0;
         overflow: hidden;
         border-radius: 4px;
-        border: solid 1px #d9d9d9;
-        /* opacity: .8; */
-        /* background: salmon; */
+        border: none;
         
         >ul{
-            /* background-color: #fff */
             >li{
                 border-bottom: solid 1px #d9d9d9;
                 white-space: nowrap;
@@ -91,24 +88,18 @@ function SideBar({position, top, left, display}) {
 
         if(isShowSideBar === false){
             sideBarSpreadHandler(true)
-            // sideBarBtn.children[0].style.transform="rotate(-405deg)";
-            // sideBarBtn.children[0].style.top="44%";
-            // sideBarBtn.children[1].style.left="100%";
-            // sideBarBtn.children[2].style.transform="rotate(-495deg)";
-            // sideBarBtn.children[2].style.top="0.65em"
-            sideBarMenu.style.transition = "all .3s";
+            sideBarMenu.style.transition = "height .3s";
             sideBarMenu.style.height = "113px";
             sideBarMenu.style.width = "120px";
+            sideBarMenu.style.border = "solid 1px #d9d9d9";
         }
         else if(isShowSideBar === true){
             sideBarSpreadHandler(false)
-            // sideBarBtn.children[0].style.transform="rotate(0)";
             sideBarBtn.children[0].style.top="0px";
             sideBarBtn.children[1].style.left="0px";
-            // sideBarBtn.children[2].style.transform="rotate(0)";
-            // sideBarBtn.children[2].style.top="calc(100% - 2px)"
-            sideBarMenu.style.transition = "all .3s";
+            sideBarMenu.style.transition = "height .3s";
             sideBarMenu.style.height = "0px";
+            sideBarMenu.style.border = "none";
         }
     }
 
