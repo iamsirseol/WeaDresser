@@ -112,7 +112,7 @@ module.exports = {
     if(!diaryId || !content || !req.body.location) return res.status(400).send("Bad request")
     if( share === null  || share === undefined ) return res.status(400).send("Bad request")
     hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
-    image = req.body.location 
+    image = req.file.location 
 
     // transaction start
     try{ // find diary => 

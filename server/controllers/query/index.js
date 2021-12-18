@@ -12,7 +12,7 @@ module.exports = {
         END AS likeBool 
       FROM Diaries D 
       LEFT JOIN Likes L 
-      ON D.id = L.diariesId 
+      ON D.id = L.diarieId 
       AND L.userId = ${userId}
       ) 
     AS NEWtable
@@ -35,7 +35,7 @@ module.exports = {
           END AS likeBool 
         FROM Diaries D 
         LEFT JOIN Likes L 
-        ON D.id = L.diariesId 
+        ON D.id = L.diarieId 
         AND L.userId = ${userId}
         ) 
       AS N 
