@@ -14,6 +14,7 @@ function NavBar({ logoutHandler }) {
   const curLocation = useLocation();
   const navBar = useRef(null);
   const { isLogin } = useSelector(state => state.isLoginReducer);
+  const {navTopLoc} = useSelector(state => state.navTopReducer);
   const dispatch = useDispatch();
   const [winY, setWinY] = useState('');
   const scrollY = () => {
@@ -33,7 +34,7 @@ function NavBar({ logoutHandler }) {
 
 
     return (
-        <NavContaier ref={navBar} className={ winY <= 10 && curLocation.pathname === "/" ? "nav-home" : winY > 10 && curLocation.pathname === "/" ? "nav-home-scroll" : "nav-else"}>
+        <NavContaier ref={navBar} className={ winY <= navTopLoc- 70 && curLocation.pathname === "/" ? "nav-home" : winY > navTopLoc- 70 && curLocation.pathname === "/" ? "nav-home-scroll" : "nav-else"}>
             <div><SideBar /></div>
             <div><SvgLogoSmall to='/'></SvgLogoSmall></div>
             <div>{isLogin ? <NavBtn onClick={logoutHandler}>로그아웃</NavBtn> : <NavBtn onClick={isShowLoginModal}>로그인</NavBtn >}</div>

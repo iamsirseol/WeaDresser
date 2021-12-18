@@ -1,5 +1,5 @@
-import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState, useRef } from 'react';
 import axios from "axios";
 import {
     LowerPageContainer,
@@ -17,8 +17,11 @@ import OotdLikeCont from "../../components/OotdList/OotdLikeCont";
 import {OotdListBoxItem} from  "../../components/OotdList/OotdListBoxStyle"
 import { IconContext } from "react-icons";
 import {AiOutlineArrowRight} from "react-icons/ai";
+import { navTop } from '../../redux/actions/actions';
 
 function LandingPageLower(){
+    const dispatch = useDispatch();
+    const lowerTop = useRef(null);
     const [woreImage, setWereImage] = useState('');
     const [bestImage, setBestImage] = useState('');
     const [userName, setUserName] = useState('');
@@ -32,7 +35,6 @@ function LandingPageLower(){
     const [isData, setIsData] = useState(true);
     const curTemp = useSelector(state => state.getWeatherDataReducer.main);
     const { isLogin } = useSelector(state => state.isLoginReducer);
-
 
     function userWoreImageRequest(){
         let tempMax = (parseInt((curTemp.temp_max - 273.15) * 10)) / 10
@@ -57,13 +59,17 @@ function LandingPageLower(){
     }
 
     useEffect(() => {
+        dispatch(navTop(lowerTop.current.offsetTop));
+    }, [])
+
+    useEffect(() => {
         if(curTemp){
             userWoreImageRequest();
         }
     }, [curTemp, isLogin])
 
     return(
-        <LowerPageContainer>
+        <LowerPageContainer ref={lowerTop}>
             <LowerPageBox>
                 <UserWore>
                 {isData ? 
