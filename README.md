@@ -46,11 +46,5 @@
          <td>FULL</td>
          <td>https://github.com/minchjung</td>
       </tr>
-      <tr>
-         <td>팀원</td>
-         <td>손영한</td>
-         <td>FULL</td>
-         <td>https://github.com/dudgks5846</td>
-      </tr>
    </tbody>
 </table
