@@ -105,14 +105,15 @@ module.exports = {
     // user validation 
     const foundUser = await isValid(token.email, token.id);
     if(!foundUser) return res.status(401).send("Unauthorized");
-
+    console.log('======================', req.body)
     //! req.body validation 협의 
-    req.body.image = req.file.location
-    const hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
-    const { diaryId, content, image, share, } = req.body;
-    if(!diaryId || !content || !image) return res.status(400).send("Bad request")
+    // const hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
+    const { diaryId, content, share, hashtag, image } = req.body;
+    if(!diaryId || !content || !req.body.location) return res.status(400).send("Bad request")
     if( share === null  || share === undefined ) return res.status(400).send("Bad request")
-    
+    hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
+    image = req.body.location 
+
     // transaction start
     try{ // find diary => 
       await sequelize.transaction( async t => { 
