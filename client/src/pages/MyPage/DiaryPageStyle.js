@@ -111,7 +111,7 @@ export const SlideContainer = styled.div`
     height: auto;
     margin: 0 auto;
     /* display: flex; */
-    /* overflow: ${props => props.isEdit ? "visible" : "hidden"}; */
+    overflow: ${props => props.isEdit ? "visible" : "hidden"};
 
 `
 export const OutBox = styled.div`
@@ -231,6 +231,7 @@ export const DotMenu = styled.div`
     top: -0.6em;
     position: relative;
     border-radius: 8px;
+    border: solid 1px #d9d9d9;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
     background-color: #fff;
 `
@@ -263,7 +264,7 @@ export const DotMenuButton2 = styled.button`
     line-height: 2.8;
     letter-spacing: normal;
     color: #ed3829;
-    border-bottom: solid 1px #d9d9d9;
+    /* border-bottom: solid 1px #d9d9d9; */
     cursor: pointer;
 
     :hover {
