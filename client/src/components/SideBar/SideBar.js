@@ -43,18 +43,28 @@ const SideBarContainer = styled.aside`
         left: 7.5px;
         height: 0;
         overflow: hidden;
-        opacity: .8;
+        border-radius: 4px;
+        border: none;
+        
         >ul{
-            background: #6990ea;
             >li{
-                border-bottom: 1px solid #fff;
+                border-bottom: solid 1px #d9d9d9;
                 white-space: nowrap;
                 padding: 5px;
+                font-family: NotoSansKR;
+                letter-spacing: 1px;
+                /* text-align: center; */
+                padding-left: 20px;
+                background: #fff;
+                /* cursor: pointer; */
+                &:hover{
+                    background-color: #f2f2f4;
+                }
                 >.side-bar-link{
                     font-size: 1.8em;
-                    color: #fff;
+                    /* color: #fff; */
                     &:hover{
-                        color: #ffe100
+                        color: #2862e5;
                     }
                 }
             }
@@ -79,23 +89,18 @@ function SideBar({position, top, left, display}) {
 
         if(isShowSideBar === false){
             sideBarSpreadHandler(true)
-            sideBarBtn.children[0].style.transform="rotate(-405deg)";
-            sideBarBtn.children[0].style.top="44%";
-            sideBarBtn.children[1].style.left="100%";
-            sideBarBtn.children[2].style.transform="rotate(-495deg)";
-            sideBarBtn.children[2].style.top="0.65em"
-            sideBarMenu.style.transition = "all .3s";
-            sideBarMenu.style.height = "150px";
+            sideBarMenu.style.transition = "height .3s";
+            sideBarMenu.style.height = "113px";
+            sideBarMenu.style.width = "120px";
+            sideBarMenu.style.border = "solid 1px #d9d9d9";
         }
         else if(isShowSideBar === true){
             sideBarSpreadHandler(false)
-            sideBarBtn.children[0].style.transform="rotate(0)";
             sideBarBtn.children[0].style.top="0px";
             sideBarBtn.children[1].style.left="0px";
-            sideBarBtn.children[2].style.transform="rotate(0)";
-            sideBarBtn.children[2].style.top="calc(100% - 2px)"
-            sideBarMenu.style.transition = "all .3s";
+            sideBarMenu.style.transition = "height .3s";
             sideBarMenu.style.height = "0px";
+            sideBarMenu.style.border = "none";
         }
     }
 
@@ -105,10 +110,10 @@ function SideBar({position, top, left, display}) {
         let sideBarMenu = document.querySelector('.side-bar-menu');
         if(isShowSideBar === true){
             sideBarSpreadHandler(false)
-            sideBarBtn.children[0].style.transform="rotate(0)";
+            // sideBarBtn.children[0].style.transform="rotate(0)";
             sideBarBtn.children[0].style.top="0px";
             sideBarBtn.children[1].style.left="0px";
-            sideBarBtn.children[2].style.transform="rotate(0)";
+            // sideBarBtn.children[2].style.transform="rotate(0)";
             sideBarBtn.children[2].style.top="calc(100% - 2px)"
             sideBarMenu.style.transition = "all .3s";
             sideBarMenu.style.height = "0px";
@@ -125,10 +130,10 @@ function SideBar({position, top, left, display}) {
                 </span>
                 <div className="side-bar-menu">
                     <ul>
-                        {isLogin ? <li><Link onClick = {() => sideBarSpread()} className="side-bar-link" to="/mypage">MyPage</Link></li> : <li><Link onClick = {() => loginHandler()} className="side-bar-link" to="">MyPage</Link></li>}
-                        <li><Link onClick = {() => sideBarSpread()} to="ootd-list" className="side-bar-link" >관음증</Link></li>
-                        {isLogin ? <li><Link onClick = {() => sideBarSpread()} className="side-bar-link" to="">Diary</Link></li> : <li><Link onClick = {() => loginHandler()} className="side-bar-link" to="">Diary</Link></li>}
-                        {isLogin ? <li><Link onClick = {() => sideBarSpread()} className="side-bar-link" to="record">Record</Link></li> : <li><Link onClick = {() => loginHandler()} className="side-bar-link" to="">Record</Link></li>}
+                        {isLogin ? <li><Link onClick = {() => sideBarSpread()} className="side-bar-link" to="/mypage">MY PAGE</Link></li> : <li><Link onClick = {() => loginHandler()} className="side-bar-link" to="">MyPage</Link></li>}
+                        <li><Link onClick = {() => sideBarSpread()} to="ootd-list" className="side-bar-link" >OOTD</Link></li>
+                        {/* {isLogin ? <li><Link onClick = {() => sideBarSpread()} className="side-bar-link" to="">Diary</Link></li> : <li><Link onClick = {() => loginHandler()} className="side-bar-link" to="">Diary</Link></li>} */}
+                        {isLogin ? <li><Link onClick = {() => sideBarSpread()} className="side-bar-link" to="record">RECORD</Link></li> : <li><Link onClick = {() => loginHandler()} className="side-bar-link" to="">Record</Link></li>}
                     </ul>
                 </div>
             </SideBarContainer>

@@ -108,11 +108,10 @@ function RecordPage() {
         // const url = process.env.REACT_APP_SERVER_URL || 
         const url = 'http://localhost:80/diary' // server랑 확인할때 환경변수 x
         axios.post('http://localhost:80/diary', formData, { withCredentials: true})
-            .then(res => console.log('submit successfully'))
+            .then(res => console.log('submit successfully')).then((res => history.push('/mypage')))
             .catch(err => console.log('error!!', err));
 
         //     history -> diary페이지 -> 다시 get요청 (가장 최신 글)
-        history.push('/mypage');
     }
     function cancelFn (e) { // formData 초기화
         e.preventDefault();
