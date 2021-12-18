@@ -105,14 +105,21 @@ module.exports = {
     // user validation 
     const foundUser = await isValid(token.email, token.id);
     if(!foundUser) return res.status(401).send("Unauthorized");
-    console.log('======================', req.body)
-    //! req.body validation 협의 
-    // const hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
-    const { diaryId, content, share, hashtag, image } = req.body;
-    if(!diaryId || !content || !req.body.location) return res.status(400).send("Bad request")
+   
+    // console.log("=========", req.body)
+    // console.log("=========", req.file)
+    // req.body validation 
+    const { diaryId, content, share } = req.body;
+    if(!diaryId || !req.file) return res.status(400).send("Bad request")
     if( share === null  || share === undefined ) return res.status(400).send("Bad request")
-    hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
-    image = req.file.location 
+
+    // data setting to bulkInsert
+    let data = req.body 
+    data.hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(','); 
+    data.image = req.file.location
+    data.content = req.body.content || ""
+
+    // console.log(req.body)
 
     // transaction start
     try{ // find diary => 
@@ -123,14 +130,16 @@ module.exports = {
           transaction : t
         }) // Not found any (server down)
         if(!diary) return res.status(400).send("Bad request");
+        data.CreatedAt = diary.CreatedAt
 
         await Hashtag.bulkCreate( // create bulk hash first => findAll tags
-          hashtag.map(ele => { return {name :ele} }), 
+          data.hashtag.map(ele => { return {name :ele} }), 
           { through : DiariesHashtag, ignoreDuplicates : true, transaction : t }  
         )
-        const foundTags = await Hashtag.findAll({ where : { name : hashtag }, transaction : t }) 
+        const foundTags = await Hashtag.findAll({ where : { name : data.hashtag }, transaction : t }) 
+        
         // update each values => save 
-        await diary.set(req.body, { transaction : t });
+        await diary.set(data, { transaction : t });
         await diary.setHashtags(foundTags, { transaction : t })
         await diary.save({transaction : t });
         const edited_diary = await Diarie.findOne({ where : { id : diaryId}, include : { model : Hashtag, through : DiariesHashtag }, transaction : t});
