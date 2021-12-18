@@ -99,6 +99,7 @@ module.exports = {
   // * PATCH mypage/diary
   update: async (req, res) => {
     // token validation
+    console.log("===============================================================================================================================================================================================================gettttttttttttasdfasfaspatch ")
     const token = isAuthorized(req); 
     if(!token) return res.status(401).send("Unauthorized");
 
@@ -110,23 +111,17 @@ module.exports = {
     // console.log("=========", req.file)
     // req.body validation 
     const { diaryId, content, share } = req.body;
-    if(!diaryId) return res.status(400).send("Bad request")
+    if( !diaryId ) return res.status(400).send("Bad request")
     if( share === null  || share === undefined ) return res.status(400).send("Bad request")
-
+    console.log("=============================================", req.body)
+    console.log("req.body===============================================================================================================================================================================================================gettttttttttttasdfasfaspatch" ,req.body)
     // data setting to bulkInsert
-    console.log(req.body,'^^^^^^^^^^^^^^^^^^^^^^^')
-    console.log(req.file, 'ffffffffffff')
     let data = req.body 
     data.hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(','); 
-    if (req.file !== undefined) {
-      data.image  = req.file.location;
-    } else {
-      data.image  = req.body.image;
-    }
-    data.content = req.body.content || "";
+    data.image = req.file ? req.file.location : req.body.image 
+    data.content = req.body.content || ""
 
-    // console.log(req.body)
-
+    console.log('data===================================================================',data)
     // transaction start
     try{ // find diary => 
       await sequelize.transaction( async t => { 
