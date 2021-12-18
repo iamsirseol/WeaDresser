@@ -46,4 +46,7 @@ export const initialState = {
     searchOffset:{
         searchOffset: 0
     },
+    navTopLoc:{
+        navTopLoc: 0
+    },
 }

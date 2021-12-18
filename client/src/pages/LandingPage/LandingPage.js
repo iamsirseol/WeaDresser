@@ -25,6 +25,8 @@ function LandingPage () {
     // const [dayNight, setDayNight] = useState('day');
     const dispatch = useDispatch();
     const weatherData = useSelector(state => state.getWeatherDataReducer); // redux-thunk 다시 보기
+    const {navTopLoc} = useSelector(state => state.navTopReducer);
+
     function askForCoords() {
         const options = {
             enableHighAccuracy: true,
@@ -62,7 +64,7 @@ function LandingPage () {
     useEffect(() => {
         // console.log('날씨!@#',weatherData);
         if (weatherData.weather) {
-             console.log(weatherData.weather[0])
+            //  console.log(weatherData.weather[0])
              if (weatherData.weather[0].main === 'Clear') {
                  setCurWeather('맑음');
                  setCurIcon(sun);
@@ -84,8 +86,9 @@ function LandingPage () {
     }, [weatherData, curWeather, curIcon]);
 
     function MoveToDown () {
+        // console.log(scrollRef.current.offsetTop,'rfrfrfrfrfrfrf')
         // scrollRef.current.style.tranform = "translateY(100%)"
-        window.scrollTo({top: 1180, behavior:'smooth'})
+        window.scroll({top: navTopLoc, behavior:'smooth'})
     }
     return (
         <>

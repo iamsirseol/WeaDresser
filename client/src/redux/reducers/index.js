@@ -12,7 +12,8 @@ import {
     IS_SHOW_DATE_PICKER,
     DATE_DATA,
     MYPAGE_RECORD_DATA,
-    SEARCH_OFFSET
+    SEARCH_OFFSET,
+    NAV_TOP
 } from '../actions/actions';
 import { initialState } from './initialState';
 
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
     getDateDataReducer,
     tempLoadingReducer,
     searchOffsetReducer,
-    getRecordDataReducer
+    getRecordDataReducer,
+    navTopReducer
 })
 
 function isLoginReducer(state = initialState.isLogin, action) {
@@ -140,6 +142,16 @@ function searchOffsetReducer(state = initialState.searchOffset, action){
     case SEARCH_OFFSET:
       return Object.assign({}, {
         searchOffset: action.payload.searchOffset
+      });
+      default : return state;
+  }
+}
+
+function navTopReducer(state = initialState.navTopLoc, action){
+  switch (action.type) {
+    case NAV_TOP:
+      return Object.assign({}, {
+        navTopLoc: action.payload.navTopLoc
       });
       default : return state;
   }

@@ -38,11 +38,8 @@ const UpdateModalContainer = styled.div`
         background: #2862e5;
     }
 `
-const UpdateModalBtn = styled.div`
 
-`
-
-function UpdateModal({setShowUpdateModal, showUpdateModal, sucUpdate}) {
+function UpdateModal({setShowUpdateModal, sucUpdate}) {
 
     function closeCondition(){
         if(sucUpdate){
