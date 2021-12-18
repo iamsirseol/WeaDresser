@@ -33,7 +33,7 @@ module.exports = {
       raw: true, nest : true
     })
     
-    // console.log(diary)
+    // parsing the data Diaries + hashtags to array object-some att is also array 
     let diaryArrCheck = { id : 0 , data : [] }
     for(let i = 0 ; i < diary.length ; i++){
       const hashVal = diary[i].Hashtags.name 
@@ -50,8 +50,7 @@ module.exports = {
         // diary[i-1].hashtag.push(!diary[i].Hashtags.name ? "" : diary[i].Hashtags.name)
       }
     }
-
-    console.log(diaryArrCheck.data)
+      
       return res.json(diaryArrCheck.data)
     }
     catch(err){
@@ -106,16 +105,19 @@ module.exports = {
     // user validation 
     const foundUser = await isValid(token.email, token.id);
     if(!foundUser) return res.status(401).send("Unauthorized");
-
+    console.log('======================', req.body)
     //! req.body validation 협의 
-    req.body.image = req.file.location
-    const hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
-    const { diaryId, content, image, share, } = req.body;
-    // console.log(hashtag,'hahahaha')
-    if(!diaryId || !content || !image) return res.status(400).send("Bad request")
+    // const hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
+    let { diaryId, content, share, hashtag, image } = req.body;
+    if(!diaryId || !content || !req.body.location) return res.status(400).send("Bad request")
     if( share === null  || share === undefined ) return res.status(400).send("Bad request")
-    
-    console.log(req.body, '@@@@@@@@@@@@@@@@@@@')
+    hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
+    if (!req.file) {
+      image = req.file.location;
+    } else {
+      image = req.body.image;
+    }
+
     // transaction start
     try{ // find diary => 
       await sequelize.transaction( async t => { 

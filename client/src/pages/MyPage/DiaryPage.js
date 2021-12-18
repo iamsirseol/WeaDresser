@@ -50,10 +50,7 @@ function DiaryPage() {
     const imgSlideRef = useRef(null);
     // const selectedRecordData = useSelector(state => state.getRecordDataReducer);
     // console.log(selectedRecordData.getRecordData);
-    // const dateData = useSelector(state => state.getDateDataReducer); // props로 전달해서상태 없데이트
-    // console.log(`${curDate.getFullYear()}-${curDate.getMonth() + 1}-${curDate.getDate()}`);
 
-    // console.log(fetchedDiary[0] === undefined,fetchedDiary[0],'deleted')
 
     useEffect(() => { // 더미 데이터 확인용
         dispatch(recordDataHandler(fetchedDiary));
@@ -68,26 +65,23 @@ function DiaryPage() {
             const url = `http://localhost:80/mypage/diary?date=${today}`;
             axios.get(url, { withCredentials: true})
                 .then(data => {
-                    console.log(data,'dddata')
                     setFetchedDiary(data.data); // dispatch로 전달해주자
                     dispatch(recordDataHandler(data)); // EditRecord로 상태 전달하기 위함
-                    if (data.data) {
-                        if (data.data.weather === 'Clouds') {
-                            setWeatherIcon(cloud);
-                            setWeatherDesc('흐림');
-                        }
-                        if (data.data.weather === 'Snow') {
-                            setWeatherIcon(snow);
-                            setWeatherDesc('눈');
-                        }
-                        if (data.data.weather === 'Rain' || data.data.weather === 'Thunderstrom') {
-                            setWeatherIcon(rain);
-                            setWeatherDesc('비');
-                        } 
-                        if (data.data.weather === 'Clear') {
-                            setWeatherIcon(sun);
-                            setWeatherDesc('맑음');
-                        }
+                    if (data.data[0].weather === 'Clouds') {
+                        setWeatherIcon(cloud);
+                        setWeatherDesc('흐림');
+                    }
+                    if (data.data[0].weather === 'Snow') {
+                        setWeatherIcon(snow);
+                        setWeatherDesc('눈');
+                    }
+                    if (data.data[0].weather === 'Rain' || data.data[0].weather === 'Thunderstrom') {
+                        setWeatherIcon(rain);
+                        setWeatherDesc('비');
+                    } 
+                    if (data.data[0].weather === 'Clear') {
+                        setWeatherIcon(sun);
+                        setWeatherDesc('맑음');
                     }
                 })
                 .catch(err => console.log(err));;
@@ -146,11 +140,6 @@ function DiaryPage() {
         }
 
     }, [curSlide, isLeftEndPage, isRightEndPage, fetchedDiary]);
-
-    function isDeleteModal () {
-        console.log('ccc')
-        setShowDeleteModal(true);
-    }
 
     function deleteRecordButton (e) {
         let copiedFetchedData = fetchedDiary.slice();

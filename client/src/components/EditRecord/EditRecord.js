@@ -5,7 +5,7 @@ import close from '../../images/close_ic.png';
 import check from '../../images/check_ic_sel.svg';
 import axios from 'axios';
 
-function EditRecord({ curSlide, setIsEdit, fetchedDiary, setCurSlide }) {
+function EditRecord({ curSlide, setCurSlide, setIsEdit, fetchedDiary, }) {
 
     const { handleSubmit } = useForm();
     // const selectedRecord = useSelector(state => state.getRecordDataReducer);
@@ -33,7 +33,7 @@ function EditRecord({ curSlide, setIsEdit, fetchedDiary, setCurSlide }) {
 
     function contentFn (e) {
         setEditContent(e.target.value);
-        setCurSlide(curSlide);
+        
     }
 
     function removeHashtagFn (removeTag) {
@@ -64,7 +64,6 @@ function EditRecord({ curSlide, setIsEdit, fetchedDiary, setCurSlide }) {
     const formData = new FormData();
     function editComplete (e) {
         // e.preventDefault();
-        console.log('###########', fetchedDiary[curSlide].image)
         let diaryId = fetchedDiary[curSlide].id
         if (editImage !== null) {
             formData.append('image', editImage);
@@ -87,6 +86,8 @@ function EditRecord({ curSlide, setIsEdit, fetchedDiary, setCurSlide }) {
 
     function cancelEdit (e) {
         setIsEdit(false);
+        console.log(curSlide)
+        setCurSlide(curSlide);
     }
 
     return (

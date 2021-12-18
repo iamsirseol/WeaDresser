@@ -111,7 +111,7 @@ export const SlideContainer = styled.div`
     height: auto;
     margin: 0 auto;
     /* display: flex; */
-    overflow: ${props => props.isEdit ? "visible" : "hidden"};
+    /* overflow: ${props => props.isEdit ? "visible" : "hidden"}; */
 
 `
 export const OutBox = styled.div`
