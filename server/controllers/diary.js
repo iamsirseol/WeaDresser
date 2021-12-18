@@ -18,30 +18,39 @@ module.exports = {
     // req.body validation 
 
     const{ content,image, weather, tempMin, tempMax, temp, hashtag , share } = req.body;
-    console.log(req.file.location)
-    console.log({ content, weather, tempMin, tempMax, temp, hashtag , share }, 'body@@@')
-    if( !content || !weather || 
-      !tempMin|| !tempMax ||
+    if(!weather || !tempMin|| !tempMax || !image,
       share === undefined || share === null || share === ''){
         return res.status(400).send("Bad request")
     }
+
     // Make hashtag array with name properties 
-    let hashArr = hashtag || [] ;
-    const tagData = hashArr.split(', ').map( ele => { return { name : ele } })
+    const hashArr = hashtag.split(', ').filter(ele => ele !== "" )
+    const tagData = hashArr.map( ele => { return { name : ele } })
+    
     req.body.userId = foundUser.id;
     req.body.image = req.file.location
+
+    // console.log("hashtag =============",hashtag)
+    // console.log("hashtag =============",hashArr)
+    // console.log("hashtag =============",tagData)
+    // console.log("req.body ===========", req.body)
     const data = req.body;
     delete data.hashtag 
+    
+    // console.log("data =============", data);
+    // console.log("tagdata =========== ", tagData);
 
     // transaction start 
     try{ // Diari Create => Hashtags bulkCreate => Diarie <-> Hashtag bulkUpdate  
       const result = await sequelize.transaction( async t => { 
-        const diary = await Diarie.create(data, { transaction : t }) 
-        await Hashtag.bulkCreate(tagData, {
+        const diary = await Diarie.create(data, { transaction : t })
+        // console.log( "createdDiary ====",diary)
+        const createdHash = await Hashtag.bulkCreate(tagData, {
           through : DiariesHashtag, 
           ignoreDuplicates : true,
           transaction: t
         }) // find all tags after insert, since we filter duplicated hashtag 
+        console.log( "createdDiary ====",createdHash)
         const foundTag = await Hashtag.findAll({ where : { name : hashArr}, transaction : t })
         await diary.setHashtags(foundTag, { transaction : t })
         return diary 
@@ -49,6 +58,7 @@ module.exports = {
       return res.json(result)      
     }catch(err){
       console.log(err)
+      // t.rollback()
       return res.status(500).send("Internal server error")
     }
   },
