@@ -7,7 +7,8 @@ import Modal from "./components/Modal/SignModal/Modal"
 import MyPage from './pages/MyPage/MyPage'
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import RecordPage from './pages/RecordPage/RecordPage';
-import { useLoading } from './utils/useLoading'
+import { useLoading } from './utils/useLoading';
+import Footer from './components/Footer/Footer'
 require('dotenv').config();
 
 function App() {
