@@ -108,11 +108,15 @@ module.exports = {
     console.log('======================', req.body)
     //! req.body validation 협의 
     // const hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
-    const { diaryId, content, share, hashtag, image } = req.body;
+    let { diaryId, content, share, hashtag, image } = req.body;
     if(!diaryId || !content || !req.body.location) return res.status(400).send("Bad request")
     if( share === null  || share === undefined ) return res.status(400).send("Bad request")
     hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
-    image = req.body.location 
+    if (!req.file) {
+      image = req.file.location;
+    } else {
+      image = req.body.image;
+    }
 
     // transaction start
     try{ // find diary => 

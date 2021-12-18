@@ -7,7 +7,7 @@ export const UserInfoBackground = styled.div`
 `
 export const UserInfoContainer = styled.div`
     position: relative;
-    top: 22.5em;
+    top: 19em;
     left: 50%;
     transform: translateX(-50%);
     width: 52%;
