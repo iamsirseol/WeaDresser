@@ -35,7 +35,7 @@ module.exports = {
           from (SELECT Diaries.id, Diaries.image, Diaries.content, Diaries.share, Diaries.userId as diarayUserId, Diaries.likeCounts,
               CASE WHEN Likes.id is null then false else true end as likeWhether
               from Diaries LEFT join Likes
-              on Diaries.id = Likes.diarieId and Likes.userId = ${id}) A Left join Users B on A.diarayUserId = B.Id Left join DiariesHashtags DH on A.id = DH.diarieId Left join Hashtags H on DH.hashtagsId = H.id 
+              on Diaries.id = Likes.diarieId and Likes.userId = ${id}) A Left join Users B on A.diarayUserId = B.Id Left join DiariesHashtags DH on A.id = DH.diarieId Left join Hashtags H on DH.hashtagId = H.id 
               where A.share = true Group by A.id, A.likeWhether) OOTD where OOTD.hashtag LIKE '%,${hashtag},%' ORDER BY OOTD.likeCounts DESC limit ${limit} offset ${offset}
           `,
           { raw: true }
@@ -49,15 +49,15 @@ module.exports = {
         res.status(200).send(ootdResult)
         return;
     }
-    tempMax = Number(tempMax) + 20;
-    tempMin -= 10;
+    tempMax = Number(tempMax) + 5;
+    tempMin -= 5;
     if(!id){
       ootdResult = await sequelize.query(
         `SELECT OOTD.* from (SELECT A.id as diariesId, A.image as diariesImage, A.tempMax, A.tempMin, A.share, A.likeCounts as likeCounts, B.userName, group_concat(H.name separator ', ') as hashtag 
         from (SELECT Diaries.id, Diaries.image, Diaries.tempMax, Diaries.tempMin, Diaries.content, Diaries.share, Diaries.userId as diarayUserId, Diaries.likeCounts
                 from Diaries)
                 A Left join Users B on A.diarayUserId = B.Id Left join DiariesHashtags DH on A.id = DH.diarieId Left join Hashtags H on DH.hashtagId = H.id where A.share = true
-                Group by A.id) OOTD where ${tempMax} >= OOTD.tempMax And OOTD.tempMin >= ${tempMin} ORDER BY OOTD.likeCounts DESC limit ${limit} offset ${offset}
+                Group by A.id) OOTD where ${tempMax}  >= OOTD.tempMax And OOTD.tempMin >= ${tempMin} ORDER BY OOTD.likeCounts DESC limit ${limit} offset ${offset}
         `,
         { raw: true }
       )
@@ -91,6 +91,9 @@ module.exports = {
     const userInfo = isAuthorized(req);
     const { diariesId, like} = req.body;
     const validUser = await isValid(userInfo.email, userInfo.id);
+    console.log("---------------------------")
+    console.log(req.body);
+    console.log("---------------------------")
     if (!diariesId) {
       return res.status(400).send("Bad Request");
     }
@@ -101,7 +104,7 @@ module.exports = {
     if(like === true){
       await Like.create({
         userId: validUser.dataValues.id,
-        diariesId: diariesId
+        diarieId: diariesId
       }).then(() => {
         res.status(200).send()
       }).catch(err => {

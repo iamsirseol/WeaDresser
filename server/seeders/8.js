@@ -12,32 +12,29 @@ module.exports = {
             temp : { [Op.between] : [ tempMin -10, tempMax + 10 ] }
           },
           include : [ 
-            { model : User, attributes : ['userName'] }
+            { model : User, attributes : ['userName'] },
+            { model : Hashtag, through : {attributes : []} },
           ],
-          order : [['likeCounts','DESC']],
+          order: [['likeCounts', 'DESC']],
           limit : 1, 
-          raw: true, nest : true,
+          nest : true,
           transaction : t
         })
-        // get same one to find hashtags all to set appropiate parsing data 
-        const diary = await Diarie.findByPk(TopOne.id, { transaction : t })
-        const foundHash = await diary.getHashtags({ 
-          through : { attributes : [] }, 
-          attributes : ['name'], 
-          raw : true, nest : true, 
-          transaction : t
-        })
-        // hash array to hash string with , comma 
-        const hashtag = foundHash.map( ele => ele.name).join(',')
-        TopOne.hashtag = hashtag 
+        // data setting for hashtags, username 
+        let topData = TopOne.dataValues
+        topData.hashtag = topData.Hashtags.map(hash => hash.dataValues.name).join(', ')
+        topData.userName = topData.User.dataValues.userName
+        delete topData.Hashtags
+        delete topData.User
+
         // to give current users info wether he liked the diary or not         
         const userId = 10 
-        TopOne.likeWether = await Like.findOne({ where : { 
-          diarieId : TopOne.id, userId : userId
+        topData.likeWether = await Like.findOne({ where : { 
+          diarieId : topData.id, userId : userId
          },
          transaction : t
         }) ? 0 : 1 
-        console.log(TopOne)
+        console.log(topData)
       })
     }
     catch(err) { 

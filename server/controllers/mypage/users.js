@@ -80,10 +80,11 @@ module.exports = {
   // * DELETE  mypage/users 회원탈퇴
   delete: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-    console.log(accessTokenData);
+    // console.log(accessTokenData);
     if (!accessTokenData) {
       return res.status(401).send("not authorized");
     }
+    
     await User.destroy({
       where: {
         id: accessTokenData.id,
@@ -92,16 +93,6 @@ module.exports = {
       console.log(err);
     });
 
-    // await Diarie.destroy({
-    //   where: {
-    //     userId: accessTokenData.id,
-    //   },
-    // });
-    // await Like.destroy({
-    //   where: {
-    //     userId: accessTokenData.id,
-    //   },
-    // });
     res
       .clearCookie("authorization", {
         httpOnly: true,

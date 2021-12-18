@@ -114,7 +114,7 @@ function EditRecord({ curSlide, setCurSlide, setIsEdit, fetchedDiary, }) {
                             <span className="close-button" onClick={() => removeHashtagFn(tag)}></span>
                         </SingleHashtag>)
                     : null}
-                    <InputHashtag type="text" onKeyPress={(e) => e.key === 'Enter' ? inputHashtagFn(e) : null} ></InputHashtag>
+                    <InputHashtag type="text" onKeyPress={(e) => e.key === 'Enter' ? inputHashtagFn(e) : null} placeholder="여기에 해시태그를 입력해 주세요." ></InputHashtag>
                 </EditHashtagBox>
                 <ShareBox>
                     {
@@ -227,7 +227,7 @@ const SingleHashtag = styled.li`
 `
 const InputHashtag = styled.input`
     width: 47.8rem;
-    height: 2em;
+    height: 1.9em;
     border: none;
     resize: none;
     padding: 0em 0.2em 0em 0.5em;

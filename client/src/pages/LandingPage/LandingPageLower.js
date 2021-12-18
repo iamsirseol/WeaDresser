@@ -42,6 +42,7 @@ function LandingPageLower(){
         let url = isLogin ? `${process.env.REACT_APP_SERVER_URL}/user` : `${process.env.REACT_APP_SERVER_URL}`
         axios.get(`${url}?tempMax=${tempMax}&tempMin=${tempMin}`, {withCredentials: true})
         .then( res => {
+            console.log(res.data[0])
             setIsData(true);
             setWereImage(res.data[0].diariesImage);
             setBestImage(res.data[1].diariesImage)
@@ -49,10 +50,10 @@ function LandingPageLower(){
             setCreateAt(`${res.data[0].createdAt.split('T')[0].split('-')[0]}년 ${res.data[0].createdAt.split('T')[0].split('-')[1]} 월 ${res.data[0].createdAt.split('T')[0].split('-')[2]}일`)
             setLikeWhetherLeft(res.data[0].likeWhether);
             setLikeCountsLeft(res.data[0].likeCounts);
-            setDiariesIdLeft(res.data[0].diariesId);
+            setDiariesIdLeft(res.data[0].id);
             setLikeWhetherRight(res.data[1].likeWhether);
             setLikeCountsRight(res.data[1].likeCounts);
-            setDiariesIdRight(res.data[1].diariesId);
+            setDiariesIdRight(res.data[1].id);
         }).catch( err => {
             setIsData(false);
         })
