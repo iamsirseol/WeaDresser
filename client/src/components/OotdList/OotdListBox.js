@@ -129,6 +129,7 @@ function OotdListBox(){
                     setIsMoreData(true)
                 }
                 setSearchListArray(searchListArray => [...searchListArray, ...result.data[0]])
+                console.log(searchListArray)
             }).then(() => {
                 
             })

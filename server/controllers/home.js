@@ -11,7 +11,7 @@ module.exports = {
         // find random diary 
         const RanOne = await Diarie.findOne({
           where : { 
-            temp : { [Op.between] : [ tempMin -10, tempMax + 10 ] },
+            temp : { [Op.between] : [ tempMin -5, tempMax + 5 ] },
             share : true,
           },
           include : [ 
@@ -35,7 +35,7 @@ module.exports = {
         // get Most like diary with username
         const TopOne = await Diarie.findOne({
           where : { 
-            temp : { [Op.between] : [ tempMin -10, tempMax + 10 ] },
+            temp : { [Op.between] : [ tempMin -5, tempMax + 5 ] },
             share : true,
           },
           include : [ 
@@ -80,7 +80,7 @@ module.exports = {
         const userId = validUser.id
         const TopOne = await Diarie.findOne({
           where : { 
-            temp : { [Op.between] : [ tempMin -10, tempMax + 10 ] },
+            temp : { [Op.between] : [ tempMin -5, tempMax + 5 ] },
             share : true,
           },
           include : [ 
@@ -110,7 +110,7 @@ module.exports = {
         const UserOne = await Diarie.findOne({
           where : {
             id : userId, 
-            temp : { [Op.between] : [ tempMin -10, tempMax + 10 ] },
+            temp : { [Op.between] : [ tempMin -5, tempMax + 5 ] },
             share : true,
           },
           include : [ 
@@ -137,7 +137,7 @@ module.exports = {
         // find random diary 
           const RanOne = await Diarie.findOne({
             where : { 
-              temp : { [Op.between] : [ tempMin -10, tempMax + 10 ] },
+              temp : { [Op.between] : [ tempMin -5, tempMax + 5 ] },
               share : true,
             },
             include : [ 
