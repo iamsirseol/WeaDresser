@@ -1,24 +1,21 @@
-import { useEffect, useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { useForm } from "react-hook-form";
 import styled from 'styled-components'
-import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
 import close from '../../images/close_ic.png';
 import check from '../../images/check_ic_sel.svg';
 import axios from 'axios';
 
-function EditRecord({ curSlide, setIsEdit, fetchedDiary }) {
+function EditRecord({ curSlide, setIsEdit, fetchedDiary, setCurSlide }) {
 
     const { handleSubmit } = useForm();
-    const history = useHistory();
     // const selectedRecord = useSelector(state => state.getRecordDataReducer);
     const [editImage, setEditImage] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
+    const [initImage, setInitImage] = useState(fetchedDiary[curSlide].image); // 초기 이미지 값
     const [editContent, setEditContent] = useState(fetchedDiary[curSlide].content);
     const [editHashtag, setEditHashtag] = useState(fetchedDiary[curSlide].hashtag);
     const [sharePost, setSharePost] = useState(true);
     const inputValue = useRef(null);
-    const initImage = fetchedDiary[curSlide].image; // 초기 이미지 값
     // console.log(editHashtag, 'hahahaha')
     // console.log(fetchedDiary[curSlide].hashtag.length, 'popopopopo')
 
@@ -36,6 +33,7 @@ function EditRecord({ curSlide, setIsEdit, fetchedDiary }) {
 
     function contentFn (e) {
         setEditContent(e.target.value);
+        setCurSlide(curSlide);
     }
 
     function removeHashtagFn (removeTag) {
@@ -50,7 +48,6 @@ function EditRecord({ curSlide, setIsEdit, fetchedDiary }) {
         else if (editHashtag.includes(e.target.value)) return;
         else {
             const trimmedHashtag = e.target.value.split('').filter(el => el !== '#').filter(el2 => el2 !== ' ').join('');
-            console.log(trimmedHashtag, '@@@')
             if (editHashtag.length > 0) {
                 setEditHashtag([...editHashtag, trimmedHashtag]);
             } else {
@@ -67,9 +64,13 @@ function EditRecord({ curSlide, setIsEdit, fetchedDiary }) {
     const formData = new FormData();
     function editComplete (e) {
         // e.preventDefault();
-        // console.log('hashtag', editHashtag)
-        let diaryId = fetchedDiary[0].id
-        formData.append('image', editImage);
+        console.log('###########', fetchedDiary[curSlide].image)
+        let diaryId = fetchedDiary[curSlide].id
+        if (editImage !== null) {
+            formData.append('image', editImage);
+        } else {
+            formData.append('image', fetchedDiary[curSlide].image);
+        }
         formData.append('content', editContent);
         formData.append('hashtag', editHashtag);
         formData.append('share', sharePost); 
@@ -80,7 +81,8 @@ function EditRecord({ curSlide, setIsEdit, fetchedDiary }) {
             .then(res => console.log('edit successfully'))
             .catch(err => console.log(err))
 
-        history.push('/mypage/diary');
+        // history.push('/mypage/diary');
+        window.location.reload();
     }
 
     function cancelEdit (e) {
@@ -140,12 +142,13 @@ const EditForm = styled.form.attrs(props => ({
 `
 
 const EditContainer = styled.div`
-    width: 52.5%;
-    height: 53.9em;
+    width: 47.8em;
+    height: 46em;
+    /* position: relative; */
 `
 const EditImageBox = styled.div`
-    width: 47.8rem;
-    height: 32.4em;
+    width: 100%;
+    height: 70%;
 `
 const InputImage = styled.input.attrs(props => ({
     name: "image",
@@ -159,8 +162,8 @@ const PreviewImage = styled.div.attrs(props => ({
     name: "image",
 
 }))`
-    width: 47.8em;
-    height: 32.4em;
+    width: 100%;
+    height: 100%;
     margin: 0 auto;
     cursor: pointer;
     background-image: url(${props => props.previewImage});
@@ -170,8 +173,8 @@ const PreviewImage = styled.div.attrs(props => ({
     background-color: #dfdfe0;
 `
 const EidtContentBox = styled.textarea`
-    width: 47.0rem;
-    height: 13rem;
+    width: 47.1rem;
+    height: 15%;
     font-family: NotoSansKR;
     font-size: 1.4em;
     line-height: 2.5;
@@ -186,7 +189,7 @@ const EidtContentBox = styled.textarea`
 `
 const EditHashtagBox = styled.ul`
     width: 47.8rem;
-    height: 7.5rem;
+    /* height: 7.5rem; */
     padding-top: 0.5em;
     position: relative;
     background-color: #fdfdfd;
@@ -195,7 +198,6 @@ const EditHashtagBox = styled.ul`
 `
 const SingleHashtag = styled.li`
     width: auto;
-    height: 3rem;
     align-items: center;
     justify-content: center;
     line-height: 2.3;
@@ -229,7 +231,7 @@ const InputHashtag = styled.input`
     resize: none;
     padding: 0em 0.2em 0em 0.5em;
     align-items: center;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     letter-spacing: 2px;
     background: #fdfdfd;
 `
@@ -238,8 +240,8 @@ export const ShareBox = styled.div`
     height: 3rem;
     margin: 0 auto;
     position: relative;
-    left: 48em;
-    bottom: 2.6em;
+    left: 35em;
+    bottom: 3em;
     /* top: 68%; */
     display: flex;
     z-index: 10;

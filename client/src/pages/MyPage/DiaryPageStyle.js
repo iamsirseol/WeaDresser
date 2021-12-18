@@ -8,9 +8,9 @@ import empty_ic from '../../images/empty_ic.svg';
 
 export const TabBody = styled.div`
     width: 52%;
-    height: 56%;
+    height: 56em;
     position: relative;
-    top: 22.5em;
+    top: 19em;
     background-color: #fff;
     border: solid 1px #ddd;
     margin: 0 auto;
@@ -96,9 +96,8 @@ export const WeatherIcon = styled.span`
 `
 
 export const RecordContainer = styled.div`
-    width: 47.8em;
-    /* width: 55.5%; */
-    height: 53.9em;
+    width: 47.8rem;
+    height: 45.8rem;
     margin: 0 auto;
     top: 7.5%;
     position: relative;
@@ -108,7 +107,8 @@ export const RecordContainer = styled.div`
 `
 export const SlideContainer = styled.div`
     width: auto;
-    height: 53.9em;
+    /* height: 53.9em; */
+    height: auto;
     margin: 0 auto;
     /* display: flex; */
     overflow: ${props => props.isEdit ? "visible" : "hidden"};
@@ -116,16 +116,16 @@ export const SlideContainer = styled.div`
 `
 export const OutBox = styled.div`
     margin: 0 auto;
-    height: 50.9em;
+    height: 100%;
     display: flex;
 `
 export const InnerBox = styled.div`
     margin: 0 auto;
-    height: 50.9em;
+    height: 46em;
 `
 export const ImageBox = styled.div`
-    width: 47.8rem;
-    height: 32.4em;
+    width: 100%;
+    height: 70%;
     border-bottom: solid 1px #d3d3d3;
     background-color: #dfdfe0;
     background-size: contain;
@@ -134,8 +134,8 @@ export const ImageBox = styled.div`
     background-position: center;
 `
 export const ContentBox = styled.div`
-    width: 47.0rem;
-    height: 13rem;
+    width: 100%;
+    height: 15%;
     /* background: cornflowerblue; */
     font-family: NotoSansKR;
     font-size: 1.4em;
@@ -146,7 +146,6 @@ export const ContentBox = styled.div`
 `
 export const HashtagBox = styled.ul`
     width: 47.8rem;
-    height: 8.5em;
     padding-top: 0.5em;
     position: relative;
     background: #fdfdfd;
@@ -206,7 +205,7 @@ export const Button2 = styled.div`
 export const DotMenuBox = styled.div`
     display: ${props => props.isEdit ? 'none' : 'block'};
     width: 0.5em;
-    height: 3em;
+    height: 2.5em;
     top: 0.5em;
     right: 0em;
     position: absolute;

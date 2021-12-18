@@ -19,13 +19,12 @@ import LandingPageLower from './LandingPageLower'
 
 function LandingPage () {
 
-    const [curWeather, setCurWeather] = useState(null);
+    const [curWeather, setCurWeather] = useState('');
     const [curIcon, setCurIcon] = useState(null);
     const scrollRef = useRef(null);
     // const [dayNight, setDayNight] = useState('day');
     const dispatch = useDispatch();
     const weatherData = useSelector(state => state.getWeatherDataReducer); // redux-thunk 다시 보기
-
     function askForCoords() {
         const options = {
             enableHighAccuracy: true,
@@ -61,9 +60,13 @@ function LandingPage () {
     }, []);
 
     useEffect(() => {
-
         // console.log('날씨!@#',weatherData);
-         if (weatherData.weather) {
+        if (weatherData.weather) {
+             console.log(weatherData.weather[0])
+             if (weatherData.weather[0].main === 'Clear') {
+                 setCurWeather('맑음');
+                 setCurIcon(sun);
+             }
             if (weatherData.weather[0].main === 'Clouds') {
                 setCurWeather('흐림');
                 setCurIcon(cloud);
@@ -72,16 +75,13 @@ function LandingPage () {
                 setCurWeather('눈');
                 setCurIcon(snow);
             }
-            if (weatherData.weather[0].main === 'Rain' || weatherData.weather[0].main === 'Thunderstrom') {
+            if (weatherData.weather[0].main === 'Rain' || weatherData.weather[0].main === 'Thunderstrom' || weatherData.weather[0].main === 'Drizzle') {
                 setCurWeather('비');
                 setCurIcon(rain);
-            } else {
-                setCurWeather('맑음');
-                setCurIcon(sun);
             }
         }
         
-    }, [weatherData]);
+    }, [weatherData, curWeather, curIcon]);
 
     function MoveToDown () {
         // scrollRef.current.style.tranform = "translateY(100%)"

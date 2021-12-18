@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { TabBody,
     DateDataBar,
@@ -17,9 +17,9 @@ import { TabBody,
     InnerBox,
     DotMenuButton1,
     DotMenuButton2,
-    EmptyContainer,
-    EmptyIcon,
-    EmptyMesaage,
+    // EmptyContainer,
+    // EmptyIcon,
+    // EmptyMesaage,
 } from './DiaryPageStyle';
 import DeleteDiaryModal from '../../components/Modal/DeleteDiaryModal';
 import { recordDataHandler } from '../../redux/actions/actions';
@@ -53,6 +53,7 @@ function DiaryPage() {
     // const dateData = useSelector(state => state.getDateDataReducer); // props로 전달해서상태 없데이트
     // console.log(`${curDate.getFullYear()}-${curDate.getMonth() + 1}-${curDate.getDate()}`);
 
+    // console.log(fetchedDiary[0] === undefined,fetchedDiary[0],'deleted')
 
     useEffect(() => { // 더미 데이터 확인용
         dispatch(recordDataHandler(fetchedDiary));
@@ -60,35 +61,37 @@ function DiaryPage() {
     
     useEffect(() => {
         
-        async function fetchFn () {
+        function fetchFn () {
             
             // const url = process.env.REACT_APP_SERVER_URL || 
             const today = `${curDate.getFullYear()}-${curDate.getMonth() + 1}-${curDate.getDate()}`;
-            console.log('today!@#', today);
             const url = `http://localhost:80/mypage/diary?date=${today}`;
-            const fetchData = await axios.get(url, { withCredentials: true})
+            axios.get(url, { withCredentials: true})
+                .then(data => {
+                    console.log(data,'dddata')
+                    setFetchedDiary(data.data); // dispatch로 전달해주자
+                    dispatch(recordDataHandler(data)); // EditRecord로 상태 전달하기 위함
+                    if (data.data) {
+                        if (data.data.weather === 'Clouds') {
+                            setWeatherIcon(cloud);
+                            setWeatherDesc('흐림');
+                        }
+                        if (data.data.weather === 'Snow') {
+                            setWeatherIcon(snow);
+                            setWeatherDesc('눈');
+                        }
+                        if (data.data.weather === 'Rain' || data.data.weather === 'Thunderstrom') {
+                            setWeatherIcon(rain);
+                            setWeatherDesc('비');
+                        } 
+                        if (data.data.weather === 'Clear') {
+                            setWeatherIcon(sun);
+                            setWeatherDesc('맑음');
+                        }
+                    }
+                })
                 .catch(err => console.log(err));;
             
-            setFetchedDiary(fetchData.data); // dispatch로 전달해주자
-            console.log(fetchData.data)
-            dispatch(recordDataHandler(fetchData)); // EditRecord로 상태 전달하기 위함
-            if (fetchData.data) {
-                if (fetchData.data.weather === 'Clouds') {
-                    setWeatherIcon(cloud);
-                    setWeatherDesc('흐림');
-                }
-                if (fetchData.data.weather === 'Snow') {
-                    setWeatherIcon(snow);
-                    setWeatherDesc('눈');
-                }
-                if (fetchData.data.weather === 'Rain' || fetchData.data.weather === 'Thunderstrom') {
-                    setWeatherIcon(rain);
-                    setWeatherDesc('비');
-                } else {
-                    setWeatherIcon(sun);
-                    setWeatherDesc('맑음');
-                }
-            }
         }
         fetchFn ();
         
@@ -156,16 +159,16 @@ function DiaryPage() {
         if (curSlide > 0 && curSlide === TOTAL_SLIDES) {
             setCurSlide(curSlide - 1);
         }
-        if (fetchedDiary.length === 0 || curSlide === 0) {
+        if (fetchedDiary.length === 0 || curSlide === 0 || fetchedDiary[0] === undefined) {
             setIsLeftEndPage(true);
             setIsRightEndPage(true);
         }
         if (curSlide > 0 && curSlide === TOTAL_SLIDES - 1) {
             setIsRightEndPage(true);
         }
+
         setShowDeleteModal(false);
         let diaryId = fetchedDiary[curSlide].id
-        // console.log(diaryId, 'idididididdi')
         let url = `http://localhost:80/mypage/diary?diaryId=${diaryId}` // 날씨데이터도 넘겨줘야 하는가?
         axios.delete(url, { withCredentials: true })
             .then(res => {console.log('delete successfully');})
@@ -193,7 +196,7 @@ function DiaryPage() {
             </DateDataBar>
                 <RecordContainer isEdit={isEdit}>
                     {
-                        isEdit ? <EditRecord formId={"record"} curSlide={curSlide} setIsEdit={setIsEdit} fetchedDiary={fetchedDiary} />
+                        isEdit ? <EditRecord formId={"record"} curSlide={curSlide} setIsEdit={setIsEdit} setCurSlide={setCurSlide} fetchedDiary={fetchedDiary} />
                         :
                         <SlideContainer >
                             <OutBox ref={imgSlideRef}>
@@ -213,17 +216,21 @@ function DiaryPage() {
                     }
                     { isLeftEndPage || isEdit ? null : <PrecButton onClick={prevButton}></PrecButton> }
                     { isRightEndPage || isEdit ? null : <NextButton onClick={nextButton}></NextButton> }
+                    { fetchedDiary[0] !== undefined ?
                         <DotMenuBox isEdit={isEdit} onClick={(e) => showDotMenu(e)}>
                             <DotMenu isDotMenu={isDotMenu}>
                                 <DotMenuButton1 type="button" onClick={(e) => editRecordButton(e)}>수정</DotMenuButton1>
                                 <DotMenuButton2 onClick={(e) => setShowDeleteModal(e)}>삭제</DotMenuButton2>
                             </DotMenu>
                         </DotMenuBox>
+                        : 
+                        null
+                        // <EmptyContainer>
+                        //     <EmptyIcon></EmptyIcon>
+                        //     <EmptyMesaage>작성한 글이 없습니다.<br/>글을 작성하시려면 위 아이콘을 클릭 하세요.</EmptyMesaage>
+                        // </EmptyContainer>
+                    }
                 </RecordContainer>
-                {/* <EmptyContainer>
-                    <EmptyIcon></EmptyIcon>
-                    <EmptyMesaage>작성한 글이 없습니다.<br/>글을 작성하시려면 위 아이콘을 클릭 하세요.</EmptyMesaage>
-                </EmptyContainer> */}
             {showDeleteModal ? <DeleteDiaryModal deleteRecordButton={deleteRecordButton} setShowDeleteModal={setShowDeleteModal} /> : null}
         </TabBody>
     )
