@@ -95,7 +95,7 @@ module.exports = {
         // like condition for current user on found diary                
         let topData = TopOne.dataValues
         topData.hashtag = topData.Hashtags.map(hash => hash.dataValues.name).join(', ')
-        topData.likeWether = await Like.findOne({ where : 
+        topData.likeWhether = await Like.findOne({ where : 
           { diarieId : TopOne.id, userId : userId},
           transaction : t
         }) ? 1 : 0 
@@ -127,7 +127,7 @@ module.exports = {
         // like condition for current user on found diary                
           userData = UserOne.dataValues
           userData.hashtag = userData.Hashtags.map(hash => hash.dataValues.name).join(', ')
-          userData.likeWether = await Like.findOne({ where : 
+          userData.likeWhether = await Like.findOne({ where : 
             { diarieId : UserOne.id, userId : userId},
             transaction : t
           }) ? 1 : 0 
@@ -151,7 +151,7 @@ module.exports = {
           })
           // like condition for current user on found diary                
           userData = RanOne.dataValues
-          userData.likeWether = await Like.findOne({ where : { 
+          userData.likeWhether = await Like.findOne({ where : { 
             diarieId : RanOne.id, userId : userId
           },
           transaction : t

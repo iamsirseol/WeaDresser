@@ -10,11 +10,6 @@ export const OotdListSearchContainer = styled.div`
     display: flex;
     padding: 0 3px;
     justify-content: space-between;
-    /* &:focus{
-        outline: none;
-        border: 2.65px solid #4588db;
-        box-shadow: 0 0 0 .65px #4588db;
-    } */
 `;
 
 export const OotdListSearchInput = styled.input.attrs(props => ({

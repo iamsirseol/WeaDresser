@@ -37,15 +37,14 @@ const Container = styled.div`
     position: relative;
     background-color: #eceaf5;
 `
-
 const PageHeader = styled.div`
     /* margin: 0 auto; */
     width: 52%;
-    height: 10em;
+    height: 10%;
     left: 50%;
     transform: translateX(-50%);
     position: absolute;
-    top: 14em;
+    top: 11em;
     display: flex;
 
     &:after {
@@ -56,12 +55,10 @@ const PageHeader = styled.div`
         border-bottom: 0.1em solid #717171;
     }
 `
-
 const UserIcon = styled.div`
     width: 6em;
     height: 6em;
     position: relative;
-    margin-bottom: 20em;
     background-image: url(${usericon});
     bottom: 10%;
 `
@@ -73,12 +70,11 @@ const Header = styled.h1`
     letter-spacing: normal;
     color: #17191d;  
 `
-
 const MyPageTabBox = styled.div`
     width: 52%;
     height: 8em;
     position: relative;
-    top: 23em;
+    top: 19.5em;
     margin: 0 auto;
     display: flex;
     align-items: left;

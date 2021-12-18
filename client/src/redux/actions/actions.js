@@ -12,6 +12,7 @@ export const DATE_DATA = "DATE_DATA";
 export const TEMP_LOADING = "TEMP_LOADING";
 export const MYPAGE_RECORD_DATA = "MYPAGE_RECORD_DATA";
 export const SEARCH_OFFSET = "SEARCH_OFFSET"
+export const NAV_TOP = "NAV_TOP"
 
 export function loginSuccessHandler(boolean, accessToken) {
     return (dispatch) => {
@@ -171,6 +172,15 @@ export function setSearchOffsetHandler(data) {
         type: SEARCH_OFFSET,
         payload: {
             searchOffset: data
+        }
+    }
+}
+
+export function navTop(data){
+    return{
+        type: NAV_TOP,
+        payload: {
+            navTopLoc: data
         }
     }
 }

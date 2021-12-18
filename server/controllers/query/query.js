@@ -14,14 +14,14 @@ module.exports = {
             Diaries.content, Diaries.share, Diaries.userId as diarayUserId, Diaries.likeCounts,
             CASE WHEN Likes.id is null then false else true end as likeWhether
           from Diaries 
-          LEFT join Likes on Diaries.id = Likes.diarieId and Likes.userId = ${parseInt(userId)}
+          LEFT join Likes on Diaries.id = Likes.diariesId
           )A 
         Left join Users B on A.diarayUserId = B.Id 
-        Left join DiariesHashtags DH on A.id = DH.diarieId 
-        Left join Hashtags H on DH.hashtagId = H.id 
-        where A.share = true AND A.diarayUserId = ${parseInt(userId)}
+        Left join DiariesHashtags DH on A.id = DH.diariesId 
+        Left join Hashtags H on DH.hashtagsId = H.id 
+        where A.share = false AND A.diarayUserId = ${parseInt(userId)}
         Group by A.id, A.likeWhether) OOTD 
-      where ${parseFloat(maxTem) - -20} >= OOTD.tempMax And OOTD.tempMin >= ${parseFloat(minTem) - 20} 
+      where ${parseFloat(maxTem)} >= OOTD.tempMax And OOTD.tempMin >= ${parseFloat(minTem)} 
       ORDER BY OOTD.createdAt DESC
       LIMIT 1;
     `;
@@ -44,11 +44,11 @@ module.exports = {
           LEFT join Likes on Diaries.id = Likes.diarieId and Likes.userId = ${parseInt(userId)}
           )A 
         Left join Users B on A.diarayUserId = B.Id 
-        Left join DiariesHashtags DH on A.id = DH.diarieId 
-        Left join Hashtags H on DH.hashtagId = H.id 
-        where A.share = true
+        Left join DiariesHashtags DH on A.id = DH.diariesId 
+        Left join Hashtags H on DH.hashtagsId = H.id 
+        where A.share = false
         Group by A.id, A.likeWhether) OOTD 
-      where ${parseFloat(maxTem)  - -20} >= OOTD.tempMax And OOTD.tempMin >= ${parseFloat(minTem) - 20} 
+      where ${parseFloat(maxTem)} >= OOTD.tempMax And OOTD.tempMin >= ${parseFloat(minTem)} 
       ORDER BY OOTD.likeCounts DESC
       LIMIT 10;
     `;
@@ -69,11 +69,11 @@ module.exports = {
           LEFT join Likes on Diaries.id = Likes.diarieId
           )A 
         Left join Users B on A.diarayUserId = B.Id 
-        Left join DiariesHashtags DH on A.id = DH.diarieId 
-        Left join Hashtags H on DH.hashtagId = H.id 
-        where A.share = true 
+        Left join DiariesHashtags DH on A.id = DH.diariesId 
+        Left join Hashtags H on DH.hashtagsId = H.id 
+        where A.share = false 
         Group by A.id) OOTD 
-      where ${parseFloat(maxTem) - -20} >= OOTD.tempMax And OOTD.tempMin >= ${parseFloat(minTem) - 20} 
+      where ${parseFloat(maxTem)} >= OOTD.tempMax And OOTD.tempMin >= ${parseFloat(minTem)} 
       ORDER BY rand()
       LIMIT 10
     `;
@@ -93,11 +93,11 @@ module.exports = {
           LEFT join Likes on Diaries.id = Likes.diarieId
           )A 
         Left join Users B on A.diarayUserId = B.Id 
-        Left join DiariesHashtags DH on A.id = DH.diarieId 
-        Left join Hashtags H on DH.hashtagId = H.id 
-        where A.share = true 
+        Left join DiariesHashtags DH on A.id = DH.diariesId 
+        Left join Hashtags H on DH.hashtagsId = H.id 
+        where A.share = false 
         Group by A.id) OOTD 
-      where ${parseFloat(maxTem)  - -20} >= OOTD.tempMax And OOTD.tempMin >= ${parseFloat(minTem) - 20} 
+      where ${parseFloat(maxTem)} >= OOTD.tempMax And OOTD.tempMin >= ${parseFloat(minTem)} 
       ORDER BY OOTD.likeCounts DESC
       LIMIT 1;
     `;
