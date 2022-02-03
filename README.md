@@ -37,7 +37,7 @@
       <tr>
          <td>팀원</td>
          <td>설동혁</td>
-         <td>FULL</td>
+         <td>Front-end</td>
          <td>https://github.com/iamsirseol</td>
       </tr>
       <tr>
